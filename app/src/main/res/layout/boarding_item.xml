@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="boarding"
+            type="com.example.mynewsapp.presentation.uimodels.boarding.BoardingModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/onBoardingImage"
+            imageResource="@{boarding.img}"
+            android:layout_width="match_parent"
+            android:layout_height="650dp"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="19dp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="@{boarding.title}"
+            android:textColor="@color/black"
+            android:textSize="27sp"
+            app:layout_constraintBottom_toTopOf="@id/introductionContent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onBoardingImage">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/introductionContent"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="@{boarding.description}"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="@id/titleText"
+            app:layout_constraintTop_toBottomOf="@id/titleText">
+
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

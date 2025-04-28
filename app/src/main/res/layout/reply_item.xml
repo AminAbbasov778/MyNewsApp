@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_editor_absoluteX="62dp"
+    tools:layout_editor_absoluteY="-20dp">
+
+    <data>
+
+        <variable
+            name="reply"
+            type="com.example.mynewsapp.presentation.uimodels.comment.CommentUiModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/commentConstraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profileImgCard"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImg"
+                setImageBitmap="@{reply.profileImg}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/reviewerName"
+            android:layout_width="wrap_content"
+            android:maxWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="@{reply.username}"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@id/profileImgCard"
+            app:layout_constraintTop_toTopOf="@id/profileImgCard">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/replyUsernameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="@color/mention_blue"
+            android:textSize="17sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@id/reviewerName"
+            app:layout_constraintTop_toTopOf="@id/profileImgCard">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-3dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="@{reply.comment}"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="@id/reviewerName"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reviewerName">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/timeDifference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-3dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="@{reply.timeDifference}"
+            android:textColor="@color/second_text_color"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="@id/review"
+            app:layout_constraintTop_toBottomOf="@id/review">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/favoriteIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="3.5dp"
+            android:src="@drawable/fullfavorite"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/timeDifference"
+            app:layout_constraintLeft_toRightOf="@id/timeDifference"
+            app:layout_constraintTop_toTopOf="@id/timeDifference">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/unFavoriteIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="3.5dp"
+            android:src="@drawable/unselectedlikeicon"
+            app:layout_constraintBottom_toBottomOf="@id/timeDifference"
+            app:layout_constraintLeft_toRightOf="@id/timeDifference"
+            app:layout_constraintTop_toTopOf="@id/timeDifference">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/likesCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:textColor="@color/second_text_color"
+            android:text="@{String.valueOf(reply.likesCount)}"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/timeDifference"
+            app:layout_constraintLeft_toRightOf="@id/timeDifference"
+            app:layout_constraintTop_toTopOf="@id/timeDifference">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/replyContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/likesCount"
+            app:layout_constraintLeft_toRightOf="@id/likesCount"
+            app:layout_constraintTop_toTopOf="@id/likesCount"
+            >
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/replyIcon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_marginBottom="3dp"
+                android:src="@drawable/reply"
+                app:layout_constraintBottom_toBottomOf="@id/replyContainer"
+                app:layout_constraintLeft_toLeftOf="@id/replyContainer"
+                app:layout_constraintTop_toTopOf="@id/replyContainer">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/replyText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/reply"
+                android:textColor="@color/second_text_color"
+                app:layout_constraintBottom_toBottomOf="@id/replyContainer"
+                app:layout_constraintLeft_toRightOf="@id/replyIcon"
+                app:layout_constraintTop_toTopOf="@id/replyContainer">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/replyRecView"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="@id/review"
+            app:layout_constraintTop_toBottomOf="@id/replyContainer"
+            app:layout_constraintRight_toRightOf="parent"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

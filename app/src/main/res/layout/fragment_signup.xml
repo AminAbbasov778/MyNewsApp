@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+
+    tools:context=".presentation.fragments.SignupFragment">
+
+    <TextView
+        android:id="@+id/introductiontext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text="Hello"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/introductiontext2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsbold"
+        android:text="Welcome!"
+        android:textColor="#1877F2"
+        android:textSize="48sp"
+        app:layout_constraintLeft_toLeftOf="@id/introductiontext1"
+        app:layout_constraintTop_toBottomOf="@id/introductiontext1"
+
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/introductiontext3"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Join us and start your journey!"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@id/introductiontext2"
+        app:layout_constraintTop_toBottomOf="@id/introductiontext2">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/emailtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Email"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/introductiontext3"
+        app:layout_constraintTop_toBottomOf="@id/introductiontext3">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/starsign1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="*"
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toBottomOf="@id/emailtext"
+        app:layout_constraintLeft_toRightOf="@id/emailtext"
+        app:layout_constraintTop_toTopOf="@id/emailtext"
+
+        >
+
+    </TextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/emailedittextcardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/emailtext"
+        app:layout_constraintTop_toBottomOf="@id/emailtext"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp">
+
+
+        <EditText
+            android:id="@+id/emailedittext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#00000000"
+            android:fontFamily="@font/poppinsmedium"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="15dp"
+            android:textColor="#4E4B66"
+            android:textSize="16sp"
+
+            >
+
+        </EditText>
+
+        <ImageView
+            android:id="@+id/removeemailtexticon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="380dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/removetexticon"
+            android:visibility="gone"
+
+            >
+
+        </ImageView>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <TextView
+        android:id="@+id/passwordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Password"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emailedittextcardview">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/starsign3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="*"
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toBottomOf="@id/passwordtext"
+        app:layout_constraintLeft_toRightOf="@id/passwordtext"
+        app:layout_constraintTop_toTopOf="@id/passwordtext"
+
+        >
+
+    </TextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/passwordedittextcardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/passwordtext"
+        app:layout_constraintTop_toBottomOf="@id/passwordtext"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp">
+
+
+        <EditText
+            android:id="@+id/passwordedittext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#00000000"
+            android:fontFamily="@font/poppinsmedium"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:textColor="#4E4B66"
+            android:textSize="16sp"
+
+            >
+
+        </EditText>
+
+        <ImageView
+            android:id="@+id/invisiblepasswordicon"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="365dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/invisiblepasswordicon">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/visiblepasswordicon"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="365dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/visiblepasswordicon"
+            android:visibility="gone">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/removepasswordtexticon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="380dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/removetexticon"
+            android:visibility="gone"
+
+            >
+
+        </ImageView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:id="@+id/invalidepasswordicon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/errorwarning"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordedittextcardview">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/invalidemailpasswordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Invalid Email"
+        android:textColor="#C30052"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/invalidepasswordicon"
+        app:layout_constraintLeft_toRightOf="@id/invalidepasswordicon"
+        app:layout_constraintTop_toTopOf="@id/invalidepasswordicon">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/confirmpasswordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Confirm password"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/invalidepasswordicon">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/starsign2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="*"
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toBottomOf="@id/confirmpasswordtext"
+        app:layout_constraintLeft_toRightOf="@id/confirmpasswordtext"
+        app:layout_constraintTop_toTopOf="@id/confirmpasswordtext"
+
+        >
+
+    </TextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/confirmpasswordedittextcardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/confirmpasswordtext"
+        app:layout_constraintTop_toBottomOf="@id/confirmpasswordtext"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp">
+
+
+        <EditText
+            android:id="@+id/confirmpasswordedittext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#00000000"
+            android:fontFamily="@font/poppinsmedium"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:textColor="#4E4B66"
+            android:textSize="16sp"
+
+            >
+
+        </EditText>
+
+        <ImageView
+            android:id="@+id/invisibleconfirmpasswordicon"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="365dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/invisiblepasswordicon">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/visibleconfirmpasswordicon"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="365dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/visiblepasswordicon"
+            android:visibility="gone">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/removeconfirmpasswordicon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="380dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/removetexticon"
+            android:visibility="gone"
+
+            >
+
+        </ImageView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/warningconstraint"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/confirmpasswordedittextcardview"
+        app:layout_constraintTop_toBottomOf="@id/confirmpasswordedittextcardview">
+
+
+        <ImageView
+            android:id="@+id/warningicon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/errorwarning"
+            app:layout_constraintBottom_toBottomOf="@id/warningconstraint"
+            app:layout_constraintLeft_toLeftOf="@id/warningconstraint"
+            app:layout_constraintTop_toTopOf="@id/warningconstraint"
+
+            >
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/successwarningicon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/successwarningicon"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/warningconstraint"
+            app:layout_constraintLeft_toLeftOf="@id/warningconstraint"
+            app:layout_constraintTop_toTopOf="@id/warningconstraint"
+
+            >
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/warningtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:textColor="#C30052"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/warningicon"
+            app:layout_constraintLeft_toRightOf="@id/warningicon"
+            app:layout_constraintTop_toTopOf="@id/warningicon">
+
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/signupbuttoncardview"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#1877F2"
+        app:cardCornerRadius="9dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warningconstraint"
+
+        >
+
+
+        <Button
+            android:id="@+id/signupbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:fontFamily="@font/poppinsmedium"
+            android:paddingTop="10dp"
+            android:text="Signup"
+            android:textSize="16sp">
+
+        </Button>
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/haveaccounttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="275dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Do you have an account ?"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/signupbuttoncardview"
+        app:layout_constraintTop_toBottomOf="@id/signupbuttoncardview">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/logintext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="65dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Log In"
+        android:textColor="#1877F2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/haveaccounttext"
+        app:layout_constraintLeft_toRightOf="@id/haveaccounttext"
+        app:layout_constraintRight_toRightOf="@id/signupbuttoncardview"
+        app:layout_constraintTop_toTopOf="@id/haveaccounttext">
+
+    </TextView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

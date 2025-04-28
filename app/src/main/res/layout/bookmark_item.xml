@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="bookmark"
+            type="com.example.mynewsapp.data.local.entity.BookmarkEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/newsItemContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/newsImageCardView"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/newsImage"
+                loadUrl="@{bookmark.imageUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/roundedimage"
+                android:scaleType="fitXY"
+                android:src="@drawable/roundedimage"
+                app:layout_constraintLeft_toLeftOf="@id/newsImageCardView"
+                app:layout_constraintTop_toTopOf="@id/newsImageCardView">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/newsCountryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="Europe"
+            android:textColor="@color/second_text_color"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toRightOf="@id/newsImageCardView"
+            app:layout_constraintTop_toTopOf="@id/newsImageCardView">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/newsTitle"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppinsmedium"
+            android:maxLines="2"
+            android:text="@{bookmark.newsTitle}"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="@id/newsCountryText"
+            app:layout_constraintTop_toBottomOf="@id/newsCountryText">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/authorProfileImgIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/agencylogo"
+            app:layout_constraintBottom_toBottomOf="@id/newsImageCardView"
+            app:layout_constraintLeft_toLeftOf="@id/newsTitle"
+
+            >
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/authorName"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppinsmedium"
+            android:paddingTop="3dp"
+            android:text="@{bookmark.sourceName}"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/authorProfileImgIcon"
+            app:layout_constraintLeft_toRightOf="@id/authorProfileImgIcon"
+            app:layout_constraintTop_toTopOf="@id/authorProfileImgIcon">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/watchIcon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/watchlogo"
+            app:layout_constraintBottom_toBottomOf="@id/authorName"
+            app:layout_constraintRight_toLeftOf="@id/newsTimeDifferenceText"
+            app:layout_constraintTop_toTopOf="@id/authorName">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/newsTimeDifferenceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:paddingTop="3dp"
+            android:text="@{bookmark.timeDifference}"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/watchIcon"
+            app:layout_constraintRight_toLeftOf="@id/moreIcon"
+            app:layout_constraintTop_toTopOf="@id/watchIcon">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/moreIcon"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/moreicon"
+            app:layout_constraintBottom_toBottomOf="@id/newsTimeDifferenceText"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/newsTimeDifferenceText">
+
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

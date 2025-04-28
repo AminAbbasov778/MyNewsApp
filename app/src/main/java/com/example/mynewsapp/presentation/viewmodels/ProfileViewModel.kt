@@ -1,0 +1,158 @@
+package com.example.mynewsapp.presentation.viewmodels
+
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mynewsapp.R
+import com.example.mynewsapp.domain.usecases.commonusecases.GetFollowedSourcesUseCase
+import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
+import com.example.mynewsapp.domain.usecases.profileUseCase.DeleteNewsByPublishedAtUseCase
+import com.example.mynewsapp.domain.usecases.profileUseCase.GetTimeDifferenceUseCase
+import com.example.mynewsapp.domain.usecases.profileUseCase.GetUserNewsUseCase
+import com.example.mynewsapp.presentation.uimodels.createnews.UserNewsUiModel
+import com.example.mynewsapp.presentation.uimodels.profile.UserProfileUiModel
+import com.example.mynewsapp.presentation.uistates.UiState
+import com.example.mynewsapp.presentation.uiutils.ImageUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+@RequiresApi(Build.VERSION_CODES.O)
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    val getProfileDataUseCase: GetProfileDataUseCase,
+    val getUserNewsUseCase: GetUserNewsUseCase,
+    val getTimeDifferenceUseCase: GetTimeDifferenceUseCase,
+    val deleteNewsByPublishedAtUseCase: DeleteNewsByPublishedAtUseCase,
+    val getFollowedSourcesUseCase: GetFollowedSourcesUseCase,
+) :
+    ViewModel() {
+    private var _profileData = MutableLiveData<UiState<UserProfileUiModel>>()
+    val profileData: LiveData<UiState<UserProfileUiModel>> get() = _profileData
+
+
+    private var _userNews = MutableLiveData<UiState<List<UserNewsUiModel>>>()
+    val userNews: LiveData<UiState<List<UserNewsUiModel>>> get() = _userNews
+
+    private var _isNewsDeleted = MutableLiveData<UiState<Int>>()
+    val isNewsDeleted: LiveData<UiState<Int>> get() = _isNewsDeleted
+
+    private val _followedSourcesCount = MutableLiveData<UiState<Int>>()
+    val followedSourcesCount: LiveData<UiState<Int>> get() = _followedSourcesCount
+
+    init {
+        getUserNews()
+        getProfileData()
+        getFollowedSources()
+
+    }
+
+
+    fun getProfileData() {
+        _profileData.value = UiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = getProfileDataUseCase()
+            withContext(Dispatchers.Main) {
+                result.collect { profileData ->
+                    if (profileData.isSuccess) {
+                        val data = profileData.getOrNull()
+                        data?.let {
+                            val imageBitmap = ImageUtils.base64ToBitmap(data.imageBase64)
+                            _profileData.value = UiState.Success(
+                                UserProfileUiModel(
+                                    imageBitmap,
+                                    data.email,
+                                    data.fullName,
+                                    data.bio,
+                                    data.phoneNumber,
+                                    data.username,
+                                    data.website
+                                )
+                            )
+                        }
+                    } else {
+                        _profileData.value = UiState.Error(R.string.process_is_failure)
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getUserNews() {
+        viewModelScope.launch(Dispatchers.IO) {
+            var result = getUserNewsUseCase()
+            result.collect { userNews ->
+            withContext(Dispatchers.Main) {
+                    if (userNews.isSuccess) {
+                        var newsResult = userNews.getOrNull()?.map {
+                            UserNewsUiModel(
+                                ImageUtils.base64ToBitmap(it.imageBase64),
+                                it.newsTitle,
+                                it.newsArticle,
+                                ImageUtils.base64ToBitmap(it.profileImageBase64),
+                                it.fullName,
+                                getTimeDifferenceUseCase(it.publishedAt),
+                                it.publishedAt
+                            )
+                        }
+                        _userNews.value = UiState.Success(newsResult ?: emptyList())
+                    } else {
+                        _userNews.value = UiState.Error(R.string.process_is_failure_to_get_news)
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    fun deleteNewsByPublishedAt(publishedAt: String) {
+        _isNewsDeleted.value = UiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = deleteNewsByPublishedAtUseCase(publishedAt)
+            withContext(Dispatchers.Main) {
+                _isNewsDeleted.value =
+                    if (result.isSuccess) UiState.Success(R.string.successfully_deleted) else UiState.Error(
+                        R.string.failure_deleting
+                    )
+            }
+        }
+
+    }
+
+
+     fun getFollowedSources() {
+        _followedSourcesCount.value = UiState.Loading
+
+        viewModelScope.launch {
+            getFollowedSourcesUseCase().collect { result ->
+                if (result.isSuccess) {
+                    result.getOrNull()
+                        ?.let { _followedSourcesCount.value = UiState.Success(it.size) }
+
+                } else {
+                    _followedSourcesCount.value =
+                        UiState.Error(R.string.failed_to_load_followed_sources)
+                }
+            }
+        }
+    }
+
+    fun getWebsiteUrl(): String? {
+        return (profileData.value as? UiState.Success)?.data?.website
+    }
+
+
+
+}

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.fragments.ExploreFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/exploreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text="@string/explore"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.textview.MaterialTextView>
+<ScrollView
+    android:id="@+id/scrollView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:scrollbars="vertical"
+    android:layout_marginRight="20dp"
+    app:layout_constraintLeft_toLeftOf="@id/exploreText"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/exploreText"
+    app:layout_constraintBottom_toBottomOf="parent"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/exploreConstraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+
+    <TextView
+        android:id="@+id/topicText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text="@string/topic"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@id/exploreConstraint"
+        app:layout_constraintTop_toTopOf="@id/exploreConstraint">
+
+    </TextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/topicSeeAllText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="@string/see_all"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/topicText"
+        app:layout_constraintBottom_toBottomOf="@id/topicText"
+
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/topicRecView"
+        android:layout_width="0dp"
+        android:minHeight="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/topicText"
+        app:layout_constraintLeft_toLeftOf="@id/topicText"
+        app:layout_constraintRight_toRightOf="@id/topicSeeAllText"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/topicLoading"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/popularTopicText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topicText"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading"
+            app:lottie_renderMode="automatic">
+
+        </com.airbnb.lottie.LottieAnimationView>
+
+    <TextView
+        android:id="@+id/popularTopicText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text="@string/popular_topic"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@id/topicRecView"
+        app:layout_constraintTop_toBottomOf="@id/topicRecView">
+
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/popularTopicRecView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="@id/topicRecView"
+        app:layout_constraintLeft_toLeftOf="@id/popularTopicText"
+        app:layout_constraintTop_toBottomOf="@id/popularTopicText"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/popularLoading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/popularTopicText"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

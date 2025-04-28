@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray">#FFFFFFFF</color>
+    <color name="text_color">#FFFFFFFF</color>
+    <color name="primary_blue">#1877F2</color>
+    <color name="second_btn_color">#EEF1F4</color>
+    <color name="second_text_color">#FFFFFFFF</color>
+    <color name="pale_plack">#E4E6EB</color>
+    <color name="mention_blue">#1DA1F2</color>
+</resources>

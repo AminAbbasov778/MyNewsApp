@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="topicModel"
+            type="com.example.mynewsapp.presentation.uimodels.common.TopicUiModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:paddingHorizontal="5dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/topicImageCardView"
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/topicImage"
+                imageResource="@{topicModel.topicImg}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/roundedimage"
+                android:scaleType="fitXY"
+                android:src="@drawable/roundedimage"
+                app:layout_constraintLeft_toLeftOf="@id/topicImageCardView"
+                app:layout_constraintTop_toTopOf="@id/topicImageCardView">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@{topicModel.topic}"
+            android:fontFamily="@font/poppinsmedium"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@id/topicImageCardView"
+            app:layout_constraintTop_toTopOf="@id/topicImageCardView">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/topicDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:ellipsize="end"
+            android:text="@{topicModel.topicDescription}"
+            android:fontFamily="@font/poppinsmedium"
+            android:maxLines="2"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@id/topic"
+            app:layout_constraintRight_toLeftOf="@id/savedBtn"
+            app:layout_constraintTop_toBottomOf="@id/topic">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/savedBtn"
+            android:layout_width="wrap_content"
+            android:minWidth="95dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="2.3dp"
+            android:maxLines="1"
+            android:text="@string/save"
+            android:textColor="@color/primary_blue"
+            android:textSize="16sp"
+            app:cornerRadius="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.google.android.material.button.MaterialButton>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.fragments.DetailFragment">
+
+    <ImageView
+        android:id="@+id/backIcon"
+        android:layout_width="35dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/backicon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/shareIcon"
+        android:layout_width="35dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/shareicon"
+        app:layout_constraintBottom_toBottomOf="@id/backIcon"
+        app:layout_constraintRight_toLeftOf="@id/moreIcon"
+        app:layout_constraintTop_toTopOf="@id/backIcon">
+
+    </ImageView>
+
+
+    <ImageView
+        android:id="@+id/moreIcon"
+        android:layout_width="35dp"
+        android:layout_height="20dp"
+
+        android:layout_marginRight="20dp"
+        android:src="@drawable/verticalmorechoicheicon"
+        app:layout_constraintBottom_toBottomOf="@id/shareIcon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/shareIcon">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/publisherLogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="@id/backIcon"
+        app:layout_constraintTop_toBottomOf="@id/backIcon">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/publisherCompanyNameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:fontFamily="@font/poppinsbold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:layout_marginRight="20dp"
+        app:layout_constraintRight_toLeftOf="@id/followButton"
+        app:layout_constraintLeft_toRightOf="@id/publisherLogo"
+        app:layout_constraintTop_toTopOf="@id/publisherLogo">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/publishTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2sp"
+        android:fontFamily="@font/poppinsmedium"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/publisherLogo"
+        app:layout_constraintLeft_toLeftOf="@id/publisherCompanyNameText"
+        app:layout_constraintTop_toBottomOf="@id/publisherCompanyNameText">
+
+    </TextView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/followButton"
+        android:layout_width="135dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#1877F2"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Following"
+        android:paddingTop="7dp"
+        android:textSize="18sp"
+        app:cornerRadius="13dp"
+        app:layout_constraintBottom_toBottomOf="@id/publisherLogo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/publisherLogo">
+
+    </com.google.android.material.button.MaterialButton>
+
+    <ScrollView
+        android:id="@+id/detailScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="@id/publisherLogo"
+        app:layout_constraintRight_toRightOf="@id/followButton"
+        app:layout_constraintTop_toBottomOf="@id/publisherLogo"
+        app:layout_constraintBottom_toTopOf="@id/socialBar"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/newsImageCardView"
+                android:layout_width="0dp"
+                android:layout_height="270dp"
+                android:backgroundTint="@color/white"
+                app:layout_constraintLeft_toLeftOf="@id/detailContainer"
+                app:layout_constraintRight_toRightOf="@id/detailContainer"
+                app:layout_constraintTop_toTopOf="@id/detailContainer"
+
+                >
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/newsImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+
+                    >
+
+                </com.google.android.material.imageview.ShapeableImageView>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/newsCountryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="Europe"
+                android:textColor="#667080"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="@id/newsImageCardView"
+                app:layout_constraintTop_toBottomOf="@id/newsImageCardView">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/newsTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:paddingRight="5dp"
+                android:textColor="@color/black"
+
+                android:textSize="26sp"
+                app:layout_constraintLeft_toLeftOf="@id/newsImageCardView"
+                app:layout_constraintRight_toRightOf="@id/newsImageCardView"
+                app:layout_constraintTop_toBottomOf="@id/newsCountryName">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/newsDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:textColor="#667080"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="@id/newsTitle"
+                app:layout_constraintRight_toRightOf="@id/newsTitle"
+                app:layout_constraintTop_toBottomOf="@id/newsTitle">
+
+            </TextView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/socialBar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/favoriteIcon"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/fullfavorite"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/unFavoriteIcon"
+        app:layout_constraintLeft_toLeftOf="@id/unFavoriteIcon"
+        app:layout_constraintTop_toTopOf="@id/unFavoriteIcon">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/unFavoriteIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/unselectedlikeicon"
+        app:layout_constraintBottom_toBottomOf="@id/socialBar"
+        app:layout_constraintLeft_toLeftOf="@id/socialBar"
+        app:layout_constraintTop_toTopOf="@id/socialBar">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/favoriteCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/socialBar"
+        app:layout_constraintLeft_toLeftOf="@id/socialBar"
+        app:layout_constraintTop_toTopOf="@id/socialBar">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/commentIcon"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/comments"
+        app:layout_constraintBottom_toBottomOf="@id/favoriteCount"
+        app:layout_constraintLeft_toRightOf="@id/favoriteCount"
+        app:layout_constraintTop_toTopOf="@id/favoriteCount">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/commentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/commentIcon"
+        app:layout_constraintLeft_toRightOf="@id/commentIcon"
+        app:layout_constraintTop_toTopOf="@id/commentIcon">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/unselectedBookmarkIcon"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/baseline_bookmark_border_24"
+        app:layout_constraintBottom_toBottomOf="@id/commentCount"
+        app:layout_constraintRight_toRightOf="@id/socialBar"
+        app:layout_constraintTop_toTopOf="@id/commentCount">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/selectedBookmarkIcon"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/selectedbookmarkicon"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/commentCount"
+        app:layout_constraintRight_toRightOf="@id/socialBar"
+        app:layout_constraintTop_toTopOf="@id/commentCount">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

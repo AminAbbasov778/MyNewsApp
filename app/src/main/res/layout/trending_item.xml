@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="trendingnews"
+            type="com.example.mynewsapp.data.model.latestnews.Article" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="@color/white">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/trendNewsImagesCardView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="15dp"
+
+            android:backgroundTint="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/trendNewsImage"
+                loadUrl="@{trendingnews.urlToImage}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+
+
+                >
+
+            </com.google.android.material.imageview.ShapeableImageView>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <TextView
+            android:id="@+id/trendNewsCountryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="Europe"
+            android:textColor="@color/second_text_color"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="@id/trendNewsImagesCardView"
+            app:layout_constraintTop_toBottomOf="@id/trendNewsImagesCardView">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/trendNewsTitle"
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:maxLines="1"
+            android:text="@{trendingnews.title}"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="@id/trendNewsCountryText"
+            app:layout_constraintTop_toBottomOf="@id/trendNewsCountryText">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/authorProfileImgIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/agencylogo"
+            app:layout_constraintLeft_toLeftOf="@id/trendNewsTitle"
+            app:layout_constraintTop_toBottomOf="@id/trendNewsTitle">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/authorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="@{trendingnews.source.name}"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/authorProfileImgIcon"
+            app:layout_constraintLeft_toRightOf="@id/authorProfileImgIcon"
+            app:layout_constraintTop_toTopOf="@id/authorProfileImgIcon">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/watchIcon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/watchlogo"
+            app:layout_constraintBottom_toBottomOf="@id/authorName"
+            app:layout_constraintLeft_toRightOf="@id/authorName"
+            app:layout_constraintTop_toTopOf="@id/authorName">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/trendNewsTimeDifferenceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="@{trendingnews.timeDifference}"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/watchIcon"
+            app:layout_constraintLeft_toRightOf="@id/watchIcon"
+            app:layout_constraintTop_toTopOf="@id/watchIcon">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/moreIcon"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="247dp"
+            android:src="@drawable/moreicon"
+            app:layout_constraintBottom_toBottomOf="@id/trendNewsTimeDifferenceText"
+            app:layout_constraintLeft_toRightOf="@id/trendNewsTimeDifferenceText"
+            app:layout_constraintTop_toTopOf="@id/trendNewsTimeDifferenceText">
+
+        </ImageView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

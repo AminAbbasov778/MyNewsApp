@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.fragments.LoginFragment">
+
+    <TextView
+        android:id="@+id/introductiontext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text="Hello"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/introductiontext2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsbold"
+        android:text="Again!"
+        android:textColor="#1877F2"
+        android:textSize="48sp"
+        app:layout_constraintLeft_toLeftOf="@id/introductiontext1"
+        app:layout_constraintTop_toBottomOf="@id/introductiontext1"
+
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/introductiontext3"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Welcome back you've been missed"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="@id/introductiontext2"
+        app:layout_constraintTop_toBottomOf="@id/introductiontext2">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/emailtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Email"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/introductiontext3"
+        app:layout_constraintTop_toBottomOf="@id/introductiontext3">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/starsign1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="3dp"
+        android:text="*"
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toBottomOf="@id/emailtext"
+        app:layout_constraintLeft_toRightOf="@id/emailtext"
+        app:layout_constraintTop_toTopOf="@id/emailtext"
+
+        >
+
+    </TextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/emailedittextcardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/emailtext"
+        app:layout_constraintTop_toBottomOf="@id/emailtext"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp">
+
+
+        <EditText
+            android:id="@+id/emailedittext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#00000000"
+            android:fontFamily="@font/poppinsmedium"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="15dp"
+            android:textColor="#4E4B66"
+            android:textSize="16sp"
+
+            >
+
+        </EditText>
+
+        <ImageView
+            android:id="@+id/removeemailtexticon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="380dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/removetexticon"
+            android:visibility="gone"
+
+
+            >
+
+        </ImageView>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <TextView
+        android:id="@+id/passwordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Password"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emailedittextcardview">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/starsign2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="3dp"
+        android:text="*"
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toBottomOf="@id/passwordtext"
+        app:layout_constraintLeft_toRightOf="@id/passwordtext"
+        app:layout_constraintTop_toTopOf="@id/passwordtext"
+
+        >
+
+    </TextView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/passwordedittextcardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintLeft_toLeftOf="@id/passwordtext"
+        app:layout_constraintTop_toBottomOf="@id/passwordtext"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp">
+
+
+        <EditText
+            android:id="@+id/passwordedittext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="40dp"
+            android:background="#00000000"
+            android:fontFamily="@font/poppinsmedium"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:textColor="#4E4B66"
+            android:textSize="16dp"
+
+            >
+
+        </EditText>
+
+        <ImageView
+            android:id="@+id/invisiblepasswordicon"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="365dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/invisiblepasswordicon">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/visiblepasswordicon"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="365dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/visiblepasswordicon"
+            android:visibility="gone">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/removepasswordtexticon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="380dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/removetexticon"
+            android:visibility="gone"
+
+
+            >
+
+        </ImageView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/warningconstraint"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/passwordedittextcardview"
+        app:layout_constraintTop_toBottomOf="@id/passwordedittextcardview">
+
+
+        <ImageView
+            android:id="@+id/warningicon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/errorwarning"
+            app:layout_constraintBottom_toBottomOf="@id/warningconstraint"
+            app:layout_constraintLeft_toLeftOf="@id/warningconstraint"
+            app:layout_constraintTop_toTopOf="@id/warningconstraint"
+
+            >
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/successwarningicon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/successwarningicon"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/warningconstraint"
+            app:layout_constraintLeft_toLeftOf="@id/warningconstraint"
+            app:layout_constraintTop_toTopOf="@id/warningconstraint"
+
+            >
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/warningtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:fontFamily="@font/poppinsmedium"
+            android:textColor="#C30052"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/warningconstraint"
+            app:layout_constraintLeft_toLeftOf="@id/warningconstraint"
+            app:layout_constraintTop_toTopOf="@id/warningconstraint">
+
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/remembermecheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Remember me"
+        android:textSize="16sp"
+        app:buttonIconTint="@color/white"
+        app:buttonTint="#5890FF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warningconstraint" />
+
+    <TextView
+        android:id="@+id/forgotpasswordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Forgot the password ?"
+        android:textColor="#5890FF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/remembermecheckbox"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/remembermecheckbox">
+
+    </TextView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/loginbuttoncardview"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#1877F2"
+        app:cardCornerRadius="9dp"
+        app:layout_constraintLeft_toLeftOf="@id/remembermecheckbox"
+        app:layout_constraintRight_toRightOf="@id/forgotpasswordtext"
+        app:layout_constraintTop_toBottomOf="@id/remembermecheckbox"
+
+        >
+
+
+        <Button
+            android:id="@+id/loginbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:fontFamily="@font/poppinsmedium"
+            android:paddingTop="10dp"
+            android:text="Login"
+            android:textSize="16sp">
+
+        </Button>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/continuetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="or continue with"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/loginbuttoncardview"
+        app:layout_constraintRight_toRightOf="@id/loginbuttoncardview"
+        app:layout_constraintTop_toBottomOf="@id/loginbuttoncardview">
+
+    </TextView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/facebookcardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="#EEF1F4"
+        app:layout_constraintLeft_toLeftOf="@id/loginbuttoncardview"
+        app:layout_constraintTop_toBottomOf="@id/continuetext"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/facebookconstraint"
+            android:layout_width="190dp"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/backgroundoffacebookicon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="45dp"
+                android:src="@drawable/bgoffacebook"
+                app:layout_constraintBottom_toBottomOf="@id/facebookconstraint"
+                app:layout_constraintLeft_toLeftOf="@id/facebookconstraint"
+                app:layout_constraintTop_toTopOf="@id/facebookconstraint"
+
+
+                >
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/facebookicon"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/facebookicon"
+                app:layout_constraintBottom_toBottomOf="@id/backgroundoffacebookicon"
+                app:layout_constraintLeft_toLeftOf="@id/backgroundoffacebookicon"
+                app:layout_constraintRight_toRightOf="@id/backgroundoffacebookicon"
+                app:layout_constraintTop_toTopOf="@id/backgroundoffacebookicon"
+
+                >
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/facebooktext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="Facebook"
+                android:textColor="#667080"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/facebookicon"
+                app:layout_constraintLeft_toRightOf="@id/facebookicon"
+                app:layout_constraintTop_toTopOf="@id/facebookicon">
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/googlecardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#EEF1F4"
+        app:layout_constraintBottom_toBottomOf="@id/facebookcardview"
+        app:layout_constraintRight_toRightOf="@id/loginbuttoncardview"
+        app:layout_constraintTop_toTopOf="@id/facebookcardview"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/googleconstraint"
+            android:layout_width="190dp"
+            android:layout_height="50dp">
+
+
+            <ImageView
+                android:id="@+id/googleicon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="55dp"
+                android:src="@drawable/googleicon"
+                app:layout_constraintBottom_toBottomOf="@id/googleconstraint"
+                app:layout_constraintLeft_toLeftOf="@id/googleconstraint"
+                app:layout_constraintTop_toTopOf="@id/googleconstraint"
+
+                >
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/googletext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="Google"
+                android:textColor="#667080"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/googleicon"
+                app:layout_constraintLeft_toRightOf="@id/googleicon"
+                app:layout_constraintTop_toTopOf="@id/googleicon">
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/donthaveaccounttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="don’t have an account ?"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/facebookcardview"
+        app:layout_constraintTop_toBottomOf="@id/facebookcardview">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/signuptext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="65dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="Sign Up"
+        android:textColor="#1877F2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/donthaveaccounttext"
+        app:layout_constraintLeft_toRightOf="@id/donthaveaccounttext"
+        app:layout_constraintRight_toRightOf="@id/googlecardview"
+        app:layout_constraintTop_toTopOf="@id/donthaveaccounttext">
+
+    </TextView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

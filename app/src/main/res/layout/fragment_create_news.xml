@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.fragments.CreateNewsFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/backIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/arrowleft"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/createNewsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsbold"
+        android:text="@string/create_news"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/backIcon">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/verticalMoreIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/verticalmorechoicheicon"
+        app:layout_constraintBottom_toBottomOf="@id/createNewsText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/createNewsText">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/addCoverPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toBottomOf="@id/createNewsText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/imagecover"
+            >
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/newsTitleCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        app:strokeColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="@id/addCoverPhoto"
+        app:layout_constraintRight_toRightOf="@id/addCoverPhoto"
+        app:layout_constraintTop_toBottomOf="@id/addCoverPhoto"
+        >
+        <EditText
+            android:id="@+id/newsTitleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppinsmedium"
+            android:hint="@string/news_title"
+            android:textColor="@color/black"
+            android:textColorHint="@color/text_color"
+            android:textSize="25sp"
+
+
+            >
+
+        </EditText>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/addArticleCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:layout_marginTop="15dp"
+        app:strokeColor="@color/white"
+        android:backgroundTint="@color/white"
+        app:layout_constraintLeft_toLeftOf="@id/newsTitleCardView"
+        app:layout_constraintRight_toRightOf="@id/newsTitleCardView"
+        app:layout_constraintTop_toBottomOf="@id/newsTitleCardView"
+        >
+        <EditText
+            android:id="@+id/addArticleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppinsmedium"
+            android:hint="@string/add_news"
+            android:background="@color/transparent"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/text_color"
+            android:textSize="18sp"
+
+
+            >
+
+        </EditText>
+
+    </com.google.android.material.card.MaterialCardView>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/toolBar"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginBottom="10dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    >
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/textIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toLeftOf="@id/toolBar"
+        app:layout_constraintTop_toTopOf="@id/toolBar"
+        app:layout_constraintBottom_toBottomOf="@id/toolBar"
+        android:src="@drawable/text"
+        >
+
+    </com.google.android.material.imageview.ShapeableImageView>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/alignIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="27dp"
+        app:layout_constraintLeft_toRightOf="@id/textIcon"
+        app:layout_constraintTop_toTopOf="@id/textIcon"
+        app:layout_constraintBottom_toBottomOf="@id/textIcon"
+        android:src="@drawable/align"
+        >
+
+    </com.google.android.material.imageview.ShapeableImageView>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="27dp"
+        app:layout_constraintLeft_toRightOf="@id/alignIcon"
+        app:layout_constraintTop_toTopOf="@id/alignIcon"
+        app:layout_constraintBottom_toBottomOf="@id/alignIcon"
+        android:src="@drawable/imageicon"
+        >
+
+    </com.google.android.material.imageview.ShapeableImageView>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/moreToolsIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="27dp"
+        app:layout_constraintLeft_toRightOf="@id/imageIcon"
+        app:layout_constraintTop_toTopOf="@id/imageIcon"
+        app:layout_constraintBottom_toBottomOf="@id/imageIcon"
+        android:src="@drawable/moreicon"
+        >
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/publishBtn"
+        android:layout_width="110dp"
+        android:layout_height="55dp"
+        app:cornerRadius="17dp"
+        android:backgroundTint="@color/primary_blue"
+        android:text="@string/publish"
+        android:enabled="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:fontFamily="@font/poppinsmedium"
+        app:layout_constraintRight_toRightOf="@id/toolBar"
+        app:layout_constraintBottom_toBottomOf="@id/toolBar"
+        app:layout_constraintTop_toTopOf="@id/toolBar"
+        >
+
+    </com.google.android.material.button.MaterialButton>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

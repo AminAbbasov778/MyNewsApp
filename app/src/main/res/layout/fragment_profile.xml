@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.fragments.ProfileFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/yourProfileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="65dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="@string/profile"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/settingsIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/settingsicon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourProfileText">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/profileImgCardView"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="1000dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yourProfileText"
+
+        >
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profileImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+
+
+            >
+
+        </com.google.android.material.imageview.ShapeableImageView>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/followersCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsbold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/followersText"
+        app:layout_constraintLeft_toLeftOf="@id/followersText"
+        app:layout_constraintRight_toRightOf="@id/followersText"
+
+
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/followersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="@string/followers"
+        android:textColor="@color/gray"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@id/profileImgCardView"
+        app:layout_constraintLeft_toRightOf="@id/profileImgCardView"
+        app:layout_constraintTop_toTopOf="@id/profileImgCardView"
+
+
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/followingConstraint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/followersText"
+        app:layout_constraintLeft_toRightOf="@id/followersText"
+        app:layout_constraintRight_toLeftOf="@id/newsText"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/followeringCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/followingText"
+            app:layout_constraintLeft_toLeftOf="@id/followingText"
+            app:layout_constraintRight_toRightOf="@id/followingText"
+
+            >
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/followingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsmedium"
+            android:text="@string/following"
+            android:textColor="@color/gray"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@id/followingConstraint"
+            app:layout_constraintLeft_toLeftOf="@id/followingConstraint"
+            app:layout_constraintRight_toRightOf="@id/followingConstraint"
+
+
+            >
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/newsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsbold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/newsText"
+        app:layout_constraintLeft_toLeftOf="@id/newsText"
+        app:layout_constraintRight_toRightOf="@id/newsText"
+
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/newsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="@string/news"
+        android:textColor="@color/gray"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@id/followingConstraint"
+        app:layout_constraintLeft_toRightOf="@id/followingConstraint"
+        app:layout_constraintRight_toRightOf="parent"
+
+
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13sp"
+        android:fontFamily="@font/poppinsbold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/profileImgCardView"
+        app:layout_constraintTop_toBottomOf="@id/profileImgCardView">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/bio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-7dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:textColor="@color/gray"
+        android:textSize="16sp"
+        app:layout_constraintRight_toRightOf="@id/newsText"
+        app:layout_constraintLeft_toLeftOf="@id/fullName"
+        app:layout_constraintTop_toBottomOf="@id/fullName"
+
+
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/editProfileBtn"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@color/primary_blue"
+        android:text="@string/edit_profile"
+        android:textSize="17sp"
+        app:cornerRadius="16dp"
+        app:layout_constraintLeft_toLeftOf="@id/bio"
+        app:layout_constraintRight_toLeftOf="@id/websiteBtn"
+        app:layout_constraintTop_toBottomOf="@id/bio"
+
+        >
+
+    </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/websiteBtn"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/primary_blue"
+        android:text="@string/website"
+        android:textSize="17sp"
+        app:cornerRadius="16dp"
+        app:layout_constraintLeft_toRightOf="@id/editProfileBtn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/editProfileBtn"
+
+        >
+
+
+    </com.google.android.material.button.MaterialButton>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userNewsRecView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@id/editProfileBtn"
+        app:layout_constraintRight_toRightOf="@id/websiteBtn"
+        app:layout_constraintTop_toBottomOf="@id/editProfileBtn"
+        android:layout_marginTop="20dp"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/addNewsCardView"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        app:cardCornerRadius="100dp"
+        android:backgroundTint="@color/primary_blue"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="120dp"
+        >
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/addNewsIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/plus"
+            android:padding="18dp"
+            >
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+
+    </com.google.android.material.card.MaterialCardView>
+    
+    
+    
+    
+    
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

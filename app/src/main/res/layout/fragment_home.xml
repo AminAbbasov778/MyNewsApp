@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/appLogo"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/applogo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/notificationLogoCardView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="20dp"
+        android:outlineSpotShadowColor="@color/white"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/appLogo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/appLogo">
+
+
+        <ImageView
+            android:id="@+id/notificationLogo"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:paddingLeft="6dp"
+            android:paddingTop="8dp"
+            android:src="@drawable/notificationlogo"
+
+            >
+
+        </ImageView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchEditTextLayout"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/search"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:endIconDrawable="@drawable/filtericon"
+        app:endIconMode="custom"
+        app:hintTextColor="#A0A3BD"
+        app:layout_constraintLeft_toLeftOf="@id/appLogo"
+        app:layout_constraintRight_toRightOf="@id/notificationLogoCardView"
+        app:layout_constraintTop_toBottomOf="@id/appLogo"
+        app:startIconDrawable="@drawable/searchicon"
+
+        >
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:fontFamily="@font/poppinsmedium"
+            android:paddingStart="50dp"
+
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ScrollView
+        android:id="@+id/homeScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchEditTextLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollViewConstrait"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/trendingNewsHeaderConstraint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/scrollViewConstrait">
+
+
+                <TextView
+                    android:id="@+id/trendingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="@string/trending"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/trendingNewsHeaderConstraint">
+
+                </TextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/trendingNewsSeeAllText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="@string/see_all"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/trendingNewsHeaderConstraint"
+
+                    >
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/trendingNewsBodyConstraint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/trendingNewsHeaderConstraint"
+                    app:layout_constraintTop_toBottomOf="@id/trendingText">
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/trendNewsImagesCardView"
+                        android:layout_width="0dp"
+                        android:layout_height="250dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="15dp"
+                        android:backgroundTint="@color/white"
+                        app:layout_constraintLeft_toLeftOf="@id/trendingNewsBodyConstraint"
+                        app:layout_constraintRight_toRightOf="@id/trendingNewsBodyConstraint"
+                        app:layout_constraintTop_toTopOf="@id/trendingNewsBodyConstraint">
+
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/trendNewsImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+
+
+                            >
+
+                        </com.google.android.material.imageview.ShapeableImageView>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <TextView
+                        android:id="@+id/trendNewsCountryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/poppinsmedium"
+                        android:text="Europe"
+                        android:textColor="@color/second_text_color"
+                        android:textSize="15sp"
+                        app:layout_constraintLeft_toLeftOf="@id/trendNewsImagesCardView"
+                        app:layout_constraintTop_toBottomOf="@id/trendNewsImagesCardView">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/trendNewsTitle"
+                        android:layout_width="325dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+
+                        android:fontFamily="@font/poppinsmedium"
+                        android:maxLines="1"
+                        android:textSize="18sp"
+                        app:layout_constraintLeft_toLeftOf="@id/trendNewsCountryText"
+                        app:layout_constraintTop_toBottomOf="@id/trendNewsCountryText">
+
+                    </TextView>
+
+
+                    <ImageView
+                        android:id="@+id/authorProfileImgIcon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/agencylogo"
+                        app:layout_constraintLeft_toLeftOf="@id/trendNewsTitle"
+                        app:layout_constraintTop_toBottomOf="@id/trendNewsTitle">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/authorName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/poppinsmedium"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@id/authorProfileImgIcon"
+                        app:layout_constraintLeft_toRightOf="@id/authorProfileImgIcon"
+                        app:layout_constraintTop_toTopOf="@id/authorProfileImgIcon">
+
+                    </TextView>
+
+                    <ImageView
+                        android:id="@+id/watchIcon"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/watchlogo"
+                        app:layout_constraintBottom_toBottomOf="@id/authorName"
+                        app:layout_constraintLeft_toRightOf="@id/authorName"
+                        app:layout_constraintTop_toTopOf="@id/authorName">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/trendNewsTimeDifferenceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/poppinsmedium"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@id/watchIcon"
+                        app:layout_constraintLeft_toRightOf="@id/watchIcon"
+                        app:layout_constraintTop_toTopOf="@id/watchIcon">
+
+                    </TextView>
+
+                    <ImageView
+                        android:id="@+id/moreIcon"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="247dp"
+                        android:src="@drawable/moreicon"
+                        app:layout_constraintBottom_toBottomOf="@id/trendNewsTimeDifferenceText"
+                        app:layout_constraintLeft_toRightOf="@id/trendNewsTimeDifferenceText"
+                        app:layout_constraintTop_toTopOf="@id/trendNewsTimeDifferenceText">
+
+                    </ImageView>
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/trendingLoading"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/trendingNewsBodyConstraint"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/trendingNewsBodyConstraint"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/loading"
+                        app:lottie_renderMode="automatic">
+
+                    </com.airbnb.lottie.LottieAnimationView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/latestText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/poppinsbold"
+                android:text="@string/latest"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trendingNewsHeaderConstraint">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/latestNewsSeeAllText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/see_all"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/latestText"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/latestText"
+
+                >
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/latestNewsHideText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="Hide"
+                android:textColor="#4E4B66"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/latestText"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/latestText"
+
+                >
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsCategoriesRecView"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintLeft_toLeftOf="@id/latestText"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/latestText" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/latestNewsRecView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="108dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="@id/scrollViewConstrait"
+                app:layout_constraintLeft_toLeftOf="@id/newsCategoriesRecView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newsCategoriesRecView" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/latestNewsloading"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/latestText"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_renderMode="automatic">
+
+            </com.airbnb.lottie.LottieAnimationView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.fragments.CommentFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/backIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/arrowleft"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/commentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsbold"
+        android:text="@string/comments"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/backIcon">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commentsRecView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintBottom_toTopOf="@id/commentConstraint"
+        app:layout_constraintTop_toBottomOf="@id/commentText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/commentConstraint"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="80dp"
+    android:layout_marginBottom="20dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    >
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/replyCardView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:strokeColor="@color/primary_blue"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="9dp"
+        android:visibility="gone"
+        app:layout_goneMarginBottom="0dp"
+        android:layout_marginBottom="-20dp"
+        app:layout_constraintLeft_toLeftOf="@id/commentEditTextCard"
+        app:layout_constraintBottom_toTopOf="@id/commentEditTextCard"
+        app:layout_constraintRight_toRightOf="@id/commentEditTextCard"
+        >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/replyConstraint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/repliedReviewerUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="AliAhmed"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="@color/mention_blue"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintLeft_toLeftOf="@id/replyConstraint"
+            app:layout_constraintTop_toTopOf="@id/replyConstraint"
+
+            >
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/removeIcon"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/blue_remove"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintRight_toRightOf="@id/replyConstraint"
+            app:layout_constraintTop_toTopOf="@id/repliedReviewerUsername"
+            app:layout_constraintBottom_toBottomOf="@id/repliedReviewerUsername"
+            >
+
+        </com.google.android.material.imageview.ShapeableImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/commentEditTextCard"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintRight_toLeftOf="@id/sendIconCard"
+        app:layout_constraintTop_toTopOf="@id/commentConstraint"
+        app:layout_constraintBottom_toBottomOf="@id/commentConstraint"
+        app:layout_constraintLeft_toLeftOf="@id/commentConstraint"
+        android:backgroundTint="@color/white"
+        app:strokeColor="@color/gray"
+        >
+        <EditText
+            android:id="@+id/commentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:scrollbars="vertical"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:hint="@string/type_your_comment"
+            android:paddingLeft="15dp"
+            >
+
+        </EditText>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/sendIconCard"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:backgroundTint="@color/primary_blue"
+        android:layout_marginRight="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/commentEditTextCard"
+        app:layout_constraintBottom_toBottomOf="@id/commentEditTextCard"
+        >
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/sendIcon"
+            android:padding="19dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/send_icon"
+            >
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/commentConstraint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/commentText"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+</androidx.constraintlayout.widget.ConstraintLayout>

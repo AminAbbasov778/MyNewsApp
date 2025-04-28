@@ -1,0 +1,91 @@
+package com.example.mynewsapp.presentation.viewmodels
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mynewsapp.R
+import com.example.mynewsapp.data.local.entity.BookmarkEntity
+import com.example.mynewsapp.domain.usecases.bookmark.ConvertBookmarkEntityToArticleUseCase
+import com.example.mynewsapp.domain.usecases.bookmark.ReadBookmarksUseCase
+import com.example.mynewsapp.domain.usecases.detail.DeleteBookmarkUseCase
+import com.example.mynewsapp.presentation.uimodels.bookmarks.BookmarkNavigationModel
+import com.example.mynewsapp.presentation.uistates.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+@HiltViewModel
+class BookmarkViewModel @Inject constructor(
+    var readBookmarksUseCase: ReadBookmarksUseCase,
+    var convertBookmarkEntityToArticleUseCase: ConvertBookmarkEntityToArticleUseCase,
+    val deleteBookmarkUseCase: DeleteBookmarkUseCase,
+) : ViewModel() {
+
+    private val _bookmarkState = MutableLiveData<UiState<List<BookmarkEntity>>>()
+    val bookmarkState: LiveData<UiState<List<BookmarkEntity>>> get() = _bookmarkState
+
+    private var _newsArticle =
+        MutableLiveData<BookmarkNavigationModel>()
+    val newsArticle: LiveData<BookmarkNavigationModel> get() = _newsArticle
+
+    private var _isProductDeleted = MutableLiveData<UiState<Int>>()
+    val isProductDeleted : LiveData<UiState<Int>> get() = _isProductDeleted
+
+
+    init {
+        loadBookmarks()
+    }
+
+    fun loadBookmarks() {
+        _bookmarkState.value = UiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            val bookmarkFlow = readBookmarksUseCase()
+            bookmarkFlow.getOrNull()?.collect { bookmarks ->
+                withContext(Dispatchers.Main) {
+                    if (bookmarkFlow.isSuccess) {
+
+                        _bookmarkState.value = UiState.Success(bookmarks)
+
+                    } else {
+                        _bookmarkState.value = UiState.Error(R.string.wrong_something)
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    fun convertBookmarkEntityToArticle(news: BookmarkEntity) {
+        _newsArticle.value = BookmarkNavigationModel(
+            convertBookmarkEntityToArticleUseCase(news),
+            true
+        )
+    }
+
+    fun clearArticle() {
+        _newsArticle.value = BookmarkNavigationModel(null, false)
+    }
+
+    fun deleteBookmark(url: String) {
+        _isProductDeleted.value = UiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            val result =
+                deleteBookmarkUseCase(
+                    url
+                )
+
+            withContext(Dispatchers.Main) {
+                _isProductDeleted.value = if (result.isSuccess) {
+                    UiState.Success(R.string.successfully_removed)
+                } else {
+                    UiState.Error(R.string.failed_remove_from_bookmark)
+                }
+            }
+        }
+    }
+
+}

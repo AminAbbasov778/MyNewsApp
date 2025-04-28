@@ -1,0 +1,302 @@
+package com.example.mynewsapp.presentation.viewmodels
+
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mynewsapp.R
+import com.example.mynewsapp.data.model.comment.CommentModel
+import com.example.mynewsapp.data.model.userprofile.UserProfileModel
+import com.example.mynewsapp.domain.domainmodels.CommentDomainModel
+import com.example.mynewsapp.domain.usecases.commentusecases.AddCommentUseCase
+import com.example.mynewsapp.domain.usecases.commentusecases.GetCommentsUseCase
+import com.example.mynewsapp.domain.usecases.commentusecases.IsCommentLikedUseCase
+import com.example.mynewsapp.domain.usecases.commentusecases.LikeCommentUseCase
+import com.example.mynewsapp.domain.usecases.commentusecases.UnlikeCommentUseCase
+import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
+import com.example.mynewsapp.domain.usecases.commonusecases.GetUserIdUseCase
+import com.example.mynewsapp.domain.usecases.createnewsusecases.GetTimeStampUseCase
+import com.example.mynewsapp.presentation.uimodels.comment.CommentLikeStatus
+import com.example.mynewsapp.presentation.uimodels.comment.CommentUiModel
+import com.example.mynewsapp.presentation.uistates.UiState
+import com.example.mynewsapp.presentation.uiutils.ImageUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+@HiltViewModel
+class CommentViewModel @Inject constructor(
+    private val addCommentUseCase: AddCommentUseCase,
+    private val getProfileDataUseCase: GetProfileDataUseCase,
+    private val getUserIdUseCase: GetUserIdUseCase,
+    private val getTimeStampUseCase: GetTimeStampUseCase,
+    private val getCommentsUseCase: GetCommentsUseCase,
+    private val isCommentLikedUseCase: IsCommentLikedUseCase,
+    private val likeCommentUseCase: LikeCommentUseCase,
+    private val unLikeCommentUseCase: UnlikeCommentUseCase
+) : ViewModel() {
+
+    private val _commentState = MutableLiveData<UiState<Int>>()
+    val commentState: LiveData<UiState<Int>> get() = _commentState
+
+    private val _comments = MutableLiveData<UiState<List<CommentUiModel>>>()
+    val comments: LiveData<UiState<List<CommentUiModel>>> get() = _comments
+
+    private val _selectedReplyComment = MutableLiveData<CommentUiModel?>(null)
+    val selectedReplyComment: LiveData<CommentUiModel?> get() = _selectedReplyComment
+
+    private val _likeState = MutableLiveData<UiState<Unit>>()
+    val likeState: LiveData<UiState<Unit>> get() = _likeState
+
+    private val _commentLikeStatus = MutableLiveData<Map<String, CommentLikeStatus>>(emptyMap())
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addComment(commentText: String, newsUrl: String) {
+        if (commentText.isNotEmpty()) {
+            _commentState.value = UiState.Loading
+            viewModelScope.launch(Dispatchers.Main) {
+                val profileResult = withContext(Dispatchers.IO) {
+                    getUserProfile()
+                }
+
+                if (profileResult.isFailure) {
+                    _commentState.value = UiState.Error(R.string.failed_add_comment)
+                    return@launch
+                }
+
+                val comment = createCommentModel(
+                    profileResult.getOrNull()!!,
+                    commentText,
+                    newsUrl,
+                    selectedReplyComment.value?.isReply ?: false,
+                    selectedReplyComment.value?.parentCommentId ?: "",
+                    selectedReplyComment.value?.username ?: ""
+                )
+
+                val result = withContext(Dispatchers.IO) {
+                    addCommentUseCase(comment)
+                }
+
+                if (result.isSuccess) {
+                    _commentState.value = UiState.Success(R.string.success_add_comment)
+                    clearData()
+                } else {
+                    _commentState.value = UiState.Error(R.string.failed_add_comment)
+                }
+            }
+        }
+    }
+
+    private suspend fun getUserProfile(): Result<UserProfileModel> {
+        return try {
+            val result = getProfileDataUseCase().firstOrNull()
+            result?.let {
+                if (it.isSuccess && it.getOrNull() != null) {
+                    Result.success(it.getOrNull()!!)
+                } else {
+                    Result.failure(it.exceptionOrNull() ?: Exception("Profile is not found"))
+                }
+            } ?: Result.failure(Exception("Profile data is empty"))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createCommentModel(
+        profile: UserProfileModel,
+        commentText: String,
+        url: String,
+        isReply: Boolean,
+        parentCommentId: String,
+        parentUsername: String
+    ): CommentModel {
+        return CommentModel(
+            comment = commentText,
+            profileImg = profile.imageBase64,
+            username = profile.username,
+            userId = getUserIdUseCase() ?: "unknown",
+            url = url,
+            commentedAt = getTimeStampUseCase(),
+            isReply = isReply,
+            parentCommentId = parentCommentId,
+            parentUsername = parentUsername,
+            likesCount = 0,
+            isLiked = false
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getComments(url: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val resultFlow = getCommentsUseCase(url)
+            resultFlow.collect { result ->
+                withContext(Dispatchers.Main) {
+                    if (result.isSuccess) {
+                        val commentDomainList = result.getOrNull() ?: emptyList()
+                        val commentUiList = commentDomainList.map { comment ->
+                            val isLiked = isCommentLikedUseCase(comment.commentedAt).getOrNull() ?: false
+                            CommentUiModel(
+                                comment = comment.comment,
+                                profileImg = ImageUtils.base64ToBitmap(comment.profileImg),
+                                username = comment.username,
+                                userId = comment.userId,
+                                commentedAt = comment.commentedAt,
+                                timeDifference = comment.timeDifference,
+                                url = comment.url,
+                                isReply = comment.isReply,
+                                parentCommentId = comment.parentCommentId,
+                                parentUsername = comment.parentUsername,
+                                likesCount = comment.likesCount,
+                                isLiked = isLiked,
+                                replies = replyUiModel(comment.replies)
+                            )
+                        }
+                        _comments.value = UiState.Success(commentUiList)
+                        initializeLikeStatus(commentUiList)
+                    } else {
+                        _comments.value = UiState.Error(R.string.failed_to_get_comments)
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun replyUiModel(replies: List<CommentDomainModel>) = replies.map { reply ->
+        val isLiked = isCommentLikedUseCase(reply.commentedAt).getOrNull() ?: false
+        CommentUiModel(
+            comment = reply.comment,
+            profileImg = ImageUtils.base64ToBitmap(reply.profileImg),
+            username = reply.username,
+            userId = reply.userId,
+            commentedAt = reply.commentedAt,
+            timeDifference = reply.timeDifference,
+            url = reply.url,
+            isReply = reply.isReply,
+            parentCommentId = reply.parentCommentId,
+            parentUsername = reply.parentUsername,
+            likesCount = reply.likesCount,
+            isLiked = isLiked,
+            replies = emptyList()
+        )
+    }
+
+    fun setReplyComment(comment: CommentUiModel) {
+        _selectedReplyComment.value = if (comment.parentUsername.isNullOrEmpty()) {
+            comment.copy(isReply = true, parentCommentId = comment.commentedAt)
+        } else {
+            comment.copy(isReply = true, parentCommentId = comment.parentCommentId, parentUsername = comment.username)
+        }
+    }
+
+    fun clearData() {
+        _selectedReplyComment.value = null
+    }
+
+    fun toggleLikeStatus(commentId: String, newsUrl: String, isCurrentlyLiked: Boolean) {
+        if (isCurrentlyLiked) {
+            unlikeComment(commentId, newsUrl)
+        } else {
+            likeComment(commentId, newsUrl)
+        }
+    }
+
+    private fun likeComment(commentId: String, newsUrl: String) {
+        _likeState.value = UiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = likeCommentUseCase(commentId, newsUrl)
+            withContext(Dispatchers.Main) {
+                if (result.isSuccess) {
+                    updateCommentLikeStatus(commentId, isLiked = true)
+                    _likeState.value = UiState.Success(Unit)
+                } else {
+                    _likeState.value = UiState.Error(R.string.failed_favorite)
+                }
+            }
+        }
+    }
+
+    private fun unlikeComment(commentId: String, newsUrl: String) {
+        _likeState.value = UiState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = unLikeCommentUseCase(commentId, newsUrl)
+            withContext(Dispatchers.Main) {
+                if (result.isSuccess) {
+                    updateCommentLikeStatus(commentId, isLiked = false)
+                    _likeState.value = UiState.Success(Unit)
+                } else {
+                    _likeState.value = UiState.Error(R.string.failed_unfavorite)
+                }
+            }
+        }
+    }
+
+    private fun initializeLikeStatus(comments: List<CommentUiModel>) {
+        val likeStatusMap = mutableMapOf<String, CommentLikeStatus>()
+        comments.forEach { comment ->
+            val likeStatus = CommentLikeStatus(
+                commentId = comment.commentedAt,
+                isLiked = comment.isLiked,
+                likesCount = comment.likesCount
+            )
+            likeStatusMap[comment.commentedAt] = likeStatus
+            comment.replies.forEach { reply ->
+                val replyLikeStatus = CommentLikeStatus(
+                    commentId = reply.commentedAt,
+                    isLiked = reply.isLiked,
+                    likesCount = reply.likesCount
+                )
+                likeStatusMap[reply.commentedAt] = replyLikeStatus
+            }
+        }
+        _commentLikeStatus.value = likeStatusMap
+        updateCommentsWithLikeStatus()
+    }
+
+    private fun updateCommentLikeStatus(commentId: String, isLiked: Boolean) {
+        val currentStatus = _commentLikeStatus.value?.toMutableMap() ?: mutableMapOf()
+        val currentLikeStatus = currentStatus[commentId] ?: CommentLikeStatus(
+            commentId = commentId,
+            isLiked = false,
+            likesCount = 0
+        )
+        currentStatus[commentId] = CommentLikeStatus(
+            commentId = commentId,
+            isLiked = isLiked,
+            likesCount = currentLikeStatus.likesCount
+        )
+        _commentLikeStatus.value = currentStatus
+        updateCommentsWithLikeStatus()
+    }
+
+    private fun updateCommentsWithLikeStatus() {
+        val currentComments = (_comments.value as? UiState.Success)?.data ?: return
+        val updatedComments = currentComments.map { comment ->
+            val status = _commentLikeStatus.value?.get(comment.commentedAt)
+            val updatedComment = if (status != null) {
+                comment.copy(
+                    isLiked = status.isLiked,
+                    likesCount = status.likesCount
+                )
+            } else comment
+
+            val updatedReplies = updatedComment.replies.map { reply ->
+                val replyStatus = _commentLikeStatus.value?.get(reply.commentedAt)
+                if (replyStatus != null) {
+                    reply.copy(
+                        isLiked = replyStatus.isLiked,
+                        likesCount = replyStatus.likesCount
+                    )
+                } else reply
+            }
+            updatedComment.copy(replies = updatedReplies)
+        }
+        _comments.value = UiState.Success(updatedComments)
+    }
+}

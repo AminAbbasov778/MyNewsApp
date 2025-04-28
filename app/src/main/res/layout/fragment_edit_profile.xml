@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.fragments.EditProfileFragment">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/removeIcon"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/remove"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/editProfileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppinsmedium"
+        android:text="@string/edit_profile"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/removeIcon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/removeIcon">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/saveIcon"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/save_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/editProfileText">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/profileImgCardView"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#EEF1F4"
+        app:cardCornerRadius="1000dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editProfileText"
+
+        >
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profileImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/addingImgCardView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="7dp"
+        android:backgroundTint="@color/primary_blue"
+        app:cardCornerRadius="1000dp"
+        app:layout_constraintBottom_toBottomOf="@id/profileImgCardView"
+        app:layout_constraintRight_toRightOf="@id/profileImgCardView"
+
+        >
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/addingImg"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_gravity="center"
+            android:src="@drawable/cameraicon"
+
+
+            >
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImgCardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scrollConstrait"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/usernameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/username"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="@id/scrollConstrait"
+                app:layout_constraintTop_toTopOf="@id/scrollConstrait">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/usernameCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/white"
+
+                app:cardCornerRadius="5dp"
+                app:layout_constraintLeft_toLeftOf="@id/usernameText"
+                app:layout_constraintTop_toBottomOf="@id/usernameText"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usernameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fullNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/fullname"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="@id/usernameText"
+                app:layout_constraintTop_toBottomOf="@id/usernameCardView">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fullNameCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintLeft_toLeftOf="@id/fullNameText"
+                app:layout_constraintTop_toBottomOf="@id/fullNameText"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fullNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/emailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/email_address"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fullNameCardView">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/emailCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintLeft_toLeftOf="@id/emailText"
+                app:layout_constraintTop_toBottomOf="@id/emailText"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/yourEmailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:gravity="center_vertical"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/phoneNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/phone_number"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emailCardView">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/phoneNumberCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintLeft_toLeftOf="@id/phoneNumberText"
+                app:layout_constraintTop_toBottomOf="@id/phoneNumberText"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/bioText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/bio"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phoneNumberCardView">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/bioCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bioText"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bioEditTExt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/websiteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="@string/website"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bioCardView">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/websiteCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/websiteText"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/websiteEditTExt"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_renderMode="automatic">
+
+    </com.airbnb.lottie.LottieAnimationView>
+</androidx.constraintlayout.widget.ConstraintLayout>
