@@ -13,8 +13,10 @@ import com.example.mynewsapp.data.repositories.CategoryRepositoryImpl
 import com.example.mynewsapp.data.repositories.CommentRepositoryImpl
 import com.example.mynewsapp.data.repositories.FollowRepositoryImpl
 import com.example.mynewsapp.data.repositories.LanguageRepositoryImpl
+import com.example.mynewsapp.data.repositories.OnBoardingRepositoryImpl
 import com.example.mynewsapp.data.repositories.RegisterRepositoryImpl
 import com.example.mynewsapp.data.repositories.RetrofitRepositoryImpl
+import com.example.mynewsapp.data.repositories.SettingsRepositoryImpl
 import com.example.mynewsapp.data.repositories.SharedPreferenceRepositoryImpl
 import com.example.mynewsapp.data.repositories.ThemeRepositoryImpl
 import com.example.mynewsapp.data.repositories.TopicRepositoryImpl
@@ -27,8 +29,10 @@ import com.example.mynewsapp.domain.interfaces.CommentRepository
 import com.example.mynewsapp.domain.interfaces.FavoriteRepository
 import com.example.mynewsapp.domain.interfaces.FollowRepository
 import com.example.mynewsapp.domain.interfaces.LanguageRepository
+import com.example.mynewsapp.domain.interfaces.OnBoardingRepository
 import com.example.mynewsapp.domain.interfaces.RegisterRepository
 import com.example.mynewsapp.domain.interfaces.RetrofitRepository
+import com.example.mynewsapp.domain.interfaces.SettingsRepository
 import com.example.mynewsapp.domain.interfaces.SharedPreferenceRepository
 import com.example.mynewsapp.domain.interfaces.ThemeRepository
 import com.example.mynewsapp.domain.interfaces.TopicRepository
@@ -132,4 +136,12 @@ object RepositoryModule {
     fun provideThemeRepository(@Named("default") sharedPreferences: SharedPreferences): ThemeRepository = ThemeRepositoryImpl(sharedPreferences)
 
 
+    @Provides
+    @Singleton
+    fun provideSettingsRepository():SettingsRepository = SettingsRepositoryImpl()
+
+
+    @Provides
+    @Singleton
+    fun  provideOnBoardingRepositoryImpl():OnBoardingRepository = OnBoardingRepositoryImpl()
 }

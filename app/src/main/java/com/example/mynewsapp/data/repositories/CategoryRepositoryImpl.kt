@@ -1,8 +1,9 @@
 package com.example.mynewsapp.data.repositories
 
 import com.example.mynewsapp.domain.interfaces.CategoryRepository
+import javax.inject.Inject
 
-class CategoryRepositoryImpl : CategoryRepository {
+class CategoryRepositoryImpl @Inject constructor() : CategoryRepository {
 
 
     override fun getCategories(): ArrayList<String> {

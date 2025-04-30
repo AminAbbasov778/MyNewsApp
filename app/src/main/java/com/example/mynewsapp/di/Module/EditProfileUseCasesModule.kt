@@ -16,20 +16,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object EditProfileUseCasesModule {
 
-
-    @Provides
-    @Singleton
-    fun provideUpdateUserProfileUseCase(userRepository: UserRepository): UpdateUserProfileUseCase =
-        UpdateUserProfileUseCase(userRepository)
-
-    @Provides
-    @Singleton
-    fun provideUserProfileModelUseCase(convertUriToBase64UseCase: ConvertUriToBase64UseCase): UserProfileModelUseCase =
-        UserProfileModelUseCase(convertUriToBase64UseCase)
-
     @Provides
     @Singleton
     fun provideConvertUriToBase64UseCase(@ApplicationContext context: Context): ConvertUriToBase64UseCase =
         ConvertUriToBase64UseCase(context)
-
 }

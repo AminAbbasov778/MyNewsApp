@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.domain.usecases.profileUseCase.LogoutUseCase
-import com.example.mynewsapp.domain.usecases.profileUseCase.RemoveUserLoginInfoUseCase
+import com.example.mynewsapp.domain.usecases.settingsusecases.GetSettingsTypesUseCases
+import com.example.mynewsapp.domain.usecases.settingsusecases.LogoutUseCase
+import com.example.mynewsapp.domain.usecases.settingsusecases.RemoveUserLoginInfoUseCase
 import com.example.mynewsapp.presentation.uistates.ResultState
 import com.example.mynewsapp.presentation.uimodels.settings.SettingsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor( var logOutUseCase: LogoutUseCase,
-                                             var removeUserLoginInfoUseCase: RemoveUserLoginInfoUseCase,) : ViewModel() {
+                                             var removeUserLoginInfoUseCase: RemoveUserLoginInfoUseCase,
+    val getSettingsTypesUseCases: GetSettingsTypesUseCases
+    ) : ViewModel() {
 
     private var _settingsType = MutableLiveData<ArrayList<SettingsModel>>()
     val settingsType: LiveData<ArrayList<SettingsModel>> get() = _settingsType
@@ -32,19 +35,7 @@ class SettingsViewModel @Inject constructor( var logOutUseCase: LogoutUseCase,
     }
 
     fun loadTypes() {
-        val settingsTypes = arrayListOf(
-            SettingsModel(
-                R.drawable.notification_icon,
-                R.string.notification,
-
-            ),
-            SettingsModel(R.drawable.lock_icon, R.string.security),
-            SettingsModel(R.drawable.help_icon, R.string.help),
-            SettingsModel(R.drawable.language_icon, R.string.language),
-            SettingsModel(R.drawable.display_icon, R.string.display),
-            SettingsModel(R.drawable.logout_icon, R.string.logout),
-        )
-        _settingsType.value = settingsTypes
+        _settingsType.value = getSettingsTypesUseCases()
     }
 
     fun logOut() {

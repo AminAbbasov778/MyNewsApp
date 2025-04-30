@@ -37,20 +37,6 @@ object FirebaseModule {
     fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
 
 
-
-
-        @Provides
-        fun provideSignInWithGoogleUseCase(authRepository: RegisterRepository): SignInWithGoogleUseCase {
-            return SignInWithGoogleUseCase(authRepository)
-        }
-
-        @Provides
-        fun provideSignInWithFacebookUseCase(registerRepository: RegisterRepository): SignInWithFacebookUseCase {
-            return SignInWithFacebookUseCase(registerRepository)
-        }
-
-
-
         @Provides
         fun provideGoogleSignInClient(@ApplicationContext context: Context): GoogleSignInClient {
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

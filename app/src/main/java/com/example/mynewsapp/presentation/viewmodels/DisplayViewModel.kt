@@ -15,8 +15,8 @@ class DisplayViewModel @Inject constructor(
     val getThemeUseCase: GetThemeUseCase,
     val saveThemeUseCase: SaveThemeUseCase,
 ) : ViewModel() {
-    private var _isDarkMode = MutableLiveData<ResultState<Boolean>?>()
-    val isDarkMode: LiveData<ResultState<Boolean>?> = _isDarkMode
+    private var _isDarkMode = MutableLiveData<ResultState<Boolean>>()
+    val isDarkMode: LiveData<ResultState<Boolean>> = _isDarkMode
 
     init {
         getTheme()

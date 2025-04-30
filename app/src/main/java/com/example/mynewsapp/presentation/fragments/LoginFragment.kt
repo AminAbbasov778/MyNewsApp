@@ -1,14 +1,18 @@
 package com.example.mynewsapp.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.res.colorResource
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -175,16 +179,18 @@ class LoginFragment : Fragment() {
         binding.passwordedittext.setSelection(binding.passwordedittext.text.length)
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun displayErrorOnEmailEdittext() {
         binding.emailedittextcardview.setStrokeColor(Color.parseColor("#C30052"))
-        binding.emailedittextcardview.backgroundTintList =
-            ColorStateList.valueOf(Color.parseColor("#FFF3F8"))
+        val color = ContextCompat.getColor(requireContext(), R.color.error_bg_color)
+        binding.passwordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
         binding.removeemailtexticon.show()
     }
 
     private fun displayNormalEmailEdittextDesign() {
-        binding.emailedittextcardview.setStrokeColor(Color.BLACK)
-        binding.emailedittextcardview.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+        val color = ContextCompat.getColor(requireContext(), R.color.black)
+        binding.emailedittextcardview.setStrokeColor(color)
+        binding.passwordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
         binding.removeemailtexticon.setGone()
     }
 
@@ -208,16 +214,18 @@ class LoginFragment : Fragment() {
         binding.visiblepasswordicon.setGone()
         binding.removepasswordtexticon.show()
         binding.passwordedittextcardview.setStrokeColor(Color.parseColor("#C30052"))
-        binding.passwordedittextcardview.backgroundTintList =
-            ColorStateList.valueOf(Color.parseColor("#FFF3F8"))
+        val color = ContextCompat.getColor(requireContext(), R.color.error_bg_color)
+        binding.passwordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
+
     }
 
     private fun displayNormalPasswordEdittext() {
         binding.removepasswordtexticon.setGone()
         binding.invisiblepasswordicon.show()
         binding.visiblepasswordicon.setGone()
-        binding.passwordedittextcardview.setStrokeColor(Color.BLACK)
-        binding.passwordedittextcardview.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+        val color = ContextCompat.getColor(requireContext(), R.color.black)
+        binding.passwordedittextcardview.setStrokeColor(color)
+        binding.passwordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
     }
 
     fun clearedittexts() {
@@ -272,8 +280,6 @@ class LoginFragment : Fragment() {
                     viewModel.signInWithGoogle(token)
                 }
             } catch (e: ApiException) {
-                Log.e("yoxla91", "Google SignIn uğursuz oldu", e)
-                Log.e("yoxla92", e.localizedMessage ?: "Naməlum xəta")
                 displayErrorWarning(R.string.failure_login)
                 binding.loading.setGone()
             }

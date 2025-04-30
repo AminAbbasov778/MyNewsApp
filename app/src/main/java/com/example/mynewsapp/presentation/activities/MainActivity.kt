@@ -2,6 +2,7 @@ package com.example.mynewsapp.presentation.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity

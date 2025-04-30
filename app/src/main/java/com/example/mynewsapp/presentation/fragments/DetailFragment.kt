@@ -109,7 +109,6 @@ class DetailFragment : Fragment() {
         }
 
         viewModel.isBookmarked.observe(viewLifecycleOwner) { isBookmarked ->
-            Log.d("DetailFragment", "isBookmarked changed: $isBookmarked")
             if (isBookmarked) {
                 binding.unselectedBookmarkIcon.setGone()
                 binding.selectedBookmarkIcon.show()
@@ -120,12 +119,11 @@ class DetailFragment : Fragment() {
         }
 
         viewModel.isFollowing.observe(viewLifecycleOwner) { isFollowing ->
-            Log.d("DetailFragment", "isFollowing changed: $isFollowing")
             if (isFollowing) {
                 binding.followButton.apply {
                     backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.primary_blue))
                     setText(R.string.following)
-                    setTextColor(ContextCompat.getColor(context, R.color.white))
+                    setTextColor(ContextCompat.getColor(context, R.color.btnColor))
                     strokeWidth = 0
                 }
             } else {

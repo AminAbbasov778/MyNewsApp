@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels<SearchViewModel>()
     private lateinit var newsAdapter: LatestNewsAdapter
     private var recyclerViewState: Parcelable? = null
     private var searchJob: Job? = null

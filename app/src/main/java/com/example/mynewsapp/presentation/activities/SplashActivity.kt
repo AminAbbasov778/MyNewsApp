@@ -17,7 +17,6 @@ class SplashActivity : BaseActivity() {
         ThemeHelper.applyTheme(this)
         var binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         lifecycleScope.launch {
 
             delay(2000)

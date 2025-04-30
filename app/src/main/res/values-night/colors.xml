@@ -3,11 +3,16 @@
     <color name="black">#FFFFFFFF</color>
     <color name="white">#FF000000</color>
     <color name="transparent">#00000000</color>
+    <color name="stroke_color">#FFFFFF</color>
+    <color name="btnColor">#FFFFFFFF</color>
+    <color name="deleteColor">#FF000000</color>
+    <color name="error_bg_color">#FFFFFFFF</color>
     <color name="gray">#FFFFFFFF</color>
-    <color name="text_color">#FFFFFFFF</color>
+    <color name="text_color">#A0A3BD</color>
+    <color name="app_background">#000000</color>
     <color name="primary_blue">#1877F2</color>
     <color name="second_btn_color">#EEF1F4</color>
-    <color name="second_text_color">#FFFFFFFF</color>
+    <color name="second_text_color">#667080</color>
     <color name="pale_plack">#E4E6EB</color>
     <color name="mention_blue">#1DA1F2</color>
 </resources>

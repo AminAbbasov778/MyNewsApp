@@ -1,4 +1,4 @@
-package com.example.mynewsapp.domain.usecases.profileUseCase
+package com.example.mynewsapp.domain.usecases.settingsusecases
 
 import com.example.mynewsapp.domain.interfaces.SharedPreferenceRepository
 import javax.inject.Inject

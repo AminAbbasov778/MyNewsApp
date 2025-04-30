@@ -2,14 +2,17 @@ package com.example.mynewsapp.presentation.fragments
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.mynewsapp.R
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentSignupBinding
@@ -160,16 +163,18 @@ class SignupFragment : Fragment() {
         binding.visiblepasswordicon.setGone()
         binding.removepasswordtexticon.show()
         binding.passwordedittextcardview.setStrokeColor(Color.parseColor("#C30052"))
-        binding.passwordedittextcardview.backgroundTintList =
-            ColorStateList.valueOf(Color.parseColor("#FFF3F8"))
+        val color = ContextCompat.getColor(requireContext(), R.color.error_bg_color)
+        binding.passwordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
     }
 
     private fun displayNormalPasswordEdittext() {
         binding.removepasswordtexticon.setGone()
         binding.invisiblepasswordicon.show()
         binding.visiblepasswordicon.setGone()
-        binding.passwordedittextcardview.setStrokeColor(Color.BLACK)
-        binding.passwordedittextcardview.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+        val color = ContextCompat.getColor(requireContext(), R.color.white)
+        val blackColor = ContextCompat.getColor(requireContext(), R.color.black)
+        binding.passwordedittextcardview.setStrokeColor(blackColor)
+        binding.passwordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
     }
 
     private fun displayErrorOnConfirmPasswordEdittext() {
@@ -177,29 +182,34 @@ class SignupFragment : Fragment() {
         binding.visibleconfirmpasswordicon.setGone()
         binding.removeconfirmpasswordicon.show()
         binding.confirmpasswordedittextcardview.setStrokeColor(Color.parseColor("#C30052"))
-        binding.confirmpasswordedittextcardview.backgroundTintList =
-            ColorStateList.valueOf(Color.parseColor("#FFF3F8"))
+        val color = ContextCompat.getColor(requireContext(), R.color.error_bg_color)
+        binding.confirmpasswordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
+
     }
 
     private fun displayNormalConfirmPasswordEdittext() {
         binding.removeconfirmpasswordicon.setGone()
         binding.invisibleconfirmpasswordicon.show()
         binding.visibleconfirmpasswordicon.setGone()
-        binding.confirmpasswordedittextcardview.setStrokeColor(Color.BLACK)
-        binding.confirmpasswordedittextcardview.backgroundTintList =
-            ColorStateList.valueOf(Color.WHITE)
+        val blackColor = ContextCompat.getColor(requireContext(), R.color.black)
+        binding.confirmpasswordedittextcardview.setStrokeColor(blackColor)
+        val color = ContextCompat.getColor(requireContext(), R.color.white)
+        binding.confirmpasswordedittextcardview.setBackgroundDrawable(ColorDrawable(color))
+
     }
 
     private fun displayErrorOnEmailEdittext() {
         binding.emailedittextcardview.setStrokeColor(Color.parseColor("#C30052"))
-        binding.emailedittextcardview.backgroundTintList =
-            ColorStateList.valueOf(Color.parseColor("#FFF3F8"))
+        val color = ContextCompat.getColor(requireContext(), R.color.error_bg_color)
+        binding.emailedittextcardview.setBackgroundDrawable(ColorDrawable(color))
         binding.removeemailtexticon.show()
     }
 
     private fun displayNormalEmailEdittextDesign() {
-        binding.emailedittextcardview.setStrokeColor(Color.BLACK)
-        binding.emailedittextcardview.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+        val blackColor = ContextCompat.getColor(requireContext(), R.color.black)
+        binding.emailedittextcardview.setStrokeColor(blackColor)
+        val color = ContextCompat.getColor(requireContext(), R.color.white)
+        binding.emailedittextcardview.setBackgroundDrawable(ColorDrawable(color))
         binding.removeemailtexticon.setGone()
     }
 

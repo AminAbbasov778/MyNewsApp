@@ -56,7 +56,7 @@
         app:boxStrokeWidth="1dp"
         app:endIconDrawable="@drawable/filtericon"
         app:endIconMode="custom"
-        app:hintTextColor="#A0A3BD"
+        app:hintTextColor="@color/black"
         app:layout_constraintLeft_toLeftOf="@id/appLogo"
         app:layout_constraintRight_toRightOf="@id/notificationLogoCardView"
         app:layout_constraintTop_toBottomOf="@id/appLogo"

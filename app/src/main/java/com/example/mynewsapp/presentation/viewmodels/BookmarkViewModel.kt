@@ -77,7 +77,6 @@ class BookmarkViewModel @Inject constructor(
                 deleteBookmarkUseCase(
                     url
                 )
-
             withContext(Dispatchers.Main) {
                 _isProductDeleted.value = if (result.isSuccess) {
                     UiState.Success(R.string.successfully_removed)

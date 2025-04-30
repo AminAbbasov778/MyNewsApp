@@ -40,10 +40,10 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/saveIcon"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
         android:layout_marginRight="20dp"
-        android:src="@drawable/save_icon"
+        android:src="@drawable/select"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/editProfileText">
 

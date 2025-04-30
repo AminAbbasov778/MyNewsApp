@@ -1,5 +1,6 @@
 package com.example.mynewsapp.presentation.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.app.utils.ThemeHelper
 import com.example.mynewsapp.databinding.FragmentDisplayBinding
+import com.example.mynewsapp.presentation.activities.MainActivity
 import com.example.mynewsapp.presentation.uistates.ResultState
 import com.example.mynewsapp.presentation.viewmodels.DisplayViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DisplayFragment : Fragment() {
     lateinit var binding: FragmentDisplayBinding
     val viewModel by viewModels<DisplayViewModel>()
+    var isFirst = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,18 +38,22 @@ class DisplayFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.isDarkMode.observe(viewLifecycleOwner) {
-            it?.let {state ->
+        viewModel.isDarkMode.observe(viewLifecycleOwner) {state->
                 when (state) {
                     is ResultState.Success -> {
                         binding.darkModeSwitch.isChecked = state.data
-                        AppCompatDelegate.setDefaultNightMode(
-                            if (state.data) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-                        )
+                        if(!isFirst){
+                            AppCompatDelegate.setDefaultNightMode(
+                                if (state.data) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                            )
+                            ThemeHelper.restartApp(requireActivity())
+                        }
+                        isFirst = false
+
+
                     }
                     is ResultState.Error -> Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
                 }
-            }
 
         }
     }
@@ -54,7 +61,10 @@ class DisplayFragment : Fragment() {
 
     private fun listener() {
         binding.darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.saveTheme(isChecked)
+            if(!isFirst){
+                viewModel.saveTheme(isChecked)
+            }
+
         }
     }
 }

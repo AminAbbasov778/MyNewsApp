@@ -2,8 +2,9 @@ package com.example.mynewsapp.domain.usecases.commentusecases
 
 import android.util.Log
 import com.example.mynewsapp.domain.domainmodels.CommentDomainModel
+import javax.inject.Inject
 
-class BuildNestedCommentsUseCase {
+class BuildNestedCommentsUseCase  @Inject constructor() {
 
     operator fun invoke(comments: List<CommentDomainModel>): List<CommentDomainModel> {
         val topLevelComments = mutableListOf<CommentDomainModel>()

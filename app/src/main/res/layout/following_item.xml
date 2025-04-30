@@ -73,6 +73,7 @@
         android:fontFamily="@font/poppinsmedium"
         android:text="Following"
         android:textSize="16sp"
+        android:textColor="@color/btnColor"
         android:paddingTop="7dp"
         app:cornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="parent"

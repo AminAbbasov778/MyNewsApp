@@ -31,7 +31,6 @@ class NewsPopupHelper(
 
 
         binding.deleteConstraint.setOnClickListener {
-            Log.e("yoxla62", "showPopup: ", )
             onDeleteClick()
             popupWindow.dismiss()
         }

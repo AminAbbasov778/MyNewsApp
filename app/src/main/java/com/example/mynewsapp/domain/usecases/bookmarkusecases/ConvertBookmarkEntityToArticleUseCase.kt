@@ -3,8 +3,9 @@ package com.example.mynewsapp.domain.usecases.bookmark
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
 import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.data.model.latestnews.Source
+import javax.inject.Inject
 
-class ConvertBookmarkEntityToArticleUseCase {
+class ConvertBookmarkEntityToArticleUseCase @Inject constructor() {
     operator fun invoke(bookmark: BookmarkEntity): Article {
         return Article(
             author = "null",

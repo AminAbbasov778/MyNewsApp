@@ -7,9 +7,10 @@ import javax.inject.Inject
 
 class ReadBookmarksUseCase @Inject constructor(
     private val databaseRepository: BookmarkDatabaseRepository,
+    private val reverseBookmarkListUseCase: ReverseBookmarkListUseCase,
 ) {
     operator fun invoke(): Result<Flow<List<BookmarkEntity>>> {
-        return databaseRepository.readBookmark()
-
+        val result = databaseRepository.readBookmark()
+        return result.map { reverseBookmarkListUseCase(it) }
     }
 }

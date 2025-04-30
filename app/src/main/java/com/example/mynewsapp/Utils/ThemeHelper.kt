@@ -1,28 +1,42 @@
 package com.example.app.utils
 
+import android.app.Activity
 import android.content.Context
-import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.os.Build
+import android.view.View
+import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import com.facebook.appevents.internal.Constants
+import com.example.mynewsapp.R
+import com.example.mynewsapp.presentation.activities.MainActivity
 
 object ThemeHelper {
 
-
-
     fun isDarkMode(context: Context): Boolean {
-        val sharedPref = context.getSharedPreferences(com.example.mynewsapp.Utils.Constants.PREF_NAME, Context.MODE_PRIVATE)
-        return sharedPref.getBoolean(com.example.mynewsapp.Utils.Constants.KEY_DARK_MODE, false)
+        val sharedPref = context.getSharedPreferences(
+            com.example.mynewsapp.Utils.Constants.PREF_NAME, Context.MODE_PRIVATE
+        )
+        return sharedPref.getBoolean(
+            com.example.mynewsapp.Utils.Constants.KEY_DARK_MODE, false
+        )
     }
 
     fun applyTheme(context: Context) {
         val isDark = isDarkMode(context)
         AppCompatDelegate.setDefaultNightMode(
             if (isDark) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-        )
 
+        )
     }
+
+    fun restartApp(activity: Activity) {
+        val intent = Intent(activity, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        activity.startActivity(intent)
+        activity.overridePendingTransition(0, 0)
+    }
+
 
 
 }

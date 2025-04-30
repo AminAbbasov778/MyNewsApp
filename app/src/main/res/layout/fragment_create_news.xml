@@ -9,11 +9,11 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/backIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="80dp"
-        android:src="@drawable/arrowleft"
+        android:src="@drawable/backicon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -188,7 +188,7 @@
         android:backgroundTint="@color/primary_blue"
         android:text="@string/publish"
         android:enabled="false"
-        android:textColor="@color/white"
+        android:textColor="@color/btnColor"
         android:textSize="16sp"
         android:layout_marginRight="20dp"
         android:gravity="center"

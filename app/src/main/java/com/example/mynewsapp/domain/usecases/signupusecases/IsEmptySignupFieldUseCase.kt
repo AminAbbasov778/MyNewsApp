@@ -1,9 +1,10 @@
 package com.example.mynewsapp.domain.usecases.signupusecases
 
 import com.example.mynewsapp.domain.domainstates.DomainValidationState
+import javax.inject.Inject
 
 
-class IsEmptySignupFieldUseCase {
+class IsEmptySignupFieldUseCase  @Inject constructor(){
     operator fun invoke(
         email: String,
         password: String,

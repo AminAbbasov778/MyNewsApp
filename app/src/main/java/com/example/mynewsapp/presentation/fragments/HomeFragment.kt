@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.app.utils.ThemeHelper
 import com.example.mynewsapp.R
 import com.example.mynewsapp.presentation.uiutils.PicassoUtil.LoadUrl
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
@@ -46,6 +47,8 @@ class HomeFragment : Fragment() {
         observe()
         onCLick()
     }
+
+
 
     private fun setupUI() {
         latestNewsAdapter = LatestNewsAdapter {
@@ -126,7 +129,7 @@ class HomeFragment : Fragment() {
                 binding.latestNewsSeeAllText.setText(R.string.hide)
                 firstVisiblePosition = 0
             }else{
-                binding.latestNewsHideText.setGone()
+                binding.trendingNewsHeaderConstraint.show()
                binding.latestNewsSeeAllText.setText(R.string.see_all)
                 firstVisiblePosition = 0
             }

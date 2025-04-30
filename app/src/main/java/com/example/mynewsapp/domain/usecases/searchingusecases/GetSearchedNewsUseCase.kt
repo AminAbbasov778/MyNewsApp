@@ -15,13 +15,13 @@ class GetSearchedNewsUseCase @Inject constructor(
         query: String,
         page: Int? = null,
     ): Result<List<Article>> {
+        val trimmedQuery = query.trim()
+        if (trimmedQuery.isEmpty()) {
+            return Result.success(emptyList())
+        }
         val result = getProcessedNewsUseCase(keyWord, sortBy, pageSize, page)
-        return if (result.isSuccess) {
-            val newsList = result.getOrNull() ?: emptyList()
-            val searchedNews = processSearchedNewsUseCase(newsList, query)
-            Result.success(searchedNews)
-        } else {
-            Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
+        return result.mapCatching { articles ->
+            processSearchedNewsUseCase(articles, trimmedQuery)
         }
     }
 }
