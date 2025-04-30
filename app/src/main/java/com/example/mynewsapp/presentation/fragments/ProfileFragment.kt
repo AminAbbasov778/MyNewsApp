@@ -18,7 +18,7 @@ import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentProfileBinding
 import com.example.mynewsapp.presentation.adapters.UserNewsAdapter
 import com.example.mynewsapp.presentation.uistates.UiState
-import com.example.mynewsapp.presentation.uimodels.profile.UserProfileUiModel
+import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import com.example.mynewsapp.presentation.viewmodels.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -144,7 +144,7 @@ class ProfileFragment : Fragment() {
     }
 
 
-    private fun successfulProfileData(data: UserProfileUiModel) {
+    private fun successfulProfileData(data: ProfileUiModel) {
         binding.loading.setGone()
         binding.fullName.text = data.fullName
         binding.bio.text = data.bio

@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynewsapp.databinding.ReplyItemBinding
-import com.example.mynewsapp.presentation.uimodels.comment.CommentUiModel
+import com.example.mynewsapp.presentation.uimodels.comment.CommentsUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 
 class ReplyAdapter(
-    private val onReplyClick: (CommentUiModel) -> Unit,
-    private val onFavoriteClick: (CommentUiModel) -> Unit,
+    private val onReplyClick: (CommentsUiModel) -> Unit,
+    private val onFavoriteClick: (CommentsUiModel) -> Unit,
 ) : RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {
 
-    private val replyList = ArrayList<CommentUiModel>()
+    private val replyList = ArrayList<CommentsUiModel>()
 
     inner class ReplyViewHolder(val binding: ReplyItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -52,7 +52,7 @@ class ReplyAdapter(
 
     override fun getItemCount(): Int = replyList.size
 
-    fun updateList(newList: List<CommentUiModel>) {
+    fun updateList(newList: List<CommentsUiModel>) {
         val diffCallback = GenericDiffUtil(
             oldList = replyList,
             newList = newList,

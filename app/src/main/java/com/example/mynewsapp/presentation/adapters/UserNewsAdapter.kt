@@ -52,7 +52,6 @@ class UserNewsAdapter(val onDeleteClick : (String) -> Unit) : RecyclerView.Adapt
     fun popupMenu(holder: UserNewsViewHolder,news : UserNewsUiModel){
         holder.binding.moreIcon.setOnClickListener {
             NewsPopupHelper(holder.itemView.context,holder.binding.moreIcon, onDeleteClick = { onDeleteClick(news.publishedAt)}).showPopup()
-
         }
 
     }

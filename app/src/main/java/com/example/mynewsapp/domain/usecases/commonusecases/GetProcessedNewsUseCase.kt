@@ -1,10 +1,10 @@
 package com.example.mynewsapp.domain.usecases.commonusecases
 
-import com.example.mynewsapp.data.model.latestnews.Article
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import javax.inject.Inject
 
 class GetProcessedNewsUseCase @Inject constructor(
-    var newsResultCheckingUseCase: NewsResultCheckingUseCase,
+    var getNewsUseCase: GetNewsUseCase,
     var addTimeDifferenceToNewsUseCase: AddTimeDifferenceToNewsUseCase,
 ) {
     suspend operator fun invoke(
@@ -12,26 +12,15 @@ class GetProcessedNewsUseCase @Inject constructor(
         sortBy: String,
         pageSize: Int? = null,
         page: Int? = null,
-    ): Result<ArrayList<Article>> {
-        val latestNewsResponse = newsResultCheckingUseCase(
+    ): Result<List<ArticleModel>> {
+        val news = getNewsUseCase(
             keyWord, sortBy, pageSize, page
         )
-        val latestNewsList = arrayListOf<Article>()
-        return if (latestNewsResponse.isSuccess) {
-            val latestNews = latestNewsResponse.getOrNull()
-            latestNews?.let {
-                for (news in it.articles) {
-                    val updatedNews = addTimeDifferenceToNewsUseCase(news)
-                    latestNewsList.add(updatedNews)
+      return news.map {
+           it.map { addTimeDifferenceToNewsUseCase(it) }
+      }
 
-                }
 
-            }
-            Result.success(latestNewsList)
-
-        } else {
-            Result.failure(latestNewsResponse.exceptionOrNull() ?: Exception("Unknown error"))
-        }
 
 
     }

@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.userprofile.UserProfileModel
+import com.example.mynewsapp.data.model.userprofile.Profile
 import com.example.mynewsapp.domain.usecases.commonusecases.CapturePhotoUseCase
 import com.example.mynewsapp.domain.usecases.createnewsusecases.CreateNewsUseCase
 import com.example.mynewsapp.domain.usecases.createnewsusecases.UserNewsModelUseCase
@@ -118,7 +118,7 @@ class CreateNewsViewModel @Inject constructor(
         }
     }
 
-    suspend fun getUserProfileData(): UserProfileModel? {
+    suspend fun getUserProfileData(): Profile? {
         val profileResult = getProfileDataUseCase()
        return profileResult.firstOrNull{it.isSuccess}?.getOrNull()
     }

@@ -6,8 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
 import com.example.mynewsapp.data.model.latestnews.Article
+import com.example.mynewsapp.data.model.latestnews.Source
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.usecases.commonusecases.GetCategoryUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProcessedNewsUseCase
+import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +24,11 @@ class HomeViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
 ) : ViewModel() {
 
-    private val _latestNewsState = MutableLiveData<UiState<ArrayList<Article>>>()
-    val latestNewsState: LiveData<UiState<ArrayList<Article>>> get() = _latestNewsState
+    private val _latestNewsState = MutableLiveData<UiState<ArrayList<ArticleUiModel>>>()
+    val latestNewsState: LiveData<UiState<ArrayList<ArticleUiModel>>> get() = _latestNewsState
 
-    private val _trendingNewsState = MutableLiveData<UiState<List<Article>>>()
-    val trendingNewsState: LiveData<UiState<List<Article>>> get() = _trendingNewsState
+    private val _trendingNewsState = MutableLiveData<UiState<List<ArticleUiModel>>>()
+    val trendingNewsState: LiveData<UiState<List<ArticleUiModel>>> get() = _trendingNewsState
 
         private val _categoryList = MutableLiveData<ArrayList<String>>()
         val categoryList: LiveData<ArrayList<String>> get() = _categoryList
@@ -37,7 +40,7 @@ class HomeViewModel @Inject constructor(
     private var currentPage = 1
     private val pageSize = 5
     private var totalResult = 10
-    private val newsList = ArrayList<Article>()
+    private val newsList = ArrayList<ArticleUiModel>()
 
     init {
         getCategories()
@@ -75,12 +78,14 @@ class HomeViewModel @Inject constructor(
             withContext(Dispatchers.Main){
                if(result.isSuccess){
                    val data = result.getOrNull() ?: emptyList()
+                   val list = convertArticleModelToArticleUiModel(data)
                    if (currentPage == 1) {
                        newsList.clear()
-                       newsList.addAll(data.take(pageSize))
+                       newsList.addAll(list.take(pageSize))
                    } else {
-                       newsList.addAll(data.take(totalResult - newsList.size))
+                       newsList.addAll(list.take(totalResult - newsList.size))
                    }
+
                    _latestNewsState.value = UiState.Success(ArrayList(newsList))
 
                 }
@@ -91,6 +96,20 @@ class HomeViewModel @Inject constructor(
 
         }
     }
+    fun convertArticleModelToArticleUiModel(newsList: List<ArticleModel>)=
+        newsList.map {news ->
+            ArticleUiModel(
+                urlToImage = news.urlToImage ?: "No Image Url",
+                timeDifference = news.timeDifference,
+                title = news.title ?: "No title",
+                description = news.description ?: "No description",
+                author = news.author ?: "No author",
+                content = news.content ?: "No content",
+                source = Source(news.source?.id ?: "No id", news.source?.name ?: "No name"),
+                url = news.url ?: "No url",
+                publishedAt = news.publishedAt ?: "No published at"
+            )  }
+
 
     private fun getTrendingNewsResult() {
         _trendingNewsState.value = UiState.Loading
@@ -99,7 +118,8 @@ class HomeViewModel @Inject constructor(
             withContext(Dispatchers.Main){
                 if(result.isSuccess){
                     val data = result.getOrNull() ?: emptyList()
-                    _trendingNewsState.value = UiState.Success(data)
+                    val news = convertArticleModelToArticleUiModel(data)
+                    _trendingNewsState.value = UiState.Success(news)
                 }
                 else{
                     _trendingNewsState.value = UiState.Error(R.string.wrong_something)

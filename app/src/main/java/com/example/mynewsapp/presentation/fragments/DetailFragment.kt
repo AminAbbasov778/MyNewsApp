@@ -51,43 +51,43 @@ class DetailFragment : Fragment() {
     }
 
     private fun provideUIWithData() {
-        binding.newsImage.LoadUrl(args.article.urlToImage)
-        binding.newsTitle.text = args.article.title
-        binding.newsDescription.text = args.article.description
-        binding.publisherCompanyNameText.text = args.article.source?.name
-        binding.publishTimeText.text = args.article.timeDifference
+        binding.newsImage.LoadUrl(args.news.urlToImage)
+        binding.newsTitle.text = args.news.title
+        binding.newsDescription.text = args.news.description
+        binding.publisherCompanyNameText.text = args.news.source?.name
+        binding.publishTimeText.text = args.news.timeDifference
         binding.publisherLogo.LoadUrl(NewsSourceConstants.sourceLogo)
     }
 
     private fun onClickEvents() {
         binding.unselectedBookmarkIcon.setOnClickListener {
-            viewModel.toggleBookmark(args.article)
+            viewModel.toggleBookmark(args.news)
         }
         binding.selectedBookmarkIcon.setOnClickListener {
-            viewModel.toggleBookmark(args.article)
+            viewModel.toggleBookmark(args.news)
         }
         binding.backIcon.setOnClickListener {
             findNavController().popBackStack()
         }
         binding.followButton.setOnClickListener {
-            args.article.source?.name?.let {
+            args.news.source?.name?.let {
                 viewModel.toggleFollowingBtn(it, NewsSourceConstants.sourceLogo, 125000)
             }
         }
         binding.favoriteIcon.setOnClickListener {
-            args.article.url?.let {
+            args.news.url?.let {
                 Log.d("DetailFragment", "Favorite icon clicked for URL: $it")
                 viewModel.toggleFavorite(it)
             }
         }
         binding.unFavoriteIcon.setOnClickListener {
-            args.article.url?.let {
+            args.news.url?.let {
                 Log.d("DetailFragment", "Unfavorite icon clicked for URL: $it")
                 viewModel.toggleFavorite(it)
             }
         }
         binding.commentIcon.setOnClickListener {
-            args.article.url?.let {
+            args.news.url?.let {
                 findNavController().navigate(
                     DetailFragmentDirections.actionDetailFragmentToCommentFragment(it)
                 )
@@ -185,9 +185,9 @@ class DetailFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initialFun() {
-        viewModel.getIsNewsBookmarked(args.article)
-        args.article.source?.name?.let { viewModel.isNewsSourceFollowed(it) }
-        args.article.url?.let {
+        viewModel.getIsNewsBookmarked(args.news)
+        args.news.source?.name?.let { viewModel.isNewsSourceFollowed(it) }
+        args.news.url?.let {
             viewModel.getComments(it)
             viewModel.getFavoriteStatus(it)
         }

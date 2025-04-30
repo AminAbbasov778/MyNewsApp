@@ -1,7 +1,9 @@
 package com.example.mynewsapp.data.repositories
 
-import com.example.mynewsapp.data.model.usernews.UserNewsModel
-import com.example.mynewsapp.data.model.userprofile.UserProfileModel
+import com.example.mynewsapp.data.mappers.toData
+import com.example.mynewsapp.data.model.usernews.UserNews
+import com.example.mynewsapp.data.model.userprofile.Profile
+import com.example.mynewsapp.domain.domainmodels.ProfileModel
 import com.example.mynewsapp.domain.interfaces.UserRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -14,19 +16,20 @@ class UserRepositoryImpl @Inject constructor(
     val firebaseAuth: com.google.firebase.auth.FirebaseAuth,
 ) : UserRepository {
 
-    override suspend fun uploadProfileData(userProfileModel: UserProfileModel): Result<Unit> {
+    override suspend fun uploadProfileData(profileModel: ProfileModel): Result<Unit> {
+        val profile = profileModel.toData()
         val user = firebaseAuth.currentUser
         val userProfile = firebaseStore.collection("users").document(user?.uid ?: "")
         return try {
             userProfile.set(
                 mapOf(
-                    "fullName" to userProfileModel.fullName,
-                    "bio" to userProfileModel.bio,
-                    "email" to userProfileModel.email,
-                    "imageBase64" to userProfileModel.imageBase64,
-                    "username" to userProfileModel.username,
-                    "phoneNumber" to userProfileModel.phoneNumber,
-                    "website" to userProfileModel.website
+                    "fullName" to profile.fullName,
+                    "bio" to profile.bio,
+                    "email" to profile.email,
+                    "imageBase64" to profile.imageBase64,
+                    "username" to profile.username,
+                    "phoneNumber" to profile.phoneNumber,
+                    "website" to profile.website
                 )
 
             ).await()
@@ -36,7 +39,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProfileData(): Flow<Result<UserProfileModel>> = callbackFlow {
+    override suspend fun getProfileData(): Flow<Result<Profile>> = callbackFlow {
         try {
             val user = firebaseAuth.currentUser
 
@@ -55,14 +58,14 @@ class UserRepositoryImpl @Inject constructor(
                         when {
                             error != null -> Result.failure(error)
                             snapshot != null -> {
-                                val profile = snapshot.toObject(UserProfileModel::class.java)
+                                val profile = snapshot.toObject(Profile::class.java)
                                 if (profile != null) {
                                     Result.success(profile)
                                 } else {
-                                    Result.success(UserProfileModel())
+                                    Result.success(Profile())
                                 }
                             }
-                            else -> Result.success(UserProfileModel())
+                            else -> Result.success(Profile())
                         }
                     } catch (e: Exception) {
                         Result.failure(e)
@@ -83,7 +86,7 @@ class UserRepositoryImpl @Inject constructor(
 
 
 
-        override suspend fun createNews(userNewsModel: UserNewsModel): Result<Unit> {
+        override suspend fun createNews(userNewsModel: UserNews): Result<Unit> {
              firebaseAuth.currentUser?.uid?.let {user ->
                 val userNews =
                     firebaseStore.collection("users").document(user).collection("news").document(userNewsModel.publishedAt)
@@ -108,7 +111,7 @@ class UserRepositoryImpl @Inject constructor(
 
         }
 
-    override suspend fun getUserNews(): Flow<Result<List<UserNewsModel>>> {
+    override suspend fun getUserNews(): Flow<Result<List<UserNews>>> {
         return callbackFlow {
             try {
                 val user = firebaseAuth.currentUser
@@ -127,8 +130,8 @@ class UserRepositoryImpl @Inject constructor(
                         val result = try {
                             when {
                                 error != null -> Result.failure(error)
-                                snapshot != null -> Result.success(snapshot.toObjects(UserNewsModel::class.java))
-                                else -> Result.success(emptyList<UserNewsModel>())
+                                snapshot != null -> Result.success(snapshot.toObjects(UserNews::class.java))
+                                else -> Result.success(emptyList<UserNews>())
                             }
                         } catch (e: Exception) {
                             Result.failure(e)

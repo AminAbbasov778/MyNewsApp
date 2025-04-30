@@ -8,8 +8,9 @@ import com.example.mynewsapp.R
 import com.example.mynewsapp.domain.usecases.settingsusecases.GetSettingsTypesUseCases
 import com.example.mynewsapp.domain.usecases.settingsusecases.LogoutUseCase
 import com.example.mynewsapp.domain.usecases.settingsusecases.RemoveUserLoginInfoUseCase
+import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uistates.ResultState
-import com.example.mynewsapp.presentation.uimodels.settings.SettingsModel
+import com.example.mynewsapp.presentation.uimodels.settings.SettingsUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -21,21 +22,21 @@ class SettingsViewModel @Inject constructor( var logOutUseCase: LogoutUseCase,
     val getSettingsTypesUseCases: GetSettingsTypesUseCases
     ) : ViewModel() {
 
-    private var _settingsType = MutableLiveData<ArrayList<SettingsModel>>()
-    val settingsType: LiveData<ArrayList<SettingsModel>> get() = _settingsType
+    private var _settingsType = MutableLiveData<List<SettingsUiModel>>()
+    val settingsType: LiveData<List<SettingsUiModel>> get() = _settingsType
 
     private var _isLoggedOut = MutableLiveData<ResultState<Int>>()
     val isLoggedOut: LiveData<ResultState<Int>> get() = _isLoggedOut
 
-    private val _navigation = MutableLiveData<SettingsModel?>()
-    val navigation: LiveData<SettingsModel?> get() = _navigation
+    private val _navigation = MutableLiveData<SettingsUiModel?>()
+    val navigation: LiveData<SettingsUiModel?> get() = _navigation
 
     init {
         loadTypes()
     }
 
     fun loadTypes() {
-        _settingsType.value = getSettingsTypesUseCases()
+        _settingsType.value = getSettingsTypesUseCases().map { it.toUi() }
     }
 
     fun logOut() {
@@ -58,7 +59,7 @@ class SettingsViewModel @Inject constructor( var logOutUseCase: LogoutUseCase,
 
     }
 
-    fun onSettingItemClick(setting : SettingsModel){
+    fun onSettingItemClick(setting : SettingsUiModel){
         _navigation.value = setting
     }
     fun clearData(){

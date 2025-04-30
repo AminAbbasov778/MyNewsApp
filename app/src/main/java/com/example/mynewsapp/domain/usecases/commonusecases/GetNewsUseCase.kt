@@ -1,10 +1,13 @@
 package com.example.mynewsapp.domain.usecases.commonusecases
 
+import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.data.model.latestnews.LatestNewsResponse
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.interfaces.RetrofitRepository
+import com.example.mynewsapp.domain.mappers.toDomain
 import javax.inject.Inject
 
-class NewsResultCheckingUseCase @Inject constructor(
+class GetNewsUseCase @Inject constructor(
     private val retrofitRepository: RetrofitRepository,
 ) {
     suspend operator fun invoke(
@@ -12,9 +15,9 @@ class NewsResultCheckingUseCase @Inject constructor(
         sortBy: String,
         pageSize: Int?,
         page: Int? = null,
-    ): Result<LatestNewsResponse> {
+    ): Result<List<ArticleModel>> {
 
-        return retrofitRepository.getLatestNews(keyWord, sortBy, pageSize, page)
-
+        val result = retrofitRepository.getLatestNews(keyWord, sortBy, pageSize, page)
+        return  result.map {result -> result.articles.map {news -> news.toDomain() }  }
     }
 }

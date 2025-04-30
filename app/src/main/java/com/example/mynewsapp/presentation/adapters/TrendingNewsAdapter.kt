@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.databinding.TrendingItemBinding
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
+import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 
-class TrendingNewsAdapter(val clickOnNews: (Article) -> Unit) :
+class TrendingNewsAdapter(val clickOnNews: (ArticleUiModel) -> Unit) :
     RecyclerView.Adapter<TrendingNewsAdapter.TrendingNewsViewHolder>() {
 
-    var list = arrayListOf<Article>()
+    var list = arrayListOf<ArticleUiModel>()
 
     inner class TrendingNewsViewHolder(val binding: TrendingItemBinding) : ViewHolder(binding.root)
 
@@ -36,7 +38,7 @@ class TrendingNewsAdapter(val clickOnNews: (Article) -> Unit) :
     }
 
 
-    fun updateList(newList: List<Article>) {
+    fun updateList(newList: List<ArticleUiModel>) {
         val diffCallback = GenericDiffUtil(
             oldList = list,
             newList = newList,

@@ -48,7 +48,7 @@ class OnBoardingFragment : Fragment() {
 
         binding.nextbutton.setOnClickListener() {
             var currentItem = binding.viewPager.currentItem
-            var boardingList = viewModel.boardingModelList.value
+            var boardingList = viewModel.boardingUiModelList.value
             if (currentItem < boardingList!!.size - 1) {
                 binding.viewPager.currentItem = currentItem + 1
             } else {
@@ -61,7 +61,7 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.boardingModelList.observe(viewLifecycleOwner) {
+        viewModel.boardingUiModelList.observe(viewLifecycleOwner) {
             boardingAdapter.updateList(it)
         }
 

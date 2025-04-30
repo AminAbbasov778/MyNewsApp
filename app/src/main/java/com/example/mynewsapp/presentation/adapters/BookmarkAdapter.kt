@@ -10,13 +10,15 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
 import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.databinding.BookmarkItemBinding
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
+import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 import com.example.mynewsapp.presentation.uiutils.NewsPopupHelper
 
 
-class BookmarkAdapter(val onNewsClick: (Article) -> Unit, val onDeleteClick : (String) -> Unit) :
+class BookmarkAdapter(val onNewsClick: (ArticleUiModel) -> Unit, val onDeleteClick : (String) -> Unit) :
     RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder>() {
-    var list = arrayListOf<Article>()
+    var list = arrayListOf<ArticleUiModel>()
 
     inner class BookmarkViewHolder(val binding: BookmarkItemBinding) : ViewHolder(binding.root)
 
@@ -35,7 +37,7 @@ class BookmarkAdapter(val onNewsClick: (Article) -> Unit, val onDeleteClick : (S
         clickEvent(holder, list[position])
     }
 
-    fun updateList(newList : List<Article>){
+    fun updateList(newList : List<ArticleUiModel>){
         val diffCallback = GenericDiffUtil(list,newList, areItemsSame ={old,new -> old.url== new.url}, areContentsSame = {old,new->old == new})
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         list.clear()
@@ -44,7 +46,7 @@ class BookmarkAdapter(val onNewsClick: (Article) -> Unit, val onDeleteClick : (S
     }
 
 
-    fun clickEvent(holder: BookmarkViewHolder,news : Article) {
+    fun clickEvent(holder: BookmarkViewHolder,news : ArticleUiModel) {
         holder.binding.newsItemContainer.setOnClickListener() {
             onNewsClick(news)
         }

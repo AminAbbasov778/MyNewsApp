@@ -1,5 +1,6 @@
 package com.example.mynewsapp.presentation.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
 import com.example.mynewsapp.domain.usecases.commonusecases.GetFollowedSourcesUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnfollowNewSourceUseCase
+import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +41,7 @@ class FollowingViewModel @Inject constructor(
             getFollowedSourcesUseCase().collect { result ->
                 if (result.isSuccess) {
                     val list = result.getOrNull()
-                        ?.map { FollowUiModel(it.sourceName, it.sourceImg, it.sourceFollowerCount) }
+                        ?.map { it.toUi() }
                     _followedSources.value = UiState.Success(list ?: emptyList())
 
 

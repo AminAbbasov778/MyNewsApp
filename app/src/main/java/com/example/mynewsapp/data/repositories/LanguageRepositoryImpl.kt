@@ -1,7 +1,7 @@
 package com.example.mynewsapp.data.repositories
 
 import android.content.SharedPreferences
-import com.example.mynewsapp.data.model.language.LanguageModel
+import com.example.mynewsapp.data.model.language.Language
 import com.example.mynewsapp.domain.interfaces.LanguageRepository
 import javax.inject.Inject
 import javax.inject.Named
@@ -29,6 +29,6 @@ class LanguageRepositoryImpl @Inject constructor(
 
     }
 
-    override fun getLanguageList(): List<LanguageModel> =
-        listOf<LanguageModel>(LanguageModel("English", "en"), LanguageModel("Azerbaijani", "az"))
+    override fun getLanguageList(): List<Language> =
+        listOf<Language>(Language("English", "en"), Language("Azerbaijani", "az"))
 }

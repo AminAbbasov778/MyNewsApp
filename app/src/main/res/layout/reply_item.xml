@@ -9,7 +9,7 @@
 
         <variable
             name="reply"
-            type="com.example.mynewsapp.presentation.uimodels.comment.CommentUiModel" />
+            type="com.example.mynewsapp.presentation.uimodels.comment.CommentsUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

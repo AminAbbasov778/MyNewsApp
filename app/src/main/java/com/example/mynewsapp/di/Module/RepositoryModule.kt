@@ -11,6 +11,7 @@ import com.example.mynewsapp.data.repositories.BookmarkDatabaseRepositoryImpl
 import com.example.mynewsapp.data.repositories.CameraRepositoryImpl
 import com.example.mynewsapp.data.repositories.CategoryRepositoryImpl
 import com.example.mynewsapp.data.repositories.CommentRepositoryImpl
+import com.example.mynewsapp.data.repositories.EditProfileRepositoryImpl
 import com.example.mynewsapp.data.repositories.FollowRepositoryImpl
 import com.example.mynewsapp.data.repositories.LanguageRepositoryImpl
 import com.example.mynewsapp.data.repositories.OnBoardingRepositoryImpl
@@ -26,6 +27,7 @@ import com.example.mynewsapp.domain.interfaces.BookmarkDatabaseRepository
 import com.example.mynewsapp.domain.interfaces.CameraRepository
 import com.example.mynewsapp.domain.interfaces.CategoryRepository
 import com.example.mynewsapp.domain.interfaces.CommentRepository
+import com.example.mynewsapp.domain.interfaces.EditProfileRepository
 import com.example.mynewsapp.domain.interfaces.FavoriteRepository
 import com.example.mynewsapp.domain.interfaces.FollowRepository
 import com.example.mynewsapp.domain.interfaces.LanguageRepository
@@ -144,4 +146,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun  provideOnBoardingRepositoryImpl():OnBoardingRepository = OnBoardingRepositoryImpl()
+
+   @Provides
+   @Singleton
+   fun provideEditProfileRepositoryImpl():EditProfileRepository = EditProfileRepositoryImpl()
+
 }

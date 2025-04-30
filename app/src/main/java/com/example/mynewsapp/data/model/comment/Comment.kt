@@ -1,9 +1,7 @@
 package com.example.mynewsapp.data.model.comment
 
-import java.security.Timestamp
 
-
-data class CommentModel(
+data class Comment(
     val comment: String = "",
     val profileImg: String = "",
     val username: String = "",

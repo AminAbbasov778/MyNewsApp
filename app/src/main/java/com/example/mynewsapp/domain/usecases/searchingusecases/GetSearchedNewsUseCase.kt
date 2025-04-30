@@ -1,6 +1,7 @@
 package com.example.mynewsapp.domain.usecases.search
 
 import com.example.mynewsapp.data.model.latestnews.Article
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProcessedNewsUseCase
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ class GetSearchedNewsUseCase @Inject constructor(
         pageSize: Int? = null,
         query: String,
         page: Int? = null,
-    ): Result<List<Article>> {
+    ): Result<List<ArticleModel>> {
         val trimmedQuery = query.trim()
         if (trimmedQuery.isEmpty()) {
             return Result.success(emptyList())

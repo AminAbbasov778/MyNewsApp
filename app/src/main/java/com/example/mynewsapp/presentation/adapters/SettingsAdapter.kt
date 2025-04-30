@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
 import com.example.mynewsapp.databinding.SettingsItemBinding
-import com.example.mynewsapp.presentation.uimodels.settings.SettingsModel
+import com.example.mynewsapp.presentation.uimodels.settings.SettingsUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 
-class SettingsAdapter(val onSettingClick : (SettingsModel) -> Unit) : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
-    var list = arrayListOf<SettingsModel>()
+class SettingsAdapter(val onSettingClick : (SettingsUiModel) -> Unit) : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
+    var list = arrayListOf<SettingsUiModel>()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -42,7 +42,7 @@ class SettingsAdapter(val onSettingClick : (SettingsModel) -> Unit) : RecyclerVi
     inner class SettingsViewHolder(val binding: SettingsItemBinding) : ViewHolder(binding.root)
 
 
-    fun updateList(newList: ArrayList<SettingsModel>) {
+    fun updateList(newList: List<SettingsUiModel>) {
         val diffCallback = GenericDiffUtil(
             oldList = list,
             newList = newList,

@@ -1,16 +1,14 @@
 package com.example.mynewsapp.presentation.viewmodels
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.comment.CommentModel
-import com.example.mynewsapp.data.model.userprofile.UserProfileModel
-import com.example.mynewsapp.domain.domainmodels.CommentDomainModel
+import com.example.mynewsapp.data.model.userprofile.Profile
+import com.example.mynewsapp.domain.domainmodels.CommentModel
 import com.example.mynewsapp.domain.usecases.commentusecases.AddCommentUseCase
 import com.example.mynewsapp.domain.usecases.commentusecases.GetCommentsUseCase
 import com.example.mynewsapp.domain.usecases.commentusecases.IsCommentLikedUseCase
@@ -20,7 +18,8 @@ import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCas
 import com.example.mynewsapp.domain.usecases.commonusecases.GetUserIdUseCase
 import com.example.mynewsapp.domain.usecases.createnewsusecases.GetTimeStampUseCase
 import com.example.mynewsapp.presentation.uimodels.comment.CommentLikeStatus
-import com.example.mynewsapp.presentation.uimodels.comment.CommentUiModel
+import com.example.mynewsapp.presentation.uimodels.comment.CommentsUiModel
+import com.example.mynewsapp.presentation.uimodels.comment.NewCommentUIModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uiutils.ImageUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,17 +38,17 @@ class CommentViewModel @Inject constructor(
     private val getCommentsUseCase: GetCommentsUseCase,
     private val isCommentLikedUseCase: IsCommentLikedUseCase,
     private val likeCommentUseCase: LikeCommentUseCase,
-    private val unLikeCommentUseCase: UnlikeCommentUseCase
+    private val unLikeCommentUseCase: UnlikeCommentUseCase,
 ) : ViewModel() {
 
     private val _commentState = MutableLiveData<UiState<Int>>()
     val commentState: LiveData<UiState<Int>> get() = _commentState
 
-    private val _comments = MutableLiveData<UiState<List<CommentUiModel>>>()
-    val comments: LiveData<UiState<List<CommentUiModel>>> get() = _comments
+    private val _comments = MutableLiveData<UiState<List<CommentsUiModel>>>()
+    val comments: LiveData<UiState<List<CommentsUiModel>>> get() = _comments
 
-    private val _selectedReplyComment = MutableLiveData<CommentUiModel?>(null)
-    val selectedReplyComment: LiveData<CommentUiModel?> get() = _selectedReplyComment
+    private val _selectedReplyComment = MutableLiveData<CommentsUiModel?>(null)
+    val selectedReplyComment: LiveData<CommentsUiModel?> get() = _selectedReplyComment
 
     private val _likeState = MutableLiveData<UiState<Unit>>()
     val likeState: LiveData<UiState<Unit>> get() = _likeState
@@ -70,7 +69,7 @@ class CommentViewModel @Inject constructor(
                     return@launch
                 }
 
-                val comment = createCommentModel(
+                val comment = provideNewCommentUIModel(
                     profileResult.getOrNull()!!,
                     commentText,
                     newsUrl,
@@ -86,34 +85,33 @@ class CommentViewModel @Inject constructor(
                 if (result.isSuccess) {
                     _commentState.value = UiState.Success(R.string.success_add_comment)
                     clearData()
-                }
-                else _commentState.value = UiState.Error(R.string.failed_add_comment)
+                } else _commentState.value = UiState.Error(R.string.failed_add_comment)
 
             }
         }
     }
 
-    private suspend fun getUserProfile(): Result<UserProfileModel> {
-            val result = getProfileDataUseCase().firstOrNull()
-        return  result?.let {
-                if (it.isSuccess && it.getOrNull() != null) Result.success(it.getOrNull()!!)
-                 else Result.failure(it.exceptionOrNull() ?: Exception("Profile is not found"))
+    private suspend fun getUserProfile(): Result<Profile> {
+        val result = getProfileDataUseCase().firstOrNull()
+        return result?.let {
+            if (it.isSuccess && it.getOrNull() != null) Result.success(it.getOrNull()!!)
+            else Result.failure(it.exceptionOrNull() ?: Exception("Profile is not found"))
 
-            } ?: run {
+        } ?: run {
             Result.failure(Exception("Profile is not found"))
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createCommentModel(
-        profile: UserProfileModel,
+    private fun provideNewCommentUIModel(
+        profile: Profile,
         commentText: String,
         url: String,
         isReply: Boolean,
         parentCommentId: String,
-        parentUsername: String
-    ): CommentModel {
-        return CommentModel(
+        parentUsername: String,
+    ): NewCommentUIModel {
+        return NewCommentUIModel(
             comment = commentText,
             profileImg = profile.imageBase64,
             username = profile.username,
@@ -124,7 +122,7 @@ class CommentViewModel @Inject constructor(
             parentCommentId = parentCommentId,
             parentUsername = parentUsername,
             likesCount = 0,
-            isLiked = false
+            isLiked = false,
         )
     }
 
@@ -137,8 +135,9 @@ class CommentViewModel @Inject constructor(
                     if (result.isSuccess) {
                         val commentDomainList = result.getOrNull() ?: emptyList()
                         val commentUiList = commentDomainList.map { comment ->
-                            val isLiked = isCommentLikedUseCase(comment.commentedAt).getOrNull() ?: false
-                            CommentUiModel(
+                            val isLiked =
+                                isCommentLikedUseCase(comment.commentedAt).getOrNull() ?: false
+                            CommentsUiModel(
                                 comment = comment.comment,
                                 profileImg = ImageUtils.base64ToBitmap(comment.profileImg),
                                 username = comment.username,
@@ -164,30 +163,35 @@ class CommentViewModel @Inject constructor(
         }
     }
 
-    private suspend fun replyUiModel(replies: List<CommentDomainModel>) = replies.map { reply ->
-        val isLiked = isCommentLikedUseCase(reply.commentedAt).getOrNull() ?: false
-        CommentUiModel(
-            comment = reply.comment,
-            profileImg = ImageUtils.base64ToBitmap(reply.profileImg),
-            username = reply.username,
-            userId = reply.userId,
-            commentedAt = reply.commentedAt,
-            timeDifference = reply.timeDifference,
-            url = reply.url,
-            isReply = reply.isReply,
-            parentCommentId = reply.parentCommentId,
-            parentUsername = reply.parentUsername,
-            likesCount = reply.likesCount,
-            isLiked = isLiked,
-            replies = emptyList()
-        )
-    }
+    private suspend fun replyUiModel(replies: List<CommentModel>): List<CommentsUiModel> =
+        replies.map { reply ->
+            val isLiked = isCommentLikedUseCase(reply.commentedAt).getOrNull() ?: false
+            CommentsUiModel(
+                comment = reply.comment,
+                profileImg = ImageUtils.base64ToBitmap(reply.profileImg),
+                username = reply.username,
+                userId = reply.userId,
+                commentedAt = reply.commentedAt,
+                timeDifference = reply.timeDifference,
+                url = reply.url,
+                isReply = reply.isReply,
+                parentCommentId = reply.parentCommentId,
+                parentUsername = reply.parentUsername,
+                likesCount = reply.likesCount,
+                isLiked = isLiked,
+                replies = emptyList()
+            )
+        }
 
-    fun setReplyComment(comment: CommentUiModel) {
+    fun setReplyComment(comment: CommentsUiModel) {
         _selectedReplyComment.value = if (comment.parentUsername.isNullOrEmpty()) {
             comment.copy(isReply = true, parentCommentId = comment.commentedAt)
         } else {
-            comment.copy(isReply = true, parentCommentId = comment.parentCommentId, parentUsername = comment.username)
+            comment.copy(
+                isReply = true,
+                parentCommentId = comment.parentCommentId,
+                parentUsername = comment.username
+            )
         }
     }
 
@@ -233,7 +237,7 @@ class CommentViewModel @Inject constructor(
         }
     }
 
-    private fun initializeLikeStatus(comments: List<CommentUiModel>) {
+    private fun initializeLikeStatus(comments: List<CommentsUiModel>) {
         val likeStatusMap = mutableMapOf<String, CommentLikeStatus>()
         comments.forEach { comment ->
             val likeStatus = CommentLikeStatus(

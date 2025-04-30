@@ -55,12 +55,12 @@
         android:name="com.example.mynewsapp.presentation.fragments.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
-        <argument
-            android:name="article"
-            app:argType="com.example.mynewsapp.data.model.latestnews.Article" />
         <action
             android:id="@+id/action_detailFragment_to_commentFragment"
             app:destination="@id/commentFragment" />
+        <argument
+            android:name="news"
+            app:argType="com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel" />
     </fragment>
     <fragment
         android:id="@+id/trendingFragment"

@@ -1,15 +1,13 @@
 package com.example.mynewsapp.presentation.viewmodels
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.latestnews.Article
-import com.example.mynewsapp.data.model.follow.FollowModel
+import com.example.mynewsapp.data.model.follow.Follow
 import com.example.mynewsapp.domain.usecases.commentusecases.GetCommentsUseCase
 import com.example.mynewsapp.domain.usecases.detail.DeleteBookmarkUseCase
 import com.example.mynewsapp.domain.usecases.detail.IsNewsBookmarkedUseCase
@@ -21,6 +19,8 @@ import com.example.mynewsapp.domain.usecases.detailusecases.IsNewsSourceFollowed
 import com.example.mynewsapp.domain.usecases.detailusecases.FollowNewsSourceUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnFavoriteNewUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnfollowNewSourceUseCase
+import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
+import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -116,7 +116,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun insertBookmark(news: Article) {
+    fun insertBookmark(news: ArticleUiModel) {
         _actionState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             val result = saveBookmarkUseCase(news)
@@ -131,7 +131,9 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun deleteBookmark(article: Article) {
+
+
+    fun deleteBookmark(article: ArticleUiModel) {
         _actionState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             val result = deleteBookmarkUseCase(article.url!!)
@@ -146,7 +148,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getIsNewsBookmarked(article: Article) {
+    fun getIsNewsBookmarked(article: ArticleUiModel) {
         _actionState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             val result = article.url?.let { isNewsBookmarkedUseCase(it) }
@@ -178,9 +180,9 @@ class DetailViewModel @Inject constructor(
 
     fun followNewsSource(sourceName: String, sourceImg: String, followerCount: Int) {
         _actionState.value = UiState.Loading
-        val followModel = FollowModel(sourceName, sourceImg, followerCount)
+        val follow = FollowUiModel(sourceName, sourceImg, followerCount)
         viewModelScope.launch(Dispatchers.IO) {
-            val result = followNewsSourceUseCase(followModel)
+            val result = followNewsSourceUseCase(follow)
             withContext(Dispatchers.Main) {
                 if (result.isSuccess) {
                     _isFollowing.value = true
@@ -247,7 +249,7 @@ class DetailViewModel @Inject constructor(
         else favoriteNews(url)
     }
 
-    fun toggleBookmark(news: Article) {
+    fun toggleBookmark(news: ArticleUiModel) {
         if (_isBookmarked.value == true) deleteBookmark(news)
         else insertBookmark(news)
     }

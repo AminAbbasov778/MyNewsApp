@@ -5,6 +5,8 @@ import com.example.mynewsapp.data.local.dao.IsNewsBookmarkedDao
 import com.example.mynewsapp.data.local.dao.ReadBookmarkDao
 import com.example.mynewsapp.data.local.dao.WriteBookmarkDao
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
+import com.example.mynewsapp.data.mappers.toData
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.interfaces.BookmarkDatabaseRepository
 import javax.inject.Inject
 
@@ -25,9 +27,10 @@ class BookmarkDatabaseRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun writeBookmark(news: BookmarkEntity): Result<Boolean> {
+    override suspend fun writeBookmark(news: ArticleModel): Result<Boolean> {
         return try {
-            writeBookmark.insertBookmark(news)
+            val bookmarkNews = news.toData()
+            writeBookmark.insertBookmark(bookmarkNews)
             Result.success(true)
         } catch (e: Exception) {
             Result.failure(e)

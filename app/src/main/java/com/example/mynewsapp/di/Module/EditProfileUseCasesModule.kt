@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.mynewsapp.domain.interfaces.UserRepository
 import com.example.mynewsapp.domain.usecases.editprofileusecases.ConvertUriToBase64UseCase
 import com.example.mynewsapp.domain.usecases.editprofileusecases.UpdateUserProfileUseCase
-import com.example.mynewsapp.domain.usecases.editprofileusecases.UserProfileModelUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

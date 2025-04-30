@@ -2,7 +2,7 @@ package com.example.mynewsapp.presentation.uimodels.profile
 
 import android.graphics.Bitmap
 
- class UserProfileUiModel(
+ class ProfileUiModel(
     val imageBitmap: Bitmap?,
     val fullName: String,
     val bio: String,

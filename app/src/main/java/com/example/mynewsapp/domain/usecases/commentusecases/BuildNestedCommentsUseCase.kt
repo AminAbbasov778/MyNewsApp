@@ -1,14 +1,13 @@
 package com.example.mynewsapp.domain.usecases.commentusecases
 
-import android.util.Log
-import com.example.mynewsapp.domain.domainmodels.CommentDomainModel
+import com.example.mynewsapp.domain.domainmodels.CommentModel
 import javax.inject.Inject
 
 class BuildNestedCommentsUseCase  @Inject constructor() {
 
-    operator fun invoke(comments: List<CommentDomainModel>): List<CommentDomainModel> {
-        val topLevelComments = mutableListOf<CommentDomainModel>()
-        val commentMap = mutableMapOf<String, CommentDomainModel>()
+    operator fun invoke(comments: List<CommentModel>): List<CommentModel> {
+        val topLevelComments = mutableListOf<CommentModel>()
+        val commentMap = mutableMapOf<String, CommentModel>()
         comments.forEach { comment ->
 
             if (comment.isReply && comment.parentCommentId != null) {

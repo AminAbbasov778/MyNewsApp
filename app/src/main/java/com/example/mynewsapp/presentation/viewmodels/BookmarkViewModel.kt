@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
 import com.example.mynewsapp.data.model.latestnews.Article
+import com.example.mynewsapp.data.model.latestnews.Source
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.usecases.bookmark.ConvertBookmarkEntityToArticleUseCase
 import com.example.mynewsapp.domain.usecases.bookmark.ReadBookmarksUseCase
 import com.example.mynewsapp.domain.usecases.detail.DeleteBookmarkUseCase
-import com.example.mynewsapp.presentation.uimodels.bookmarks.BookmarkNavigationModel
+import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,16 +23,12 @@ import javax.inject.Inject
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
     var readBookmarksUseCase: ReadBookmarksUseCase,
-    var convertBookmarkEntityToArticleUseCase: ConvertBookmarkEntityToArticleUseCase,
     val deleteBookmarkUseCase: DeleteBookmarkUseCase,
 ) : ViewModel() {
 
-    private val _bookmarkState = MutableLiveData<UiState<List<Article>>>()
-    val bookmarkState: LiveData<UiState<List<Article>>> get() = _bookmarkState
+    private val _bookmarkState = MutableLiveData<UiState<List<ArticleUiModel>>>()
+    val bookmarkState: LiveData<UiState<List<ArticleUiModel>>> get() = _bookmarkState
 
-    private var _newsArticle =
-        MutableLiveData<BookmarkNavigationModel>()
-    val newsArticle: LiveData<BookmarkNavigationModel> get() = _newsArticle
 
     private var _isProductDeleted = MutableLiveData<UiState<Int>>()
     val isProductDeleted : LiveData<UiState<Int>> get() = _isProductDeleted
@@ -44,21 +42,32 @@ class BookmarkViewModel @Inject constructor(
         _bookmarkState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             val bookmarkFlow = readBookmarksUseCase()
-            bookmarkFlow.getOrNull()?.collect { bookmarks ->
-                withContext(Dispatchers.Main) {
-                    if (bookmarkFlow.isSuccess) {
-
-                        _bookmarkState.value = UiState.Success(bookmarks)
-
-                    } else {
-                        _bookmarkState.value = UiState.Error(R.string.wrong_something)
+            if (bookmarkFlow.isSuccess) {
+                bookmarkFlow.getOrNull()?.collect { bookmarks ->
+                    withContext(Dispatchers.Main) {
+                        val bookmarkNews = convertArticleModelToArticleUiModel(bookmarks)
+                        _bookmarkState.value = UiState.Success(bookmarkNews)
                     }
                 }
+            } else {
+                _bookmarkState.value = UiState.Error(R.string.wrong_something)
             }
+
         }
-
-
     }
+    fun convertArticleModelToArticleUiModel(newsList: List<ArticleModel>)=
+       newsList.map {news ->
+           ArticleUiModel(
+           urlToImage = news.urlToImage ?: "No Image Url",
+           timeDifference = news.timeDifference,
+           title = news.title ?: "No title",
+           description = news.description ?: "No description",
+           author = news.author ?: "No author",
+           content = news.content ?: "No content",
+           source = Source(news.source?.id ?: "No id", news.source?.name ?: "No name"),
+           url = news.url ?: "No url",
+           publishedAt = news.publishedAt ?: "No published at"
+       )  }
 
 
     fun deleteBookmark(url: String) {

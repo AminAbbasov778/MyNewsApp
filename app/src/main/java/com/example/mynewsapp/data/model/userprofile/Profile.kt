@@ -1,6 +1,6 @@
 package com.example.mynewsapp.data.model.userprofile
 
-data class UserProfileModel(
+data class Profile(
     val fullName: String = "",
     val bio: String = "",
     val email: String = "",

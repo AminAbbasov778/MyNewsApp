@@ -8,11 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
 import com.example.mynewsapp.Utils.LanguageManager
-import com.example.mynewsapp.data.model.language.LanguageModel
+import com.example.mynewsapp.data.model.language.Language
 import com.example.mynewsapp.domain.usecases.languageusecases.GetCurrentLanguageUseCase
 import com.example.mynewsapp.domain.usecases.languageusecases.GetLanguageListUseCase
 import com.example.mynewsapp.domain.usecases.languageusecases.SetLanguageUseCase
 import com.example.mynewsapp.presentation.activities.MainActivity
+import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.language.LanguageUiModel
 import com.example.mynewsapp.presentation.uistates.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +31,7 @@ class LanguageViewModel @Inject constructor(
 
     private var _languageList = MutableLiveData<ResultState<List<LanguageUiModel>>>()
     val languageList: LiveData<ResultState<List<LanguageUiModel>>> get() = _languageList
-    private var langList = listOf<LanguageModel>()
+    private var langList = listOf<LanguageUiModel>()
 
     init {
         getLanguageList()
@@ -38,11 +39,12 @@ class LanguageViewModel @Inject constructor(
     }
 
     fun getLanguageList() {
-        langList = getLanguageListUseCase()
+        langList = getLanguageListUseCase().map { it.toUi(false) }
     }
 
     fun setIsSelected(langCode: String) {
-        val list = langList.map { LanguageUiModel(it.language, it.code, it.code == langCode) }
+        val list = langList.map { it.copy(isSelected = (it.code == langCode) )
+        }
         _languageList.value = ResultState.Success(list)
     }
 

@@ -1,10 +1,11 @@
 package com.example.mynewsapp.domain.usecases.search
 
 import com.example.mynewsapp.data.model.latestnews.Article
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import javax.inject.Inject
 
 class ProcessSearchedNewsUseCase @Inject constructor() {
-    operator fun invoke(newsList: List<Article>, query: String): List<Article> {
+    operator fun invoke(newsList: List<ArticleModel>, query: String): List<ArticleModel> {
         return newsList.filter { article ->
             article.title?.contains(query, ignoreCase = true) == true ||
                     article.description?.contains(query, ignoreCase = true) == true ||

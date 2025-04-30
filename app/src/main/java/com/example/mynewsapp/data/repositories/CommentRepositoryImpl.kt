@@ -1,8 +1,8 @@
 package com.example.mynewsapp.data.repositories
 
 import FirestoreUtil
-import android.util.Log
-import com.example.mynewsapp.data.model.comment.CommentModel
+import com.example.mynewsapp.data.model.comment.Comment
+import com.example.mynewsapp.domain.domainmodels.CommentModel
 import com.example.mynewsapp.domain.interfaces.CommentRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -47,7 +47,7 @@ class CommentRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getComments(newsUrl: String): Flow<Result<List<CommentModel>>> = callbackFlow {
+    override suspend fun getComments(newsUrl: String): Flow<Result<List<Comment>>> = callbackFlow {
         try {
             val encodedUrl = FirestoreUtil.encodeUrlToId(newsUrl)
 
@@ -62,7 +62,7 @@ class CommentRepositoryImpl @Inject constructor(
                     }
                     val result = snapshot?.documents?.mapNotNull { doc ->
                         try {
-                            val comment = doc.toObject(CommentModel::class.java)
+                            val comment = doc.toObject(Comment::class.java)
                             comment
                         } catch (e: Exception) {
                             null

@@ -9,10 +9,12 @@ import com.example.mynewsapp.R
 import com.example.mynewsapp.presentation.uiutils.ImageUtils
 import com.example.mynewsapp.domain.usecases.commonusecases.CapturePhotoUseCase
 import com.example.mynewsapp.domain.usecases.editprofileusecases.UpdateUserProfileUseCase
-import com.example.mynewsapp.domain.usecases.editprofileusecases.UserProfileModelUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
+import com.example.mynewsapp.domain.usecases.editprofileusecases.ConvertUriToBase64UseCase
+import com.example.mynewsapp.domain.usecases.editprofileusecases.GetImagePickerOptionsUseCase
+import com.example.mynewsapp.presentation.uimodels.profile.NewProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
-import com.example.mynewsapp.presentation.uimodels.profile.UserProfileUiModel
+import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,8 +25,9 @@ import javax.inject.Inject
 class EditProfileViewModel @Inject constructor(
     val capturePhotoUseCase: CapturePhotoUseCase,
     val updateUserProfileUseCase: UpdateUserProfileUseCase,
-    val userProfileModelUseCase: UserProfileModelUseCase,
     val getProfileDataUseCase: GetProfileDataUseCase,
+    val convertUriToBase64UseCase: ConvertUriToBase64UseCase,
+    val getImagePickerOptionsUseCase : GetImagePickerOptionsUseCase
 ) : ViewModel() {
     private var _imageUri = MutableLiveData<Uri>()
     val imageUri: LiveData<Uri> get() = _imageUri
@@ -35,8 +38,8 @@ class EditProfileViewModel @Inject constructor(
     private var _updatedProfile = MutableLiveData<UiState<Int>>()
     val updatedProfile: LiveData<UiState<Int>> get() = _updatedProfile
 
-    private var _profileData = MutableLiveData<UiState<UserProfileUiModel>>()
-    val profileData: LiveData<UiState<UserProfileUiModel>> get() = _profileData
+    private var _profileData = MutableLiveData<UiState<ProfileUiModel>>()
+    val profileData: LiveData<UiState<ProfileUiModel>> get() = _profileData
 
 
     init {
@@ -49,7 +52,7 @@ class EditProfileViewModel @Inject constructor(
 
 
     fun getImagePickerOptions() {
-        _imagePickerOptions.value = arrayOf("Camera", "Gallery")
+        _imagePickerOptions.value = getImagePickerOptionsUseCase()
     }
 
     fun updateUserProfile(
@@ -62,10 +65,10 @@ class EditProfileViewModel @Inject constructor(
         userName: String,
     ) {
         _updatedProfile.value = UiState.Loading
-        val userProfile =
-            userProfileModelUseCase(fullName, bio, email, imageUri, userName, phoneNumber, website)
+        val imageBase64 = convertUriToBase64UseCase(imageUri)
+        val userProfileUiModel = NewProfileUiModel(imageBase64 ?: "",fullName, bio, email, userName, phoneNumber, website)
         viewModelScope.launch(Dispatchers.IO) {
-            var result = updateUserProfileUseCase(userProfile)
+            var result = updateUserProfileUseCase(userProfileUiModel)
             withContext(Dispatchers.Main) {
                 _updatedProfile.value = if (result.isSuccess) {
                     UiState.Success(R.string.successful_updating_profile)
@@ -87,7 +90,7 @@ class EditProfileViewModel @Inject constructor(
                             val  data = profileData.getOrNull()
                             data?.let {
                                 val imageBitmap = ImageUtils.base64ToBitmap(data.imageBase64)
-                                _profileData.value =   UiState.Success(UserProfileUiModel(imageBitmap = imageBitmap,
+                                _profileData.value =   UiState.Success(ProfileUiModel(imageBitmap = imageBitmap,
                                     email = data.email, fullName = data.fullName, bio = data.bio, phoneNumber = data.phoneNumber, username = data.username, website = data.website
                                 ))
                             }

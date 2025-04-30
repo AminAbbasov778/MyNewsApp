@@ -12,8 +12,10 @@ import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCas
 import com.example.mynewsapp.domain.usecases.profileUseCase.DeleteNewsByPublishedAtUseCase
 import com.example.mynewsapp.domain.usecases.profileUseCase.GetTimeDifferenceUseCase
 import com.example.mynewsapp.domain.usecases.profileUseCase.GetUserNewsUseCase
+import com.example.mynewsapp.presentation.mappers.toUi
+import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
 import com.example.mynewsapp.presentation.uimodels.createnews.UserNewsUiModel
-import com.example.mynewsapp.presentation.uimodels.profile.UserProfileUiModel
+import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uiutils.ImageUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,8 +34,8 @@ class ProfileViewModel @Inject constructor(
     val getFollowedSourcesUseCase: GetFollowedSourcesUseCase,
 ) :
     ViewModel() {
-    private var _profileData = MutableLiveData<UiState<UserProfileUiModel>>()
-    val profileData: LiveData<UiState<UserProfileUiModel>> get() = _profileData
+    private var _profileData = MutableLiveData<UiState<ProfileUiModel>>()
+    val profileData: LiveData<UiState<ProfileUiModel>> get() = _profileData
 
 
     private var _userNews = MutableLiveData<UiState<List<UserNewsUiModel>>>()
@@ -64,7 +66,7 @@ class ProfileViewModel @Inject constructor(
                         data?.let {
                             val imageBitmap = ImageUtils.base64ToBitmap(data.imageBase64)
                             _profileData.value = UiState.Success(
-                                UserProfileUiModel(
+                                ProfileUiModel(
                                     imageBitmap,
                                     data.email,
                                     data.fullName,
@@ -96,15 +98,7 @@ class ProfileViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                     if (userNews.isSuccess) {
                         var newsResult = userNews.getOrNull()?.map {
-                            UserNewsUiModel(
-                                ImageUtils.base64ToBitmap(it.imageBase64),
-                                it.newsTitle,
-                                it.newsArticle,
-                                ImageUtils.base64ToBitmap(it.profileImageBase64),
-                                it.fullName,
-                                getTimeDifferenceUseCase(it.publishedAt),
-                                it.publishedAt
-                            )
+                            it.toUi(ImageUtils.base64ToBitmap(it.imageBase64),ImageUtils.base64ToBitmap(it.profileImageBase64),getTimeDifferenceUseCase(it.publishedAt))
                         }
                         _userNews.value = UiState.Success(newsResult ?: emptyList())
                     } else {
@@ -138,9 +132,8 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             getFollowedSourcesUseCase().collect { result ->
                 if (result.isSuccess) {
-                    result.getOrNull()
-                        ?.let { _followedSourcesCount.value = UiState.Success(it.size) }
-
+                   val list = result.getOrNull()?.map { it.toUi() }
+                    _followedSourcesCount.value = UiState.Success(list?.size ?: 0)
                 } else {
                     _followedSourcesCount.value =
                         UiState.Error(R.string.failed_to_load_followed_sources)

@@ -1,6 +1,8 @@
 package com.example.mynewsapp.data.repositories
 
-import com.example.mynewsapp.data.model.follow.FollowModel
+import com.example.mynewsapp.data.mappers.toData
+import com.example.mynewsapp.data.model.follow.Follow
+import com.example.mynewsapp.domain.domainmodels.FollowModel
 import com.example.mynewsapp.domain.interfaces.FollowRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -15,12 +17,12 @@ class FollowRepositoryImpl @Inject constructor(val firebaseAuth: FirebaseAuth,va
 
         override suspend fun followNewsSource(followModel: FollowModel): Result<Unit> {
             val user = firebaseAuth.currentUser ?: return Result.failure(Exception("User not logged in"))
-
+            val follow = followModel.toData()
             return try {
                 val data = hashMapOf(
-                    "sourceName" to followModel.sourceName,
-                    "sourceLogo" to followModel.sourceImg,
-                    "sourceFollowerCount" to followModel.sourceFollowerCount,
+                    "sourceName" to follow.sourceName,
+                    "sourceLogo" to follow.sourceImg,
+                    "sourceFollowerCount" to follow.sourceFollowerCount,
                     "followedAt" to FieldValue.serverTimestamp()
                 )
 
@@ -28,7 +30,7 @@ class FollowRepositoryImpl @Inject constructor(val firebaseAuth: FirebaseAuth,va
                     .collection("users")
                     .document(user.uid)
                     .collection("followings")
-                    .document(followModel.sourceName)
+                    .document(follow.sourceName)
                     .set(data)
                     .await()
 
@@ -72,7 +74,7 @@ class FollowRepositoryImpl @Inject constructor(val firebaseAuth: FirebaseAuth,va
 
 
 
-    override suspend fun getFollowedSources(): Flow<Result<List<FollowModel>>> = callbackFlow {
+    override suspend fun getFollowedSources(): Flow<Result<List<Follow>>> = callbackFlow {
         try {
             val user = firebaseAuth.currentUser ?: run {
                 trySend(Result.failure(Exception("User not logged in")))
@@ -96,7 +98,7 @@ class FollowRepositoryImpl @Inject constructor(val firebaseAuth: FirebaseAuth,va
                             val logo = doc.getString("sourceLogo")
                             val sourceFollowerCount = doc.getLong("sourceFollowerCount")?.toInt() ?: 0
                             if (name != null && logo != null) {
-                                FollowModel(name, logo,sourceFollowerCount)
+                                Follow(name, logo,sourceFollowerCount)
                             } else null
                         } ?: emptyList()
 

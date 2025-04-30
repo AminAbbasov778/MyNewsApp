@@ -6,7 +6,7 @@
 
         <variable
             name="boarding"
-            type="com.example.mynewsapp.presentation.uimodels.boarding.BoardingModel" />
+            type="com.example.mynewsapp.presentation.uimodels.boarding.BoardingUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinsmedium"
             android:text="@{boarding.description}"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="@id/titleText"
             app:layout_constraintTop_toBottomOf="@id/titleText">
