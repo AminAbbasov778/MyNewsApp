@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
+import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.domain.usecases.bookmark.ConvertBookmarkEntityToArticleUseCase
 import com.example.mynewsapp.domain.usecases.bookmark.ReadBookmarksUseCase
 import com.example.mynewsapp.domain.usecases.detail.DeleteBookmarkUseCase
@@ -24,8 +25,8 @@ class BookmarkViewModel @Inject constructor(
     val deleteBookmarkUseCase: DeleteBookmarkUseCase,
 ) : ViewModel() {
 
-    private val _bookmarkState = MutableLiveData<UiState<List<BookmarkEntity>>>()
-    val bookmarkState: LiveData<UiState<List<BookmarkEntity>>> get() = _bookmarkState
+    private val _bookmarkState = MutableLiveData<UiState<List<Article>>>()
+    val bookmarkState: LiveData<UiState<List<Article>>> get() = _bookmarkState
 
     private var _newsArticle =
         MutableLiveData<BookmarkNavigationModel>()
@@ -59,16 +60,6 @@ class BookmarkViewModel @Inject constructor(
 
     }
 
-    fun convertBookmarkEntityToArticle(news: BookmarkEntity) {
-        _newsArticle.value = BookmarkNavigationModel(
-            convertBookmarkEntityToArticleUseCase(news),
-            true
-        )
-    }
-
-    fun clearArticle() {
-        _newsArticle.value = BookmarkNavigationModel(null, false)
-    }
 
     fun deleteBookmark(url: String) {
         _isProductDeleted.value = UiState.Loading

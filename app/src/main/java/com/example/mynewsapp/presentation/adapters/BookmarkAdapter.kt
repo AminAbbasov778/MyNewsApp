@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
+import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.databinding.BookmarkItemBinding
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 import com.example.mynewsapp.presentation.uiutils.NewsPopupHelper
 
 
-class BookmarkAdapter(val onNewsClick: (BookmarkEntity) -> Unit,val onDeleteClick : (String) -> Unit) :
+class BookmarkAdapter(val onNewsClick: (Article) -> Unit, val onDeleteClick : (String) -> Unit) :
     RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder>() {
-    var list = arrayListOf<BookmarkEntity>()
+    var list = arrayListOf<Article>()
 
     inner class BookmarkViewHolder(val binding: BookmarkItemBinding) : ViewHolder(binding.root)
 
@@ -30,12 +31,12 @@ class BookmarkAdapter(val onNewsClick: (BookmarkEntity) -> Unit,val onDeleteClic
     }
 
     override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
-        holder.binding.bookmark = list[position]
+        holder.binding.article = list[position]
         clickEvent(holder, list[position])
     }
 
-    fun updateList(newList : List<BookmarkEntity>){
-        val diffCallback = GenericDiffUtil(list,newList, areItemsSame ={old,new -> old.id== new.id}, areContentsSame = {old,new->old == new})
+    fun updateList(newList : List<Article>){
+        val diffCallback = GenericDiffUtil(list,newList, areItemsSame ={old,new -> old.url== new.url}, areContentsSame = {old,new->old == new})
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         list.clear()
         list.addAll(newList)
@@ -43,12 +44,12 @@ class BookmarkAdapter(val onNewsClick: (BookmarkEntity) -> Unit,val onDeleteClic
     }
 
 
-    fun clickEvent(holder: BookmarkViewHolder,news : BookmarkEntity) {
+    fun clickEvent(holder: BookmarkViewHolder,news : Article) {
         holder.binding.newsItemContainer.setOnClickListener() {
             onNewsClick(news)
         }
             holder.binding.moreIcon.setOnClickListener {
-            NewsPopupHelper(holder.itemView.context,holder.binding.moreIcon, onDeleteClick = {onDeleteClick(news.url)}).showPopup()
+                news.url?.let {NewsPopupHelper(holder.itemView.context,holder.binding.moreIcon, onDeleteClick = {onDeleteClick(it)}).showPopup() }
         }
     }
 }

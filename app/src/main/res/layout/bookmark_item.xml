@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="bookmark"
-            type="com.example.mynewsapp.data.local.entity.BookmarkEntity" />
+            name="article"
+            type="com.example.mynewsapp.data.model.latestnews.Article" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,7 +28,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/newsImage"
-                loadUrl="@{bookmark.imageUrl}"
+                loadUrl="@{article.urlToImage}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/roundedimage"
@@ -61,7 +61,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/poppinsmedium"
             android:maxLines="2"
-            android:text="@{bookmark.newsTitle}"
+            android:text="@{article.title}"
             android:textSize="18sp"
             app:layout_constraintLeft_toLeftOf="@id/newsCountryText"
             app:layout_constraintTop_toBottomOf="@id/newsCountryText">
@@ -89,7 +89,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/poppinsmedium"
             android:paddingTop="3dp"
-            android:text="@{bookmark.sourceName}"
+            android:text="@{article.source.name}"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/authorProfileImgIcon"
             app:layout_constraintLeft_toRightOf="@id/authorProfileImgIcon"
@@ -117,7 +117,7 @@
             android:layout_marginRight="10dp"
             android:fontFamily="@font/poppinsmedium"
             android:paddingTop="3dp"
-            android:text="@{bookmark.timeDifference}"
+            android:text="@{article.timeDifference}"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/watchIcon"
             app:layout_constraintRight_toLeftOf="@id/moreIcon"

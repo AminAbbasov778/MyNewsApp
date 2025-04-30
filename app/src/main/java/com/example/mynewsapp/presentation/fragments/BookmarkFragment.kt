@@ -41,7 +41,11 @@ class BookmarkFragment : Fragment() {
     fun provideNewsAdapter() {
         adapter = BookmarkAdapter(
             onNewsClick = {
-                viewModel.convertBookmarkEntityToArticle(it) },
+                findNavController().navigate(
+                    BookmarkFragmentDirections.actionBookmarkFragmentToDetailFragment(
+                       it
+                    )
+                ) },
             onDeleteClick = {
                 viewModel.deleteBookmark(it)}
         )
@@ -67,16 +71,7 @@ class BookmarkFragment : Fragment() {
             }
         }
 
-        viewModel.newsArticle.observe(viewLifecycleOwner) { navState ->
-            if (navState.state == true && navState.article != null) {
-                findNavController().navigate(
-                    BookmarkFragmentDirections.actionBookmarkFragmentToDetailFragment(
-                        navState.article!!
-                    )
-                )
-                viewModel.clearArticle()
-            }
-        }
+
 
         viewModel.isProductDeleted.observe(viewLifecycleOwner) {
             when(it){

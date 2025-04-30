@@ -86,25 +86,21 @@ class CommentViewModel @Inject constructor(
                 if (result.isSuccess) {
                     _commentState.value = UiState.Success(R.string.success_add_comment)
                     clearData()
-                } else {
-                    _commentState.value = UiState.Error(R.string.failed_add_comment)
                 }
+                else _commentState.value = UiState.Error(R.string.failed_add_comment)
+
             }
         }
     }
 
     private suspend fun getUserProfile(): Result<UserProfileModel> {
-        return try {
             val result = getProfileDataUseCase().firstOrNull()
-            result?.let {
-                if (it.isSuccess && it.getOrNull() != null) {
-                    Result.success(it.getOrNull()!!)
-                } else {
-                    Result.failure(it.exceptionOrNull() ?: Exception("Profile is not found"))
-                }
-            } ?: Result.failure(Exception("Profile data is empty"))
-        } catch (e: Exception) {
-            Result.failure(e)
+        return  result?.let {
+                if (it.isSuccess && it.getOrNull() != null) Result.success(it.getOrNull()!!)
+                 else Result.failure(it.exceptionOrNull() ?: Exception("Profile is not found"))
+
+            } ?: run {
+            Result.failure(Exception("Profile is not found"))
         }
     }
 

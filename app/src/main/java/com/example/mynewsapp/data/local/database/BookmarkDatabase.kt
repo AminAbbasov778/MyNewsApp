@@ -8,7 +8,7 @@ import com.example.mynewsapp.data.local.dao.ReadBookmarkDao
 import com.example.mynewsapp.data.local.dao.WriteBookmarkDao
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
 
-@Database(entities = [BookmarkEntity::class], version = 2, exportSchema = false)
+@Database(entities = [BookmarkEntity::class], version = 3, exportSchema = false)
 abstract class BookmarkDatabase : RoomDatabase() {
 
     abstract fun getBookmarkWriteDao(): WriteBookmarkDao

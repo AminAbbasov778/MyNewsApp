@@ -65,7 +65,6 @@ class CommentFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.setGone()
                     binding.commentEditText.text.clear()
-                    Toast.makeText(context, getString(it.data), Toast.LENGTH_SHORT).show()
                 }
                 is UiState.Error -> {
                     binding.loading.setGone()
