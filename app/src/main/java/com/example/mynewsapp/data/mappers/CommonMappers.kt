@@ -1,4 +1,4 @@
-package com.example.mynewsapp.domain.mappers
+package com.example.mynewsapp.data.mappers
 
 import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.data.model.latestnews.Source

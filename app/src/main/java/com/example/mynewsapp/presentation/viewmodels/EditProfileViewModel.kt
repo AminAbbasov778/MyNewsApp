@@ -6,12 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
+import com.example.mynewsapp.domain.mappers.toDomain
 import com.example.mynewsapp.presentation.uiutils.ImageUtils
 import com.example.mynewsapp.domain.usecases.commonusecases.CapturePhotoUseCase
 import com.example.mynewsapp.domain.usecases.editprofileusecases.UpdateUserProfileUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
 import com.example.mynewsapp.domain.usecases.editprofileusecases.ConvertUriToBase64UseCase
 import com.example.mynewsapp.domain.usecases.editprofileusecases.GetImagePickerOptionsUseCase
+import com.example.mynewsapp.presentation.mappers.toProfileUiModel
 import com.example.mynewsapp.presentation.uimodels.profile.NewProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
@@ -68,7 +70,7 @@ class EditProfileViewModel @Inject constructor(
         val imageBase64 = convertUriToBase64UseCase(imageUri)
         val userProfileUiModel = NewProfileUiModel(imageBase64 ?: "",fullName, bio, email, userName, phoneNumber, website)
         viewModelScope.launch(Dispatchers.IO) {
-            var result = updateUserProfileUseCase(userProfileUiModel)
+            var result = updateUserProfileUseCase(userProfileUiModel.toDomain())
             withContext(Dispatchers.Main) {
                 _updatedProfile.value = if (result.isSuccess) {
                     UiState.Success(R.string.successful_updating_profile)
@@ -89,10 +91,7 @@ class EditProfileViewModel @Inject constructor(
                         if(profileData.isSuccess){
                             val  data = profileData.getOrNull()
                             data?.let {
-                                val imageBitmap = ImageUtils.base64ToBitmap(data.imageBase64)
-                                _profileData.value =   UiState.Success(ProfileUiModel(imageBitmap = imageBitmap,
-                                    email = data.email, fullName = data.fullName, bio = data.bio, phoneNumber = data.phoneNumber, username = data.username, website = data.website
-                                ))
+                                _profileData.value =   UiState.Success(data.toProfileUiModel())
                             }
                         }else{
                             _profileData.value = UiState.Error(R.string.process_is_failure)

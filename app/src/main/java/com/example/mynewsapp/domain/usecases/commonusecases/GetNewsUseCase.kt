@@ -16,8 +16,6 @@ class GetNewsUseCase @Inject constructor(
         pageSize: Int?,
         page: Int? = null,
     ): Result<List<ArticleModel>> {
-
-        val result = retrofitRepository.getLatestNews(keyWord, sortBy, pageSize, page)
-        return  result.map {result -> result.articles.map {news -> news.toDomain() }  }
+      return retrofitRepository.getLatestNews(keyWord, sortBy, pageSize, page)
     }
 }

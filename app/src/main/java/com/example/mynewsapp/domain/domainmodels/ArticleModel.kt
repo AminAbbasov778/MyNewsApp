@@ -12,5 +12,5 @@ data class ArticleModel(
                     val title: String?,
                     val url: String? = "No Url",
                     val urlToImage: String?,
-                    val timeDifference: String?,){
+                    val timeDifference: String? = "Empty",){
 }

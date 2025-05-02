@@ -7,5 +7,5 @@ import com.example.mynewsapp.domain.mappers.toDomain
 import javax.inject.Inject
 
 class GetLanguageListUseCase @Inject constructor(val languageRepository: LanguageRepository) {
-   operator fun invoke(): List<LanguageModel> = languageRepository.getLanguageList().map { it.toDomain() }
+   operator fun invoke(): List<LanguageModel> = languageRepository.getLanguageList()
 }

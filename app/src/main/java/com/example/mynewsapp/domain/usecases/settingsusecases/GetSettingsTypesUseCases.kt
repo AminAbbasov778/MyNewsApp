@@ -7,5 +7,5 @@ import com.example.mynewsapp.presentation.uimodels.settings.SettingsUiModel
 import javax.inject.Inject
 
 class GetSettingsTypesUseCases @Inject constructor(val settingsRepository: SettingsRepository)  {
-    operator fun invoke(): List<SettingsModel> = settingsRepository.getSettingsTypes().map { it.toDomain() }
+    operator fun invoke(): List<SettingsModel> = settingsRepository.getSettingsTypes()
 }

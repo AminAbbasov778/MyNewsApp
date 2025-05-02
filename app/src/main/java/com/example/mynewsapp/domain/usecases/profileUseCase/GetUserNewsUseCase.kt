@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetUserNewsUseCase @Inject constructor(val userRepository: UserRepository) {
-    suspend operator fun invoke(): Flow<Result<List<UserNewsModel>>> = userRepository.getUserNews().map { it.map {newsList -> newsList.map {news -> news.toDomain() }  } }
+    suspend operator fun invoke(): Flow<Result<List<UserNewsModel>>> = userRepository.getUserNews()
 }

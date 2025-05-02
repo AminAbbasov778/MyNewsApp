@@ -1,9 +1,11 @@
 package com.example.mynewsapp.data.repositories
 
 import com.example.mynewsapp.data.mappers.toData
+import com.example.mynewsapp.data.mappers.toDomain
 import com.example.mynewsapp.data.model.usernews.UserNews
 import com.example.mynewsapp.data.model.userprofile.Profile
 import com.example.mynewsapp.domain.domainmodels.ProfileModel
+import com.example.mynewsapp.domain.domainmodels.UserNewsModel
 import com.example.mynewsapp.domain.interfaces.UserRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -39,7 +41,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProfileData(): Flow<Result<Profile>> = callbackFlow {
+    override suspend fun getProfileData(): Flow<Result<ProfileModel>> = callbackFlow {
         try {
             val user = firebaseAuth.currentUser
 
@@ -60,12 +62,12 @@ class UserRepositoryImpl @Inject constructor(
                             snapshot != null -> {
                                 val profile = snapshot.toObject(Profile::class.java)
                                 if (profile != null) {
-                                    Result.success(profile)
+                                    Result.success(profile.toDomain())
                                 } else {
-                                    Result.success(Profile())
+                                    Result.success(ProfileModel())
                                 }
                             }
-                            else -> Result.success(Profile())
+                            else -> Result.success(ProfileModel())
                         }
                     } catch (e: Exception) {
                         Result.failure(e)
@@ -86,19 +88,20 @@ class UserRepositoryImpl @Inject constructor(
 
 
 
-        override suspend fun createNews(userNewsModel: UserNews): Result<Unit> {
+        override suspend fun createNews(userNewsModel: UserNewsModel): Result<Unit> {
+            val userNews = userNewsModel.toData()
              firebaseAuth.currentUser?.uid?.let {user ->
-                val userNews =
+                val document =
                     firebaseStore.collection("users").document(user).collection("news").document(userNewsModel.publishedAt)
                 return try {
-                    userNews.set(
+                    document.set(
                         mapOf(
-                            "newsTitle" to userNewsModel.newsTitle,
-                            "newsArticle" to userNewsModel.newsArticle,
-                            "imageBase64" to userNewsModel.imageBase64,
-                            "profileImageBase64" to userNewsModel.profileImageBase64,
-                            "fullName" to userNewsModel.fullName,
-                            "publishedAt" to userNewsModel.publishedAt
+                            "newsTitle" to userNews.newsTitle,
+                            "newsArticle" to userNews.newsArticle,
+                            "imageBase64" to userNews.imageBase64,
+                            "profileImageBase64" to userNews.profileImageBase64,
+                            "fullName" to userNews.fullName,
+                            "publishedAt" to userNews.publishedAt
                         )
 
                     ).await()
@@ -111,7 +114,7 @@ class UserRepositoryImpl @Inject constructor(
 
         }
 
-    override suspend fun getUserNews(): Flow<Result<List<UserNews>>> {
+    override suspend fun getUserNews(): Flow<Result<List<UserNewsModel>>> {
         return callbackFlow {
             try {
                 val user = firebaseAuth.currentUser
@@ -130,8 +133,11 @@ class UserRepositoryImpl @Inject constructor(
                         val result = try {
                             when {
                                 error != null -> Result.failure(error)
-                                snapshot != null -> Result.success(snapshot.toObjects(UserNews::class.java))
-                                else -> Result.success(emptyList<UserNews>())
+                                snapshot != null -> {
+                                   val news =  snapshot.toObjects(UserNews::class.java)
+                                    Result.success(news.map { it.toDomain() })
+                                }
+                                else -> Result.success(emptyList<UserNewsModel>())
                             }
                         } catch (e: Exception) {
                             Result.failure(e)

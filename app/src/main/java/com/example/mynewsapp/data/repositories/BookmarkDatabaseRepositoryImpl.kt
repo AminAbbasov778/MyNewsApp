@@ -6,8 +6,10 @@ import com.example.mynewsapp.data.local.dao.ReadBookmarkDao
 import com.example.mynewsapp.data.local.dao.WriteBookmarkDao
 import com.example.mynewsapp.data.local.entity.BookmarkEntity
 import com.example.mynewsapp.data.mappers.toData
+import com.example.mynewsapp.data.mappers.toDomain
 import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.interfaces.BookmarkDatabaseRepository
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class BookmarkDatabaseRepositoryImpl @Inject constructor(
@@ -18,9 +20,9 @@ class BookmarkDatabaseRepositoryImpl @Inject constructor(
 ) : BookmarkDatabaseRepository {
 
 
-    override fun readBookmark(): Result<kotlinx.coroutines.flow.Flow<List<BookmarkEntity>>> {
+    override fun readBookmark(): Result<kotlinx.coroutines.flow.Flow<List<ArticleModel>>> {
         return try {
-            var bookmarks = readBookmark.getBookmark()
+            var bookmarks = readBookmark.getBookmark().map { it.map {news -> news.toDomain()  } }
             Result.success(bookmarks)
         } catch (e: Exception) {
             Result.failure(e)

@@ -1,6 +1,7 @@
 package com.example.mynewsapp.data.repositories
 
 import com.example.mynewsapp.data.mappers.toData
+import com.example.mynewsapp.data.mappers.toDomain
 import com.example.mynewsapp.data.model.follow.Follow
 import com.example.mynewsapp.domain.domainmodels.FollowModel
 import com.example.mynewsapp.domain.interfaces.FollowRepository
@@ -74,7 +75,7 @@ class FollowRepositoryImpl @Inject constructor(val firebaseAuth: FirebaseAuth,va
 
 
 
-    override suspend fun getFollowedSources(): Flow<Result<List<Follow>>> = callbackFlow {
+    override suspend fun getFollowedSources(): Flow<Result<List<FollowModel>>> = callbackFlow {
         try {
             val user = firebaseAuth.currentUser ?: run {
                 trySend(Result.failure(Exception("User not logged in")))
@@ -102,7 +103,7 @@ class FollowRepositoryImpl @Inject constructor(val firebaseAuth: FirebaseAuth,va
                             } else null
                         } ?: emptyList()
 
-                        trySend(Result.success(sources))
+                        trySend(Result.success(sources.map { it.toDomain() }))
                     } catch (e: Exception) {
                         trySend(Result.failure(e))
                     }
@@ -112,7 +113,7 @@ class FollowRepositoryImpl @Inject constructor(val firebaseAuth: FirebaseAuth,va
 
         } catch (e: Exception) {
             trySend(Result.failure(e))
-            close()
+            close(e)
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.mynewsapp.data.repositories
 
 import android.content.SharedPreferences
+import com.example.mynewsapp.data.mappers.toDomain
 import com.example.mynewsapp.data.model.language.Language
+import com.example.mynewsapp.domain.domainmodels.LanguageModel
 import com.example.mynewsapp.domain.interfaces.LanguageRepository
 import javax.inject.Inject
 import javax.inject.Named
@@ -29,6 +31,8 @@ class LanguageRepositoryImpl @Inject constructor(
 
     }
 
-    override fun getLanguageList(): List<Language> =
-        listOf<Language>(Language("English", "en"), Language("Azerbaijani", "az"))
+    override fun getLanguageList(): List<LanguageModel> {
+       val languagesList =  listOf<Language>(Language("English", "en"), Language("Azerbaijani", "az"))
+       return languagesList.map { it.toDomain() }
+    }
 }

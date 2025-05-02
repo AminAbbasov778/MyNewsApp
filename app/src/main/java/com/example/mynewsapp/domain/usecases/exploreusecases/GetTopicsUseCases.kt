@@ -7,5 +7,5 @@ import com.example.mynewsapp.domain.mappers.toDomain
 import javax.inject.Inject
 
 class GetTopicsUseCases @Inject constructor(val topicRepository: TopicRepository) {
-    operator fun invoke() : List<TopicModel> = topicRepository.getTopics().map { it.toDomain() }
+    operator fun invoke() : List<TopicModel> = topicRepository.getTopics()
 }

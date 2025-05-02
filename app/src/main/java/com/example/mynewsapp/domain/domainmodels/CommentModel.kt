@@ -6,7 +6,7 @@ data class CommentModel(
     val username: String,
     val userId: String,
     val commentedAt: String,
-    val timeDifference: String?= "Empty difference",
+    val timeDifference: String= "Empty difference",
     val url: String,
     val isReply: Boolean,
     val parentCommentId: String?,

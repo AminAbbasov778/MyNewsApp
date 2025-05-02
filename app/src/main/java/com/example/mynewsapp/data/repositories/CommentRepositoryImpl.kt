@@ -1,6 +1,8 @@
 package com.example.mynewsapp.data.repositories
 
 import FirestoreUtil
+import com.example.mynewsapp.data.mappers.toData
+import com.example.mynewsapp.data.mappers.toDomain
 import com.example.mynewsapp.data.model.comment.Comment
 import com.example.mynewsapp.domain.domainmodels.CommentModel
 import com.example.mynewsapp.domain.interfaces.CommentRepository
@@ -19,21 +21,22 @@ class CommentRepositoryImpl @Inject constructor(
 ) : CommentRepository {
 
     override suspend fun addComment(commentModel: CommentModel): Result<Unit> {
+        val comment = commentModel.toData()
         val user = firebaseAuth.currentUser ?: return Result.failure(Exception("User not logged in"))
         val encodedUrl = FirestoreUtil.encodeUrlToId(commentModel.url)
 
         val commentData = hashMapOf(
-            "comment" to commentModel.comment,
-            "profileImg" to commentModel.profileImg,
-            "username" to commentModel.username,
+            "comment" to comment.comment,
+            "profileImg" to comment.profileImg,
+            "username" to comment.username,
             "userId" to user.uid,
-            "commentedAt" to commentModel.commentedAt,
-            "parentCommentId" to commentModel.parentCommentId,
-            "isReply" to commentModel.isReply,
-            "url" to commentModel.url,
-            "parentUsername" to commentModel.parentUsername,
-            "likesCount" to commentModel.likesCount,
-            "isLiked" to commentModel.isLiked
+            "commentedAt" to comment.commentedAt,
+            "parentCommentId" to comment.parentCommentId,
+            "isReply" to comment.isReply,
+            "url" to comment.url,
+            "parentUsername" to comment.parentUsername,
+            "likesCount" to comment.likesCount,
+            "isLiked" to comment.isLiked
         )
         return try {
             firebaseFirestore.collection("comments")
@@ -47,7 +50,7 @@ class CommentRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getComments(newsUrl: String): Flow<Result<List<Comment>>> = callbackFlow {
+    override suspend fun getComments(newsUrl: String): Flow<Result<List<CommentModel>>> = callbackFlow {
         try {
             val encodedUrl = FirestoreUtil.encodeUrlToId(newsUrl)
 
@@ -63,7 +66,7 @@ class CommentRepositoryImpl @Inject constructor(
                     val result = snapshot?.documents?.mapNotNull { doc ->
                         try {
                             val comment = doc.toObject(Comment::class.java)
-                            comment
+                            comment?.toDomain()
                         } catch (e: Exception) {
                             null
                         }

@@ -10,6 +10,7 @@ import com.example.mynewsapp.data.model.latestnews.Source
 import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.usecases.commonusecases.GetCategoryUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProcessedNewsUseCase
+import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -73,17 +74,16 @@ class HomeViewModel @Inject constructor(
         _latestNewsState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             val result =
-                getProcessedNewsUseCase(currentCategory, "publishedAt", pageSize, currentPage)
+                getProcessedNewsUseCase(currentCategory, "publishedAt", pageSize, currentPage).map{list -> list.map{it.toUi()}}
 
             withContext(Dispatchers.Main){
                if(result.isSuccess){
                    val data = result.getOrNull() ?: emptyList()
-                   val list = convertArticleModelToArticleUiModel(data)
                    if (currentPage == 1) {
                        newsList.clear()
-                       newsList.addAll(list.take(pageSize))
+                       newsList.addAll(data.take(pageSize))
                    } else {
-                       newsList.addAll(list.take(totalResult - newsList.size))
+                       newsList.addAll(data.take(totalResult - newsList.size))
                    }
 
                    _latestNewsState.value = UiState.Success(ArrayList(newsList))
@@ -114,12 +114,11 @@ class HomeViewModel @Inject constructor(
     private fun getTrendingNewsResult() {
         _trendingNewsState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val result = getProcessedNewsUseCase("everything", "popularity")
+            val result = getProcessedNewsUseCase("everything", "popularity").map{list -> list.map{it.toUi()}}
             withContext(Dispatchers.Main){
                 if(result.isSuccess){
                     val data = result.getOrNull() ?: emptyList()
-                    val news = convertArticleModelToArticleUiModel(data)
-                    _trendingNewsState.value = UiState.Success(news)
+                    _trendingNewsState.value = UiState.Success(data)
                 }
                 else{
                     _trendingNewsState.value = UiState.Error(R.string.wrong_something)

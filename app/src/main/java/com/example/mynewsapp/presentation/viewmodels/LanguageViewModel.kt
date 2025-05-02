@@ -39,7 +39,7 @@ class LanguageViewModel @Inject constructor(
     }
 
     fun getLanguageList() {
-        langList = getLanguageListUseCase().map { it.toUi(false) }
+        langList = getLanguageListUseCase().map { it.toUi() }
     }
 
     fun setIsSelected(langCode: String) {

@@ -7,24 +7,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.follow.Follow
 import com.example.mynewsapp.domain.usecases.commentusecases.GetCommentsUseCase
 import com.example.mynewsapp.domain.usecases.detail.DeleteBookmarkUseCase
 import com.example.mynewsapp.domain.usecases.detail.IsNewsBookmarkedUseCase
 import com.example.mynewsapp.domain.usecases.detail.SaveBookmarkUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.FavoriteNewsUseCase
+import com.example.mynewsapp.domain.usecases.detailusecases.FollowNewsSourceUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.GetFavoriteCountUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.IsNewsFavoriteUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.IsNewsSourceFollowedUseCase
-import com.example.mynewsapp.domain.usecases.detailusecases.FollowNewsSourceUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnFavoriteNewUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnfollowNewSourceUseCase
+import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -41,7 +42,7 @@ class DetailViewModel @Inject constructor(
     private val isNewsFavoriteUseCase: IsNewsFavoriteUseCase,
     private val isNewsSourceFollowedUseCase: IsNewsSourceFollowedUseCase,
     private val getFavoriteCountUseCase: GetFavoriteCountUseCase,
-    private val getCommentsUseCase: GetCommentsUseCase
+    private val getCommentsUseCase: GetCommentsUseCase,
 ) : ViewModel() {
 
     private val _actionState = MutableLiveData<UiState<Unit>>()
@@ -78,7 +79,8 @@ class DetailViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     fun getComments(url: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val resultFlow = getCommentsUseCase(url)
+            val resultFlow =
+                getCommentsUseCase(url).map { result -> result.map { list -> list.map { it.toUi() } } }
             resultFlow.collect { result ->
                 withContext(Dispatchers.Main) {
                     if (result.isSuccess) {
@@ -105,10 +107,10 @@ class DetailViewModel @Inject constructor(
                             val isFavorite = isFavoriteResult.getOrNull() ?: false
                             val count = countResult.getOrNull() ?: 0
                             _isFavorite.value = isFavorite
-                            _favoriteCount.value =   UiState.Success(count)
+                            _favoriteCount.value = UiState.Success(count)
                             _actionState.value = UiState.Success(Unit)
                         } else {
-                            _actionState.value =  UiState.Error(R.string.wrong_something)
+                            _actionState.value = UiState.Error(R.string.wrong_something)
                         }
                     }
                 }
@@ -130,7 +132,6 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
-
 
 
     fun deleteBookmark(article: ArticleUiModel) {
@@ -216,9 +217,9 @@ class DetailViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                 if (result.isSuccess) {
                     _isFavorite.value = true
-                    _actionState.value= UiState.Success(Unit)
+                    _actionState.value = UiState.Success(Unit)
                 } else {
-                    _actionState.value =  UiState.Error(R.string.failed_favorite)
+                    _actionState.value = UiState.Error(R.string.failed_favorite)
                 }
             }
         }
@@ -255,6 +256,6 @@ class DetailViewModel @Inject constructor(
     }
 
     fun favoriteStatus() {
-        _isFavorite.value =  false
+        _isFavorite.value = false
     }
 }

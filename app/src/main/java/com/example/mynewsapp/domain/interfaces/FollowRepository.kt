@@ -8,6 +8,6 @@ interface FollowRepository  {
     suspend fun followNewsSource(follow: FollowModel): Result<Unit>
      suspend fun unfollowNewsSource(sourceName: String): Result<Unit>
     suspend fun isNewsSourceFollowed(sourceName: String): Result<Boolean>
-    suspend fun getFollowedSources(): Flow<Result<List<Follow>>>
+    suspend fun getFollowedSources(): Flow<Result<List<FollowModel>>>
 
 }

@@ -12,6 +12,7 @@ import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCas
 import com.example.mynewsapp.domain.usecases.profileUseCase.DeleteNewsByPublishedAtUseCase
 import com.example.mynewsapp.domain.usecases.profileUseCase.GetTimeDifferenceUseCase
 import com.example.mynewsapp.domain.usecases.profileUseCase.GetUserNewsUseCase
+import com.example.mynewsapp.presentation.mappers.toProfileUiModel
 import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
 import com.example.mynewsapp.presentation.uimodels.createnews.UserNewsUiModel
@@ -64,17 +65,8 @@ class ProfileViewModel @Inject constructor(
                     if (profileData.isSuccess) {
                         val data = profileData.getOrNull()
                         data?.let {
-                            val imageBitmap = ImageUtils.base64ToBitmap(data.imageBase64)
                             _profileData.value = UiState.Success(
-                                ProfileUiModel(
-                                    imageBitmap,
-                                    data.email,
-                                    data.fullName,
-                                    data.bio,
-                                    data.phoneNumber,
-                                    data.username,
-                                    data.website
-                                )
+                                data.toProfileUiModel()
                             )
                         }
                     } else {
@@ -98,7 +90,7 @@ class ProfileViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                     if (userNews.isSuccess) {
                         var newsResult = userNews.getOrNull()?.map {
-                            it.toUi(ImageUtils.base64ToBitmap(it.imageBase64),ImageUtils.base64ToBitmap(it.profileImageBase64),getTimeDifferenceUseCase(it.publishedAt))
+                            it.toUi(getTimeDifferenceUseCase(it.publishedAt))
                         }
                         _userNews.value = UiState.Success(newsResult ?: emptyList())
                     } else {

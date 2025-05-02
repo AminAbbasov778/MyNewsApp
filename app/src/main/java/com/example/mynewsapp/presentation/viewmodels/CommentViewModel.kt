@@ -17,9 +17,13 @@ import com.example.mynewsapp.domain.usecases.commentusecases.UnlikeCommentUseCas
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetUserIdUseCase
 import com.example.mynewsapp.domain.usecases.createnewsusecases.GetTimeStampUseCase
+import com.example.mynewsapp.presentation.mappers.toDomain
+import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.comment.CommentLikeStatus
 import com.example.mynewsapp.presentation.uimodels.comment.CommentsUiModel
 import com.example.mynewsapp.presentation.uimodels.comment.NewCommentUIModel
+import com.example.mynewsapp.presentation.uimodels.profile.NewProfileUiModel
+import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uiutils.ImageUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -68,18 +72,23 @@ class CommentViewModel @Inject constructor(
                     _commentState.value = UiState.Error(R.string.failed_add_comment)
                     return@launch
                 }
-
-                val comment = provideNewCommentUIModel(
-                    profileResult.getOrNull()!!,
-                    commentText,
-                    newsUrl,
-                    selectedReplyComment.value?.isReply ?: false,
-                    selectedReplyComment.value?.parentCommentId ?: "",
-                    selectedReplyComment.value?.username ?: ""
+                val comment = NewCommentUIModel(
+                    comment = commentText,
+                    profileImgBase64 = profileResult.getOrNull()!!.imageBase64,
+                    username = profileResult.getOrNull()!!.username,
+                    userId = getUserIdUseCase() ?: "unknown",
+                    url = newsUrl,
+                    commentedAt = getTimeStampUseCase(),
+                    isReply = selectedReplyComment.value?.isReply ?: false,
+                    parentCommentId = selectedReplyComment.value?.parentCommentId ?: "",
+                    parentUsername = selectedReplyComment.value?.username ?: "",
+                    likesCount = 0,
                 )
 
+
+
                 val result = withContext(Dispatchers.IO) {
-                    addCommentUseCase(comment)
+                    addCommentUseCase(comment.toDomain())
                 }
 
                 if (result.isSuccess) {
@@ -91,40 +100,18 @@ class CommentViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getUserProfile(): Result<Profile> {
+    private suspend fun getUserProfile(): Result<NewProfileUiModel> {
         val result = getProfileDataUseCase().firstOrNull()
-        return result?.let {
-            if (it.isSuccess && it.getOrNull() != null) Result.success(it.getOrNull()!!)
-            else Result.failure(it.exceptionOrNull() ?: Exception("Profile is not found"))
+        return result?.let {profile ->
+            if (profile.isSuccess && profile.getOrNull() != null) Result.success(profile.getOrNull()!!.toUi())
+            else Result.failure(profile.exceptionOrNull() ?: Exception("Profile is not found"))
 
         } ?: run {
             Result.failure(Exception("Profile is not found"))
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun provideNewCommentUIModel(
-        profile: Profile,
-        commentText: String,
-        url: String,
-        isReply: Boolean,
-        parentCommentId: String,
-        parentUsername: String,
-    ): NewCommentUIModel {
-        return NewCommentUIModel(
-            comment = commentText,
-            profileImg = profile.imageBase64,
-            username = profile.username,
-            userId = getUserIdUseCase() ?: "unknown",
-            url = url,
-            commentedAt = getTimeStampUseCase(),
-            isReply = isReply,
-            parentCommentId = parentCommentId,
-            parentUsername = parentUsername,
-            likesCount = 0,
-            isLiked = false,
-        )
-    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getComments(url: String) {
@@ -137,8 +124,7 @@ class CommentViewModel @Inject constructor(
                         val commentUiList = commentDomainList.map { comment ->
                             val isLiked =
                                 isCommentLikedUseCase(comment.commentedAt).getOrNull() ?: false
-                            CommentsUiModel(
-                                comment = comment.comment,
+                            CommentsUiModel(comment.comment,
                                 profileImg = ImageUtils.base64ToBitmap(comment.profileImg),
                                 username = comment.username,
                                 userId = comment.userId,

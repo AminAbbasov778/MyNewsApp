@@ -13,6 +13,15 @@ import com.example.mynewsapp.domain.usecases.commonusecases.CapturePhotoUseCase
 import com.example.mynewsapp.domain.usecases.createnewsusecases.CreateNewsUseCase
 import com.example.mynewsapp.domain.usecases.createnewsusecases.UserNewsModelUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
+import com.example.mynewsapp.domain.usecases.createnewsusecases.GetTimeStampUseCase
+import com.example.mynewsapp.domain.usecases.editprofileusecases.ConvertUriToBase64UseCase
+import com.example.mynewsapp.presentation.mappers.toDomain
+import com.example.mynewsapp.presentation.mappers.toProfileUiModel
+import com.example.mynewsapp.presentation.mappers.toUi
+import com.example.mynewsapp.presentation.uimodels.createnews.NewUserNewsUiModel
+import com.example.mynewsapp.presentation.uimodels.createnews.UserNewsUiModel
+import com.example.mynewsapp.presentation.uimodels.profile.NewProfileUiModel
+import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +41,8 @@ class CreateNewsViewModel @Inject constructor(
     val createNewsUseCase: CreateNewsUseCase,
     val userNewsModelUseCase: UserNewsModelUseCase,
     val getProfileDataUseCase: GetProfileDataUseCase,
+    val convertUriToBase64UseCase: ConvertUriToBase64UseCase,
+    val getTimeStampUseCase: GetTimeStampUseCase,
 ) : ViewModel() {
     private var _imageUri = MutableLiveData<Uri>()
     val imageUri: LiveData<Uri> get() = _imageUri
@@ -95,18 +106,17 @@ class CreateNewsViewModel @Inject constructor(
                 return@launch
             }
 
-            val fullName = profileData.fullName
-            val profileImageBase64 = profileData.imageBase64
-
-            val userNews = userNewsModelUseCase(
-                newsTitle,
+            val newsImageBase64 = convertUriToBase64UseCase(newsImageUri) ?: "Empty news image"
+            val publishedAt = getTimeStampUseCase()
+            val news = NewUserNewsUiModel(
                 newsArticle,
-                newsImageUri,
-                fullName,
-                profileImageBase64
+                newsTitle,
+                newsImageBase64,
+                profileData.imageBase64,
+                profileData.fullName,
+                publishedAt
             )
-
-            val result = createNewsUseCase(userNews)
+            val result = createNewsUseCase(news.toDomain())
 
             withContext(Dispatchers.Main) {
                 _createNewsResult.value = if (result.isSuccess) {
@@ -118,9 +128,9 @@ class CreateNewsViewModel @Inject constructor(
         }
     }
 
-    suspend fun getUserProfileData(): Profile? {
+    suspend fun getUserProfileData(): NewProfileUiModel? {
         val profileResult = getProfileDataUseCase()
-       return profileResult.firstOrNull{it.isSuccess}?.getOrNull()
+       return profileResult.firstOrNull{it.isSuccess}?.getOrNull()?.toUi()
     }
 }
 

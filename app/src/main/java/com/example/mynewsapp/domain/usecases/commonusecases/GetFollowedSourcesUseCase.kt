@@ -10,8 +10,6 @@ import javax.inject.Inject
 
 class GetFollowedSourcesUseCase @Inject constructor(val followRepository: FollowRepository) {
     suspend operator fun invoke(): Flow<Result<List<FollowModel>>>  {
-       return followRepository.getFollowedSources().map { result ->
-            result.map { list -> list.map { it.toDomain() } }
-        }
+       return followRepository.getFollowedSources()
     }
 }

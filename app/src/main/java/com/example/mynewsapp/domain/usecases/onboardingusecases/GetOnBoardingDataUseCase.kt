@@ -7,5 +7,5 @@ import com.example.mynewsapp.presentation.uimodels.boarding.BoardingUiModel
 import javax.inject.Inject
 
 class GetOnBoardingDataUseCase @Inject constructor(val onBoardingRepository: OnBoardingRepository) {
-    operator fun invoke(): List<BoardingModel> = onBoardingRepository.getOnBoardingData().map { it.toDomain() }
+    operator fun invoke(): List<BoardingModel> = onBoardingRepository.getOnBoardingData()
 }

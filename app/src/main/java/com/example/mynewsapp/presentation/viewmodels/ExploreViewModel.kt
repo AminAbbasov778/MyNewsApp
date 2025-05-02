@@ -51,12 +51,11 @@ class ExploreViewModel @Inject constructor(
     fun getTrendingNews() {
         _trendingNews.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val trendingNews = getProcessedNewsUseCase("everything", "popularity")
+            val trendingNews = getProcessedNewsUseCase("everything", "popularity").map {list -> list.map { it.toUi() } }
             withContext(Dispatchers.Main) {
                 if (trendingNews.isSuccess) {
                     val data = trendingNews.getOrNull() ?: emptyList()
-                    val news = convertArticleModelToArticleUiModel(data)
-                    _trendingNews.value = UiState.Success(news)
+                    _trendingNews.value = UiState.Success(data)
                 } else {
                     _trendingNews.value = UiState.Error(R.string.wrong_something)
                 }
@@ -64,19 +63,6 @@ class ExploreViewModel @Inject constructor(
             }
         }
     }
-    fun convertArticleModelToArticleUiModel(newsList: List<ArticleModel>)=
-        newsList.map {news ->
-            ArticleUiModel(
-                urlToImage = news.urlToImage ?: "No Image Url",
-                timeDifference = news.timeDifference,
-                title = news.title ?: "No title",
-                description = news.description ?: "No description",
-                author = news.author ?: "No author",
-                content = news.content ?: "No content",
-                source = Source(news.source?.id ?: "No id", news.source?.name ?: "No name"),
-                url = news.url ?: "No url",
-                publishedAt = news.publishedAt ?: "No published at"
-            )  }
 
     fun saveTopics(topicName: String) {
         _topics.value = UiState.Loading
@@ -110,7 +96,6 @@ class ExploreViewModel @Inject constructor(
             getSavedTopicsUseCase().collect { savedTopicsResult ->
                 if (savedTopicsResult.isSuccess) {
                     val savedTopics = savedTopicsResult.getOrNull() ?: emptyList()
-
                     topicList = topics.map { topic ->
                         topic.toUi(savedTopics.contains(topic.topic))
                     }
