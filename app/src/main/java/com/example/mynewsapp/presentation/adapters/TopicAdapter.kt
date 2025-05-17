@@ -61,7 +61,7 @@ class TopicAdapter(val onSaveClick : (TopicUiModel) -> Unit) : RecyclerView.Adap
 
 
 
-    fun updateList(newList : ArrayList<TopicUiModel>){
+    fun updateList(newList : List<TopicUiModel>){
         val diffCallback = GenericDiffUtil(
             oldList = topicList,
             newList = newList,

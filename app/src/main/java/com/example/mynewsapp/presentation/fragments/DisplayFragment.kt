@@ -1,6 +1,5 @@
 package com.example.mynewsapp.presentation.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.app.utils.ThemeHelper
 import com.example.mynewsapp.databinding.FragmentDisplayBinding
-import com.example.mynewsapp.presentation.activities.MainActivity
 import com.example.mynewsapp.presentation.uistates.ResultState
 import com.example.mynewsapp.presentation.viewmodels.DisplayViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,12 +1,7 @@
 package com.example.mynewsapp.presentation.activities
 
 import android.content.Context
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.mynewsapp.R
 import com.example.mynewsapp.Utils.LanguageManager
 
 abstract class BaseActivity : AppCompatActivity() {

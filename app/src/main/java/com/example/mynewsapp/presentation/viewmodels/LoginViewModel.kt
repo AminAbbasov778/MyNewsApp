@@ -14,7 +14,6 @@ import com.example.mynewsapp.domain.usecases.loginusecases.SignInWithFacebookUse
 import com.example.mynewsapp.domain.usecases.loginusecases.SignInWithGoogleUseCase
 import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uistates.ValidationState
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

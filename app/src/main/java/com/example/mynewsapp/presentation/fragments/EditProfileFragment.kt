@@ -11,15 +11,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.mynewsapp.presentation.uiutils.BitmapUtils
 import com.example.mynewsapp.Utils.Constants.CAMERA_PERMISSION_REQUEST_CODE
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentEditProfileBinding
-import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
+import com.example.mynewsapp.presentation.uistates.UiState
+import com.example.mynewsapp.presentation.uiutils.BitmapUtils
 import com.example.mynewsapp.presentation.uiutils.CameraPermissionUtils
 import com.example.mynewsapp.presentation.uiutils.DialogUtils
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.presentation.viewmodels.EditProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

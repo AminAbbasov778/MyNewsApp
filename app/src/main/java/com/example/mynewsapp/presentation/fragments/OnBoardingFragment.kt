@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentOnBoardingBinding
 import com.example.mynewsapp.presentation.adapters.OnBoardingAdapter
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.presentation.viewmodels.OnBoardingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

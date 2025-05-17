@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mynewsapp.R
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentProfileBinding
 import com.example.mynewsapp.presentation.adapters.UserNewsAdapter
-import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
+import com.example.mynewsapp.presentation.uistates.UiState
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.presentation.viewmodels.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -91,7 +91,7 @@ class ProfileFragment : Fragment() {
 
         viewModel.isNewsDeleted.observe(viewLifecycleOwner) {
             when(it){
-                is UiState.Success -> uiStateObserve(it.data)
+                is UiState.Success -> binding.loading.setGone()
                 is UiState.Error -> uiStateObserve(it.message)
                 is UiState.Loading -> binding.loading.show()
             }

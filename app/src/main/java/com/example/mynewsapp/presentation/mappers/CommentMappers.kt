@@ -20,5 +20,5 @@ fun NewCommentUIModel.toDomain(): CommentModel{
 }
 
 fun CommentModel.toUi(): CommentsUiModel{
-    return CommentsUiModel(comment, ImageUtils.base64ToBitmap(profileImg),username,userId,commentedAt,timeDifference,url,isReply,parentCommentId,parentUsername,likesCount,isLiked,replies.map { it.toUi() })
+    return CommentsUiModel(comment, ImageUtils.base64ToBitmap(profileImg),username,userId,commentedAt,timeDifference,url,isReply,parentCommentId,parentUsername,likesCount,replies.map { it.toUi() })
 }

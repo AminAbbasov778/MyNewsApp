@@ -35,6 +35,7 @@ class FollowAdapter(val onUnFollowClick: (String) -> Unit) :
         holder.binding.followButton.setOnClickListener {
             onUnFollowClick(list.sourceName)
         }
+
     }
 
     override fun getItemCount(): Int {

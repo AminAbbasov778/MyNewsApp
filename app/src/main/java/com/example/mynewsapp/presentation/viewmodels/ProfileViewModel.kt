@@ -1,5 +1,6 @@
 package com.example.mynewsapp.presentation.viewmodels
 
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
@@ -14,11 +15,9 @@ import com.example.mynewsapp.domain.usecases.profileUseCase.GetTimeDifferenceUse
 import com.example.mynewsapp.domain.usecases.profileUseCase.GetUserNewsUseCase
 import com.example.mynewsapp.presentation.mappers.toProfileUiModel
 import com.example.mynewsapp.presentation.mappers.toUi
-import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
 import com.example.mynewsapp.presentation.uimodels.createnews.UserNewsUiModel
 import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
-import com.example.mynewsapp.presentation.uiutils.ImageUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -135,8 +134,22 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun getWebsiteUrl(): String? {
-        return (profileData.value as? UiState.Success)?.data?.website
+        val website = (profileData.value as? UiState.Success)?.data?.website
+        return if (!website.isNullOrBlank() && isValidUrl(website)) {
+            website
+        } else {
+            null
+        }
     }
+    private fun isValidUrl(url: String): Boolean {
+        return try {
+            val uri = Uri.parse(url)
+            uri.scheme == "http" || uri.scheme == "https"
+        } catch (e: Exception) {
+            false
+        }
+    }
+
 
 
 

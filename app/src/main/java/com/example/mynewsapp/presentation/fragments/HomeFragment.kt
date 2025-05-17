@@ -10,15 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.app.utils.ThemeHelper
 import com.example.mynewsapp.R
-import com.example.mynewsapp.presentation.uiutils.PicassoUtil.LoadUrl
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentHomeBinding
 import com.example.mynewsapp.presentation.adapters.CategoryAdapter
 import com.example.mynewsapp.presentation.adapters.LatestNewsAdapter
 import com.example.mynewsapp.presentation.uistates.UiState
+import com.example.mynewsapp.presentation.uiutils.PicassoUtil.LoadUrl
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.presentation.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,21 +50,24 @@ class HomeFragment : Fragment() {
 
 
     private fun setupUI() {
-        latestNewsAdapter = LatestNewsAdapter {
-            val layoutManager = binding.latestNewsRecView.layoutManager as LinearLayoutManager
-            firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                    it
+        latestNewsAdapter = LatestNewsAdapter (
+            onNewsClick = {
+                val layoutManager = binding.latestNewsRecView.layoutManager as LinearLayoutManager
+                firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                        it
+                    )
                 )
-            )
-        }
+            },
+
+        )
         binding.latestNewsRecView.adapter = latestNewsAdapter
         binding.latestNewsRecView.layoutManager = LinearLayoutManager(context)
         setupScrollListener()
 
         categoryAdapter = CategoryAdapter {
-            viewModel.getLatestNewsResult(category = it)
+            viewModel.getLatestNewsResult(category = getString(it))
         }
         binding.newsCategoriesRecView.adapter = categoryAdapter
     }

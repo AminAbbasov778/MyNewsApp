@@ -7,6 +7,7 @@ import com.example.mynewsapp.data.local.dao.IsNewsBookmarkedDao
 import com.example.mynewsapp.data.local.dao.ReadBookmarkDao
 import com.example.mynewsapp.data.local.dao.WriteBookmarkDao
 import com.example.mynewsapp.data.remote.RequestService
+import com.example.mynewsapp.data.repositories.AuthorsRepositoryImpl
 import com.example.mynewsapp.data.repositories.BookmarkDatabaseRepositoryImpl
 import com.example.mynewsapp.data.repositories.CameraRepositoryImpl
 import com.example.mynewsapp.data.repositories.CategoryRepositoryImpl
@@ -23,6 +24,7 @@ import com.example.mynewsapp.data.repositories.ThemeRepositoryImpl
 import com.example.mynewsapp.data.repositories.TopicRepositoryImpl
 import com.example.mynewsapp.data.repositories.UserRepositoryImpl
 import com.example.mynewsapp.data.repository.FavoriteRepositoryImpl
+import com.example.mynewsapp.domain.interfaces.AuthorsRepository
 import com.example.mynewsapp.domain.interfaces.BookmarkDatabaseRepository
 import com.example.mynewsapp.domain.interfaces.CameraRepository
 import com.example.mynewsapp.domain.interfaces.CategoryRepository
@@ -39,12 +41,9 @@ import com.example.mynewsapp.domain.interfaces.SharedPreferenceRepository
 import com.example.mynewsapp.domain.interfaces.ThemeRepository
 import com.example.mynewsapp.domain.interfaces.TopicRepository
 import com.example.mynewsapp.domain.interfaces.UserRepository
-import com.facebook.CallbackManager
-import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -150,5 +149,9 @@ object RepositoryModule {
    @Provides
    @Singleton
    fun provideEditProfileRepositoryImpl():EditProfileRepository = EditProfileRepositoryImpl()
+
+    @Provides
+    @Singleton
+    fun provideAuthorsRepositoryImpl():AuthorsRepository = AuthorsRepositoryImpl()
 
 }

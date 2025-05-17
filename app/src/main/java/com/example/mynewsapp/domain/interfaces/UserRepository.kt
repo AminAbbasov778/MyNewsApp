@@ -1,7 +1,5 @@
 package com.example.mynewsapp.domain.interfaces
 
-import com.example.mynewsapp.data.model.usernews.UserNews
-import com.example.mynewsapp.data.model.userprofile.Profile
 import com.example.mynewsapp.domain.domainmodels.ProfileModel
 import com.example.mynewsapp.domain.domainmodels.UserNewsModel
 import kotlinx.coroutines.flow.Flow

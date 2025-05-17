@@ -1,16 +1,11 @@
 package com.example.mynewsapp.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.mynewsapp.data.local.entity.BookmarkEntity
-import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.databinding.BookmarkItemBinding
-import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 import com.example.mynewsapp.presentation.uiutils.NewsPopupHelper

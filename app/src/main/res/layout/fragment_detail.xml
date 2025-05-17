@@ -273,8 +273,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/unselectedBookmarkIcon"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_marginRight="60dp"
         android:src="@drawable/bookmarkicon"
         app:layout_constraintBottom_toBottomOf="@id/commentCount"
@@ -286,8 +286,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/selectedBookmarkIcon"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_marginRight="60dp"
         android:src="@drawable/selectedbookmarkicon"
         android:visibility="gone"

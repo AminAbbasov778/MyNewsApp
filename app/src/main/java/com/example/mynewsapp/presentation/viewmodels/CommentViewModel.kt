@@ -7,8 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.userprofile.Profile
-import com.example.mynewsapp.domain.domainmodels.CommentModel
 import com.example.mynewsapp.domain.usecases.commentusecases.AddCommentUseCase
 import com.example.mynewsapp.domain.usecases.commentusecases.GetCommentsUseCase
 import com.example.mynewsapp.domain.usecases.commentusecases.IsCommentLikedUseCase
@@ -23,9 +21,7 @@ import com.example.mynewsapp.presentation.uimodels.comment.CommentLikeStatus
 import com.example.mynewsapp.presentation.uimodels.comment.CommentsUiModel
 import com.example.mynewsapp.presentation.uimodels.comment.NewCommentUIModel
 import com.example.mynewsapp.presentation.uimodels.profile.NewProfileUiModel
-import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
-import com.example.mynewsapp.presentation.uiutils.ImageUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
@@ -72,20 +68,19 @@ class CommentViewModel @Inject constructor(
                     _commentState.value = UiState.Error(R.string.failed_add_comment)
                     return@launch
                 }
+                val isReply = selectedReplyComment.value != null
+
                 val comment = NewCommentUIModel(
-                    comment = commentText,
-                    profileImgBase64 = profileResult.getOrNull()!!.imageBase64,
-                    username = profileResult.getOrNull()!!.username,
-                    userId = getUserIdUseCase() ?: "unknown",
-                    url = newsUrl,
-                    commentedAt = getTimeStampUseCase(),
-                    isReply = selectedReplyComment.value?.isReply ?: false,
-                    parentCommentId = selectedReplyComment.value?.parentCommentId ?: "",
-                    parentUsername = selectedReplyComment.value?.username ?: "",
-                    likesCount = 0,
+                    commentText,
+                    profileResult.getOrNull()!!.imageBase64,
+                    profileResult.getOrNull()!!.username,
+                    getUserIdUseCase() ?: "unknown",
+                    getTimeStampUseCase(),
+                    newsUrl,
+                    isReply,
+                    selectedReplyComment.value?.parentCommentId,
+                    selectedReplyComment.value?.username,
                 )
-
-
 
                 val result = withContext(Dispatchers.IO) {
                     addCommentUseCase(comment.toDomain())
@@ -95,23 +90,22 @@ class CommentViewModel @Inject constructor(
                     _commentState.value = UiState.Success(R.string.success_add_comment)
                     clearData()
                 } else _commentState.value = UiState.Error(R.string.failed_add_comment)
-
             }
         }
     }
 
     private suspend fun getUserProfile(): Result<NewProfileUiModel> {
         val result = getProfileDataUseCase().firstOrNull()
-        return result?.let {profile ->
-            if (profile.isSuccess && profile.getOrNull() != null) Result.success(profile.getOrNull()!!.toUi())
+        return result?.let { profile ->
+            if (profile.isSuccess && profile.getOrNull() != null) Result.success(
+                profile.getOrNull()!!.toUi()
+            )
             else Result.failure(profile.exceptionOrNull() ?: Exception("Profile is not found"))
 
         } ?: run {
             Result.failure(Exception("Profile is not found"))
         }
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getComments(url: String) {
@@ -121,23 +115,18 @@ class CommentViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     if (result.isSuccess) {
                         val commentDomainList = result.getOrNull() ?: emptyList()
-                        val commentUiList = commentDomainList.map { comment ->
-                            val isLiked =
-                                isCommentLikedUseCase(comment.commentedAt).getOrNull() ?: false
-                            CommentsUiModel(comment.comment,
-                                profileImg = ImageUtils.base64ToBitmap(comment.profileImg),
-                                username = comment.username,
-                                userId = comment.userId,
-                                commentedAt = comment.commentedAt,
-                                timeDifference = comment.timeDifference,
-                                url = comment.url,
-                                isReply = comment.isReply,
-                                parentCommentId = comment.parentCommentId,
-                                parentUsername = comment.parentUsername,
-                                likesCount = comment.likesCount,
-                                isLiked = isLiked,
-                                replies = replyUiModel(comment.replies)
-                            )
+                        val currentLikeStatus = _commentLikeStatus.value ?: emptyMap()
+                        var commentUiList = commentDomainList.map { it.toUi() }
+                        commentUiList = commentUiList.map { comment ->
+                            val isLikedFromStatus = currentLikeStatus[comment.commentedAt]?.isLiked
+                            val isLiked = isLikedFromStatus
+                                ?: isCommentLikedUseCase(comment.commentedAt).getOrNull() ?: false
+                            val updatedReplies = comment.replies.map { reply ->
+                                val replyIsLiked = currentLikeStatus[reply.commentedAt]?.isLiked
+                                    ?: isCommentLikedUseCase(reply.commentedAt).getOrNull() ?: false
+                                reply.copy(isLiked = replyIsLiked)
+                            }
+                            comment.copy(isLiked = isLiked, replies = updatedReplies)
                         }
                         _comments.value = UiState.Success(commentUiList)
                         initializeLikeStatus(commentUiList)
@@ -148,32 +137,13 @@ class CommentViewModel @Inject constructor(
             }
         }
     }
-
-    private suspend fun replyUiModel(replies: List<CommentModel>): List<CommentsUiModel> =
-        replies.map { reply ->
-            val isLiked = isCommentLikedUseCase(reply.commentedAt).getOrNull() ?: false
-            CommentsUiModel(
-                comment = reply.comment,
-                profileImg = ImageUtils.base64ToBitmap(reply.profileImg),
-                username = reply.username,
-                userId = reply.userId,
-                commentedAt = reply.commentedAt,
-                timeDifference = reply.timeDifference,
-                url = reply.url,
-                isReply = reply.isReply,
-                parentCommentId = reply.parentCommentId,
-                parentUsername = reply.parentUsername,
-                likesCount = reply.likesCount,
-                isLiked = isLiked,
-                replies = emptyList()
-            )
-        }
-
     fun setReplyComment(comment: CommentsUiModel) {
-        _selectedReplyComment.value = if (comment.parentUsername.isNullOrEmpty()) {
-            comment.copy(isReply = true, parentCommentId = comment.commentedAt)
+        if (comment.parentUsername.isNullOrEmpty()) {
+            _selectedReplyComment.value =
+                comment.copy(isReply = true, parentCommentId = comment.commentedAt)
+
         } else {
-            comment.copy(
+            _selectedReplyComment.value = comment.copy(
                 isReply = true,
                 parentCommentId = comment.parentCommentId,
                 parentUsername = comment.username
@@ -224,25 +194,33 @@ class CommentViewModel @Inject constructor(
     }
 
     private fun initializeLikeStatus(comments: List<CommentsUiModel>) {
-        val likeStatusMap = mutableMapOf<String, CommentLikeStatus>()
-        comments.forEach { comment ->
-            val likeStatus = CommentLikeStatus(
-                commentId = comment.commentedAt,
-                isLiked = comment.isLiked,
-                likesCount = comment.likesCount
-            )
-            likeStatusMap[comment.commentedAt] = likeStatus
-            comment.replies.forEach { reply ->
-                val replyLikeStatus = CommentLikeStatus(
-                    commentId = reply.commentedAt,
-                    isLiked = reply.isLiked,
-                    likesCount = reply.likesCount
-                )
-                likeStatusMap[reply.commentedAt] = replyLikeStatus
+        viewModelScope.launch(Dispatchers.IO) {
+            val likeStatusMap = _commentLikeStatus.value?.toMutableMap() ?: mutableMapOf()
+            comments.forEach { comment ->
+                if (likeStatusMap[comment.commentedAt] == null) {
+                    val isLiked = isCommentLikedUseCase(comment.commentedAt).getOrNull() ?: false
+                    likeStatusMap[comment.commentedAt] = CommentLikeStatus(
+                        commentId = comment.commentedAt,
+                        isLiked = isLiked,
+                        likesCount = comment.likesCount
+                    )
+                }
+                comment.replies.forEach { reply ->
+                    if (likeStatusMap[reply.commentedAt] == null) {
+                        val isLiked = isCommentLikedUseCase(reply.commentedAt).getOrNull() ?: false
+                        likeStatusMap[reply.commentedAt] = CommentLikeStatus(
+                            commentId = reply.commentedAt,
+                            isLiked = isLiked,
+                            likesCount = reply.likesCount
+                        )
+                    }
+                }
+            }
+            withContext(Dispatchers.Main) {
+                _commentLikeStatus.value = likeStatusMap
+                updateCommentsWithLikeStatus()
             }
         }
-        _commentLikeStatus.value = likeStatusMap
-        updateCommentsWithLikeStatus()
     }
 
     private fun updateCommentLikeStatus(commentId: String, isLiked: Boolean) {
@@ -255,9 +233,13 @@ class CommentViewModel @Inject constructor(
         currentStatus[commentId] = CommentLikeStatus(
             commentId = commentId,
             isLiked = isLiked,
-            likesCount = currentLikeStatus.likesCount
+            likesCount = if (isLiked) currentLikeStatus.likesCount + 1 else maxOf(
+                0,
+                currentLikeStatus.likesCount - 1
+            )
         )
         _commentLikeStatus.value = currentStatus
+
         updateCommentsWithLikeStatus()
     }
 
@@ -270,19 +252,24 @@ class CommentViewModel @Inject constructor(
                     isLiked = status.isLiked,
                     likesCount = status.likesCount
                 )
-            } else comment
+            } else {
+                comment
+            }
 
-            val updatedReplies = updatedComment.replies.map { reply ->
+            val updatedReplies = comment.replies.map { reply ->
                 val replyStatus = _commentLikeStatus.value?.get(reply.commentedAt)
                 if (replyStatus != null) {
                     reply.copy(
                         isLiked = replyStatus.isLiked,
                         likesCount = replyStatus.likesCount
                     )
-                } else reply
+                } else {
+                    reply
+                }
             }
             updatedComment.copy(replies = updatedReplies)
         }
         _comments.value = UiState.Success(updatedComments)
+
     }
 }

@@ -1,10 +1,7 @@
 package com.example.mynewsapp.domain.usecases.commonusecases
 
-import com.example.mynewsapp.data.model.latestnews.Article
-import com.example.mynewsapp.data.model.latestnews.LatestNewsResponse
 import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.interfaces.RetrofitRepository
-import com.example.mynewsapp.domain.mappers.toDomain
 import javax.inject.Inject
 
 class GetNewsUseCase @Inject constructor(

@@ -14,6 +14,7 @@
     <string name="facebook_app_id">YOUR_FACEBOOK_APP_ID</string>
     <string name="website_is_not_avaliable">Sayt yolu el catmazdir</string>
     <string name="display">Ekran</string>
+    <string name="author">Muellif</string>
     <string name="failure_color_mode">Reng modu ugurla teyin edildi</string>
     <string name="facebook_login_cancelled">Facebook ile qeydiyyatdan kecmek legv edilidi</string>
     <string name="no_digit">Şifrə ən azı bir rəqəm daxil etməlidir</string>
@@ -92,7 +93,7 @@
     <string name="news">Xəbərlər</string>
     <string name="profile">Profil</string>
     <string name="follow">İzlə</string>
-    <string name="english">İngilis</string>
+    <string name="english">İngilisce</string>
     <string name="trending">Trend</string>
     <string name="search">Axtarış</string>
     <string name="all">Hamısı</string>
@@ -102,6 +103,7 @@
     <string name="explore">Kəşf et</string>
     <string name="bookmark">Əlfəcinlər</string>
     <string name="topic">Mövzu</string>
+    <string name="azerbaijani">Azerbaycanca</string>
     <string name="comments">Serhler</string>
     <string name="reply">cavab ver</string>
     <string name="type_your_comment">Senin serhin</string>

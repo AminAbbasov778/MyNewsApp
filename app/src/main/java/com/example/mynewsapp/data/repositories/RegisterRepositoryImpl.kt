@@ -1,7 +1,6 @@
 package com.example.mynewsapp.data.repositories
 
 import com.example.mynewsapp.domain.interfaces.RegisterRepository
-import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider

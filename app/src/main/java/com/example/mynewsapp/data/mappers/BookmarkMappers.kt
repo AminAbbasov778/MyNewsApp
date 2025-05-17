@@ -4,8 +4,6 @@ import com.example.mynewsapp.data.local.entity.BookmarkEntity
 import com.example.mynewsapp.data.local.entity.SourceEntity
 import com.example.mynewsapp.data.model.latestnews.Source
 import com.example.mynewsapp.domain.domainmodels.ArticleModel
-import com.example.mynewsapp.domain.usecases.commonusecases.ChangeIsoToMillisFromApiUseCase
-import com.example.mynewsapp.domain.usecases.commonusecases.TimeDifferenceUseCase
 
 
 fun ArticleModel.toData(): BookmarkEntity{

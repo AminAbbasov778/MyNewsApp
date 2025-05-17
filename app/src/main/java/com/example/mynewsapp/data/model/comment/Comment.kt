@@ -12,5 +12,4 @@ data class Comment(
     val parentCommentId: String? = null,
     val parentUsername : String? = null,
     val likesCount: Int = 0,
-    val isLiked: Boolean = false
 )

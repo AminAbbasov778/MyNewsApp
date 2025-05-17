@@ -1,6 +1,5 @@
-package com.example.mynewsapp.domain.usecases.search
+package com.example.mynewsapp.domain.usecases.commonusecases
 
-import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import javax.inject.Inject
 

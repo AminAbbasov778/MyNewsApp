@@ -1,14 +1,17 @@
 package com.example.mynewsapp.presentation.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
+import com.example.mynewsapp.domain.domainmodels.ArticleModel
+import com.example.mynewsapp.domain.domainmodels.FollowModel
 import com.example.mynewsapp.domain.usecases.commonusecases.GetFollowedSourcesUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnfollowNewSourceUseCase
+import com.example.mynewsapp.domain.usecases.followingusecases.GetSearchedFollowSourcesUseCase
 import com.example.mynewsapp.presentation.mappers.toUi
+import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FollowingViewModel @Inject constructor(
     val getFollowedSourcesUseCase: GetFollowedSourcesUseCase,
-    val unfollowNewSourceUseCase: UnfollowNewSourceUseCase
+    val unfollowNewSourceUseCase: UnfollowNewSourceUseCase,
+    val getSearchedFollowSourcesUseCase: GetSearchedFollowSourcesUseCase
     ) :
     ViewModel() {
 
@@ -29,6 +33,12 @@ class FollowingViewModel @Inject constructor(
 
     private var _followState = MutableLiveData<UiState<Unit>>()
     val followState : LiveData<UiState<Unit>> get() = _followState
+
+    private val _searchedSources = MutableLiveData<UiState<ArrayList<FollowUiModel>>>()
+    val searchedSources: LiveData<UiState<ArrayList<FollowUiModel>>> = _searchedSources
+
+
+    private var cachedSources: List<FollowModel> = emptyList()
 
     init {
         getFollowedSources()
@@ -40,9 +50,9 @@ class FollowingViewModel @Inject constructor(
         viewModelScope.launch {
             getFollowedSourcesUseCase().collect { result ->
                 if (result.isSuccess) {
-                    val list = result.getOrNull()
-                        ?.map { it.toUi() }
-                    _followedSources.value = UiState.Success(list ?: emptyList())
+                    val sources = result.getOrNull()
+                        cachedSources = sources ?: emptyList()
+                    _followedSources.value = UiState.Success(sources?.map { it.toUi() } ?: emptyList())
 
 
                 } else {
@@ -64,6 +74,24 @@ class FollowingViewModel @Inject constructor(
                     _followState.value = UiState.Error(R.string.failed_unfollow)
                 }
             }
+        }
+
+    }
+
+    fun searchNews(query: String) {
+        val trimmedQuery =query.trim()
+        if(trimmedQuery.isNotEmpty()){
+            _searchedSources.value = UiState.Loading
+            viewModelScope.launch(Dispatchers.Default) {
+                val filtered = getSearchedFollowSourcesUseCase(cachedSources, trimmedQuery)
+                val uiList = filtered.map { it.toUi() }
+                withContext(Dispatchers.Main) {
+                    _searchedSources.value = UiState.Success(ArrayList(uiList))
+                }
+            }
+        }else{
+            _searchedSources.value = UiState.Success(ArrayList(cachedSources.map { it.toUi() }))
+
         }
 
     }

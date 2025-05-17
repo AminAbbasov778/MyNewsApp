@@ -1,6 +1,5 @@
 package com.example.mynewsapp.domain.interfaces
 
-import com.example.mynewsapp.data.model.topic.TopicEntity
 import com.example.mynewsapp.domain.domainmodels.TopicModel
 import kotlinx.coroutines.flow.Flow
 

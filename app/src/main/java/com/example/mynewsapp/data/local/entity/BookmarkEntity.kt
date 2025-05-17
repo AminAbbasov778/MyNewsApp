@@ -4,7 +4,6 @@ package com.example.mynewsapp.data.local.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mynewsapp.data.model.latestnews.Source
 
 
 @Entity(tableName = "Bookmark")

@@ -9,8 +9,8 @@ import com.example.mynewsapp.domain.usecases.settingsusecases.GetSettingsTypesUs
 import com.example.mynewsapp.domain.usecases.settingsusecases.LogoutUseCase
 import com.example.mynewsapp.domain.usecases.settingsusecases.RemoveUserLoginInfoUseCase
 import com.example.mynewsapp.presentation.mappers.toUi
-import com.example.mynewsapp.presentation.uistates.ResultState
 import com.example.mynewsapp.presentation.uimodels.settings.SettingsUiModel
+import com.example.mynewsapp.presentation.uistates.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

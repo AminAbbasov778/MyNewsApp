@@ -5,9 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.latestnews.Article
-import com.example.mynewsapp.data.model.latestnews.Source
-import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProcessedNewsUseCase
 import com.example.mynewsapp.domain.usecases.exploreusecases.GetSavedTopicsUseCase
 import com.example.mynewsapp.domain.usecases.exploreusecases.GetTopicsUseCases

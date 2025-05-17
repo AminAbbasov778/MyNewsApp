@@ -14,7 +14,7 @@ data class CommentsUiModel(
     val parentCommentId: String?,
     val parentUsername: String?,
     val likesCount: Int = 0,
-    val isLiked: Boolean = false,
     val replies: List<CommentsUiModel> = emptyList(),
+    val isLiked: Boolean = false,
 ) {
 }

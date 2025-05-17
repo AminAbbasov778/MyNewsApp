@@ -6,17 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.domain.mappers.toDomain
-import com.example.mynewsapp.presentation.uiutils.ImageUtils
+import com.example.mynewsapp.domain.domainmodels.ProfileModel
 import com.example.mynewsapp.domain.usecases.commonusecases.CapturePhotoUseCase
-import com.example.mynewsapp.domain.usecases.editprofileusecases.UpdateUserProfileUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
 import com.example.mynewsapp.domain.usecases.editprofileusecases.ConvertUriToBase64UseCase
-import com.example.mynewsapp.domain.usecases.editprofileusecases.GetImagePickerOptionsUseCase
+import com.example.mynewsapp.domain.usecases.commonusecases.GetImagePickerOptionsUseCase
+import com.example.mynewsapp.domain.usecases.editprofileusecases.UpdateUserProfileUseCase
 import com.example.mynewsapp.presentation.mappers.toProfileUiModel
 import com.example.mynewsapp.presentation.uimodels.profile.NewProfileUiModel
-import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
+import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,9 +67,9 @@ class EditProfileViewModel @Inject constructor(
     ) {
         _updatedProfile.value = UiState.Loading
         val imageBase64 = convertUriToBase64UseCase(imageUri)
-        val userProfileUiModel = NewProfileUiModel(imageBase64 ?: "",fullName, bio, email, userName, phoneNumber, website)
+        val profileModel = ProfileModel(fullName, bio,email,imageBase64 ?: "", userName, phoneNumber, website)
         viewModelScope.launch(Dispatchers.IO) {
-            var result = updateUserProfileUseCase(userProfileUiModel.toDomain())
+            var result = updateUserProfileUseCase(profileModel)
             withContext(Dispatchers.Main) {
                 _updatedProfile.value = if (result.isSuccess) {
                     UiState.Success(R.string.successful_updating_profile)

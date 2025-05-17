@@ -4,24 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.databinding.NewsItemBinding
-import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 
-class LatestNewsAdapter(val onClickLatestNews: (ArticleUiModel) -> Unit) :
+class LatestNewsAdapter(val onNewsClick: (ArticleUiModel) -> Unit,) :
     RecyclerView.Adapter<LatestNewsAdapter.LatestNewsViewHolder>() {
 
-    var latestNews = ArrayList<ArticleUiModel>()
+    var news = ArrayList<ArticleUiModel>()
 
     inner class LatestNewsViewHolder(val binding: NewsItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
 
     fun addItems(newList: List<ArticleUiModel>) {
-        val start = latestNews.size
-        latestNews.addAll(newList.drop(start))
+        val start = news.size
+        news.addAll(newList.drop(start))
         notifyItemRangeInserted(start, newList.size - start)
     }
 
@@ -30,23 +28,29 @@ class LatestNewsAdapter(val onClickLatestNews: (ArticleUiModel) -> Unit) :
         return LatestNewsViewHolder(binding)
     }
 
-    override fun getItemCount() = latestNews.size
+    override fun getItemCount() = news.size
 
     override fun onBindViewHolder(holder: LatestNewsViewHolder, position: Int) {
-        holder.binding.latestNews = latestNews[position]
-        holder.binding.newsItemContainer.setOnClickListener { onClickLatestNews(latestNews[position]) }
+        holder.binding.latestNews = news[position]
+        clickEvent(holder,news[position])
+    }
+
+    fun clickEvent(holder: LatestNewsViewHolder,news : ArticleUiModel) {
+        holder.binding.newsItemContainer.setOnClickListener() {
+            onNewsClick(news)
+        }
     }
 
     fun setItems(newList: List<ArticleUiModel>) {
         val diffCallback = GenericDiffUtil(
-            oldList = latestNews,
+            oldList = news,
             newList = newList,
-            areItemsSame = { old, new -> old == new },
+            areItemsSame = { old, new -> old.url == new.url },
             areContentsSame = { old, new -> old == new }
         )
         val diffResult = DiffUtil.calculateDiff(diffCallback)
-        latestNews.clear()
-        latestNews.addAll(newList)
+        news.clear()
+        news.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
     }
 

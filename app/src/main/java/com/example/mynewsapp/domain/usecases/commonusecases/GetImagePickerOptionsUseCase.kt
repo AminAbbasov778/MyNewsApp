@@ -1,4 +1,4 @@
-package com.example.mynewsapp.domain.usecases.editprofileusecases
+package com.example.mynewsapp.domain.usecases.commonusecases
 
 import com.example.mynewsapp.domain.interfaces.EditProfileRepository
 import javax.inject.Inject

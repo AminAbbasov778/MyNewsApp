@@ -1,7 +1,6 @@
 package com.example.mynewsapp.domain.domainmodels
 
 import com.example.mynewsapp.data.model.latestnews.Source
-import com.google.gson.annotations.SerializedName
 
 data class ArticleModel(
                     val author: String?,

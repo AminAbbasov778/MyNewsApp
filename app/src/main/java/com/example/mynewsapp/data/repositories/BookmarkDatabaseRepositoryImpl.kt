@@ -4,7 +4,6 @@ import com.example.mynewsapp.data.local.dao.DeleteBookmarkDao
 import com.example.mynewsapp.data.local.dao.IsNewsBookmarkedDao
 import com.example.mynewsapp.data.local.dao.ReadBookmarkDao
 import com.example.mynewsapp.data.local.dao.WriteBookmarkDao
-import com.example.mynewsapp.data.local.entity.BookmarkEntity
 import com.example.mynewsapp.data.mappers.toData
 import com.example.mynewsapp.data.mappers.toDomain
 import com.example.mynewsapp.domain.domainmodels.ArticleModel

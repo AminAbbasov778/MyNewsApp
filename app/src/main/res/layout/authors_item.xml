@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    >
+    <data
+        >
+        <variable
+            name="authors"
+            type="com.example.mynewsapp.presentation.uimodels.author.AuthorUiModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginBottom="30dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/sourceImg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            loadUrl="@{authors.sourceImg}"
+            android:scaleType="fitXY"
+            android:padding="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sourceName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsbold"
+            android:textSize="17sp"
+            android:text="@{authors.sourceName}"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"
+            app:layout_constraintRight_toLeftOf="@id/followButton"
+            app:layout_constraintBottom_toTopOf="@id/sourceFollowersCount"
+            app:layout_constraintLeft_toRightOf="@id/sourceImg"
+            app:layout_constraintTop_toTopOf="@id/sourceImg"
+            >
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sourceFollowersCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="15sp"
+            android:text="@{String.valueOf(authors.sourceFollowerCount)}"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/second_text_color"
+            app:layout_constraintLeft_toLeftOf="@id/sourceName"
+            app:layout_constraintBottom_toBottomOf="@id/sourceImg"
+            >
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/followButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:fontFamily="@font/poppinsmedium"
+            followStyle="@{authors.isFollowed}"
+            android:paddingTop="7dp"
+            app:cornerRadius="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.google.android.material.button.MaterialButton>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

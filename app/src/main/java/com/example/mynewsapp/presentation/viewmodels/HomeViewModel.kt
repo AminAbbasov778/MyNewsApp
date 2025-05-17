@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.data.model.latestnews.Source
 import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.domain.usecases.commonusecases.GetCategoryUseCase
@@ -31,8 +30,8 @@ class HomeViewModel @Inject constructor(
     private val _trendingNewsState = MutableLiveData<UiState<List<ArticleUiModel>>>()
     val trendingNewsState: LiveData<UiState<List<ArticleUiModel>>> get() = _trendingNewsState
 
-        private val _categoryList = MutableLiveData<ArrayList<String>>()
-        val categoryList: LiveData<ArrayList<String>> get() = _categoryList
+        private val _categoryList = MutableLiveData<ArrayList<Int>>()
+        val categoryList: LiveData<ArrayList<Int>> get() = _categoryList
 
         private var _isSeeAllActive = MutableLiveData<Boolean>(false)
         val isSeeAllActive : LiveData<Boolean> get() = _isSeeAllActive
@@ -96,19 +95,7 @@ class HomeViewModel @Inject constructor(
 
         }
     }
-    fun convertArticleModelToArticleUiModel(newsList: List<ArticleModel>)=
-        newsList.map {news ->
-            ArticleUiModel(
-                urlToImage = news.urlToImage ?: "No Image Url",
-                timeDifference = news.timeDifference,
-                title = news.title ?: "No title",
-                description = news.description ?: "No description",
-                author = news.author ?: "No author",
-                content = news.content ?: "No content",
-                source = Source(news.source?.id ?: "No id", news.source?.name ?: "No name"),
-                url = news.url ?: "No url",
-                publishedAt = news.publishedAt ?: "No published at"
-            )  }
+
 
 
     private fun getTrendingNewsResult() {

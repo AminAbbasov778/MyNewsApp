@@ -25,6 +25,7 @@ class CommentRepositoryImpl @Inject constructor(
         val user = firebaseAuth.currentUser ?: return Result.failure(Exception("User not logged in"))
         val encodedUrl = FirestoreUtil.encodeUrlToId(commentModel.url)
 
+
         val commentData = hashMapOf(
             "comment" to comment.comment,
             "profileImg" to comment.profileImg,
@@ -36,7 +37,6 @@ class CommentRepositoryImpl @Inject constructor(
             "url" to comment.url,
             "parentUsername" to comment.parentUsername,
             "likesCount" to comment.likesCount,
-            "isLiked" to comment.isLiked
         )
         return try {
             firebaseFirestore.collection("comments")
@@ -65,8 +65,20 @@ class CommentRepositoryImpl @Inject constructor(
                     }
                     val result = snapshot?.documents?.mapNotNull { doc ->
                         try {
-                            val comment = doc.toObject(Comment::class.java)
-                            comment?.toDomain()
+                            val comment = Comment(
+                                comment = doc.getString("comment") ?: "",
+                                profileImg = doc.getString("profileImg") ?: "",
+                                username = doc.getString("username") ?: "",
+                                userId = doc.getString("userId") ?: "",
+                                commentedAt = doc.getString("commentedAt") ?: "",
+                                url = doc.getString("url") ?: "",
+                                isReply = doc.getBoolean("isReply") ?: false,
+                                parentCommentId = doc.getString("parentCommentId"),
+                                parentUsername = doc.getString("parentUsername"),
+                                likesCount = doc.getLong("likesCount")?.toInt() ?: 0,
+                            )
+
+                            comment.toDomain()
                         } catch (e: Exception) {
                             null
                         }
@@ -81,7 +93,6 @@ class CommentRepositoryImpl @Inject constructor(
             close(e)
         }
     }
-
     override suspend fun likeComment(commentId: String, newsUrl: String): Result<Unit> {
         val user = firebaseAuth.currentUser ?: return Result.failure(Exception("User not logged in"))
         val encodedUrl = FirestoreUtil.encodeUrlToId(newsUrl)
@@ -123,7 +134,6 @@ class CommentRepositoryImpl @Inject constructor(
                     .document(user.uid)
                     .collection("likedComments")
                     .document(commentId)
-
                 val commentSnapshot = transaction.get(commentRef)
                 val currentLikesCount = commentSnapshot.getLong("likesCount")?.toInt() ?: 0
 

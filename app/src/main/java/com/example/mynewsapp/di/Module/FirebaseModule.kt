@@ -1,10 +1,6 @@
 package com.example.mynewsapp.di.Module
 
 import android.content.Context
-import com.example.mynewsapp.data.repositories.RegisterRepositoryImpl
-import com.example.mynewsapp.domain.interfaces.RegisterRepository
-import com.example.mynewsapp.domain.usecases.loginusecases.SignInWithFacebookUseCase
-import com.example.mynewsapp.domain.usecases.loginusecases.SignInWithGoogleUseCase
 import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

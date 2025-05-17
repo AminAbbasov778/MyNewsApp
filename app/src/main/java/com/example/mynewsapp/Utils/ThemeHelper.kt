@@ -3,12 +3,7 @@ package com.example.app.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.view.View
-import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
-import com.example.mynewsapp.R
 import com.example.mynewsapp.presentation.activities.MainActivity
 
 object ThemeHelper {

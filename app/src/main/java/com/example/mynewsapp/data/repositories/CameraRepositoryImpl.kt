@@ -16,4 +16,7 @@ class CameraRepositoryImpl @Inject constructor(val context: Context) : CameraRep
             file
         )
     }
+
+    override fun getImagePickerOptions(): Array<String> = arrayOf("Camera", "Gallery")
+
 }

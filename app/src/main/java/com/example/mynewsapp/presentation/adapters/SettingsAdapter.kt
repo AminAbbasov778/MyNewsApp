@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
 import com.example.mynewsapp.databinding.SettingsItemBinding
 import com.example.mynewsapp.presentation.uimodels.settings.SettingsUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
 
 class SettingsAdapter(val onSettingClick : (SettingsUiModel) -> Unit) : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
     var list = arrayListOf<SettingsUiModel>()

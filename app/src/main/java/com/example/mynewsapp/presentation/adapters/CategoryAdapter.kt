@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynewsapp.databinding.CategoryItemBinding
+import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
-import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 
 class CategoryAdapter(
-    private val onClickCategory: (String) -> Unit
+    private val onClickCategory: (Int) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    private val categoryList = arrayListOf<String>()
-    private var selectedPosition: Int = 0
+    private val categoryList = arrayListOf<Int>()
+     var selectedPosition: Int = 0
 
     inner class CategoryViewHolder( val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -26,11 +26,12 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         bind(holder.binding,categoryList[position], position)
+
     }
 
     override fun getItemCount(): Int = categoryList.size
 
-    fun updateList(newList: ArrayList<String>) {
+    fun updateList(newList: List<Int>) {
         val diffCallback = GenericDiffUtil(
             oldList = categoryList,
             newList = newList,
@@ -43,7 +44,8 @@ class CategoryAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
-    fun bind(binding: CategoryItemBinding,category: String, position: Int) {
+    fun bind(binding: CategoryItemBinding,category: Int, position: Int) {
+
         binding.category = category
 
 

@@ -2,7 +2,6 @@ package com.example.mynewsapp.presentation.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.app.utils.ThemeHelper
 import com.example.mynewsapp.databinding.ActivitySplashBinding

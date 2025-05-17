@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
+import com.example.mynewsapp.domain.domainmodels.FollowModel
 import com.example.mynewsapp.domain.usecases.commentusecases.GetCommentsUseCase
 import com.example.mynewsapp.domain.usecases.detail.DeleteBookmarkUseCase
 import com.example.mynewsapp.domain.usecases.detail.IsNewsBookmarkedUseCase
@@ -18,6 +19,7 @@ import com.example.mynewsapp.domain.usecases.detailusecases.IsNewsFavoriteUseCas
 import com.example.mynewsapp.domain.usecases.detailusecases.IsNewsSourceFollowedUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnFavoriteNewUseCase
 import com.example.mynewsapp.domain.usecases.detailusecases.UnfollowNewSourceUseCase
+import com.example.mynewsapp.presentation.mappers.toDomain
 import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uimodels.common.FollowUiModel
@@ -121,7 +123,7 @@ class DetailViewModel @Inject constructor(
     fun insertBookmark(news: ArticleUiModel) {
         _actionState.value = UiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val result = saveBookmarkUseCase(news)
+            val result = saveBookmarkUseCase(news.toDomain())
             withContext(Dispatchers.Main) {
                 if (result.isSuccess) {
                     _isBookmarked.value = true
@@ -181,7 +183,7 @@ class DetailViewModel @Inject constructor(
 
     fun followNewsSource(sourceName: String, sourceImg: String, followerCount: Int) {
         _actionState.value = UiState.Loading
-        val follow = FollowUiModel(sourceName, sourceImg, followerCount)
+        val follow = FollowModel(sourceName, sourceImg, followerCount)
         viewModelScope.launch(Dispatchers.IO) {
             val result = followNewsSourceUseCase(follow)
             withContext(Dispatchers.Main) {

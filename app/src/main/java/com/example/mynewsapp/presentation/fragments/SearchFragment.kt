@@ -16,11 +16,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mynewsapp.databinding.FragmentSearchBinding
+import com.example.mynewsapp.presentation.adapters.AuthorsAdapter
+import com.example.mynewsapp.presentation.adapters.CategoryAdapter
+import com.example.mynewsapp.presentation.adapters.LatestNewsAdapter
+import com.example.mynewsapp.presentation.adapters.TopicAdapter
+import com.example.mynewsapp.presentation.enums.SearchCategory
+import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
 import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
-import com.example.mynewsapp.databinding.FragmentSearchBinding
-import com.example.mynewsapp.presentation.adapters.LatestNewsAdapter
-import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.viewmodels.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -32,6 +36,9 @@ class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModels<SearchViewModel>()
     private lateinit var newsAdapter: LatestNewsAdapter
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var topicsAdapter: TopicAdapter
+    private lateinit var authorsAdapter: AuthorsAdapter
     private var recyclerViewState: Parcelable? = null
     private var searchJob: Job? = null
 
@@ -48,7 +55,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupEditText()
         setupSearch()
-        setupNewsAdapter()
+        setupAdapters()
         observeData()
         setupScrollListener()
         recyclerViewState?.let {
@@ -77,24 +84,58 @@ class SearchFragment : Fragment() {
                 val query = s.toString()
                 searchJob = viewLifecycleOwner.lifecycleScope.launch {
                     delay(300)
-                    viewModel.searchNews(query)
+                    viewModel.search(query)
                 }
             }
         })
     }
 
-    private fun setupNewsAdapter() {
+    private fun setupAdapters() {
         newsAdapter = LatestNewsAdapter {
-            recyclerViewState = binding.searchedNewsRecView.layoutManager?.onSaveInstanceState()
             findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToDetailFragment(
-                    it
-                )
+                SearchFragmentDirections.actionSearchFragmentToDetailFragment(it)
             )
         }
+        topicsAdapter = TopicAdapter { topic -> viewModel.onSaveClick(topic) }
+        authorsAdapter = AuthorsAdapter { author -> viewModel.toggleFollowingBtn(author) }
+        categoryAdapter = CategoryAdapter { selected ->
+            viewModel.setCategory(selected)
+            val query = binding.searchEditText.text.toString()
+            viewModel.search(query)
+        }
+
+        binding.searchCategoryRecView.adapter = categoryAdapter
+        binding.searchedNewsRecView.layoutManager = LinearLayoutManager(requireContext())
         binding.searchedNewsRecView.adapter = newsAdapter
+        newsAdapter.setItems(emptyList())
+
+        viewModel.selectedCategory.observe(viewLifecycleOwner) { category ->
+            updateVisibleRecyclerView(category)
+        }
     }
 
+
+
+    private fun updateVisibleRecyclerView(category: Int) {
+        val query = binding.searchEditText.text.toString()
+        when (category) {
+            SearchCategory.NEWS.titleRes -> {
+                binding.searchedNewsRecView.adapter = newsAdapter
+                viewModel.search(query)
+
+            }
+            SearchCategory.TOPICS.titleRes -> {
+                binding.searchedNewsRecView.adapter = topicsAdapter
+                    viewModel.search(query)
+
+            }
+            SearchCategory.AUTHORS.titleRes -> {
+                binding.searchedNewsRecView.adapter = authorsAdapter
+                    viewModel.search(query)
+
+            }
+        }
+    }
 
     private fun observeData() {
         viewModel.searchedNews.observe(viewLifecycleOwner) { state ->
@@ -102,28 +143,58 @@ class SearchFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loading.setGone()
                     newsAdapter.setItems(state.data)
-                    recyclerViewState?.let {
-                        binding.searchedNewsRecView.layoutManager?.onRestoreInstanceState(it)
-
-                    }
                 }
-
                 is UiState.Error -> {
                     binding.loading.setGone()
-                    binding.searchedNewsRecView.setGone()
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(state.message), Toast.LENGTH_SHORT).show()
                 }
-
                 is UiState.Loading -> binding.loading.show()
             }
         }
 
+        viewModel.topics.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Success -> {
+                    binding.loading.setGone()
+                    topicsAdapter.updateList(state.data)
+                }
+                is UiState.Error -> {
+                    binding.loading.setGone()
+                    Toast.makeText(requireContext(), getString(state.message), Toast.LENGTH_SHORT).show()
+                }
+                is UiState.Loading -> binding.loading.show()
+            }
+        }
 
+        viewModel.authors.observe(viewLifecycleOwner) { authors ->
+            binding.loading.setGone()
+            authorsAdapter.updateList(authors)
+        }
+
+        viewModel.searchCategories.observe(viewLifecycleOwner) { categories ->
+            categoryAdapter.updateList(categories)
+            if (categoryAdapter.selectedPosition == 0 && categories.isNotEmpty()) {
+                categoryAdapter.notifyItemChanged(0)
+            }
+        }
+
+        viewModel.actionState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Success -> binding.loading.setGone()
+                is UiState.Error -> {
+                    binding.loading.setGone()
+                    Toast.makeText(requireContext(), getString(state.message), Toast.LENGTH_SHORT).show()
+                }
+                is UiState.Loading -> binding.loading.show()
+            }
+        }
     }
 
     private fun setupScrollListener() {
         binding.searchedNewsRecView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (viewModel.selectedCategory.value != SearchCategory.NEWS.titleRes) return
+
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                 val visibleItemCount = layoutManager.childCount
@@ -135,6 +206,4 @@ class SearchFragment : Fragment() {
             }
         })
     }
-
-
 }

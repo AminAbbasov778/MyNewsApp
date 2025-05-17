@@ -1,7 +1,5 @@
 package com.example.mynewsapp.presentation.mappers
 
-import android.graphics.Bitmap
-import androidx.compose.ui.graphics.ImageBitmap
 import com.example.mynewsapp.domain.domainmodels.ProfileModel
 import com.example.mynewsapp.domain.domainmodels.UserNewsModel
 import com.example.mynewsapp.presentation.uimodels.createnews.UserNewsUiModel

@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.databinding.TrendingItemBinding
-import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import com.example.mynewsapp.presentation.uimodels.common.ArticleUiModel
 import com.example.mynewsapp.presentation.uiutils.GenericDiffUtil
 

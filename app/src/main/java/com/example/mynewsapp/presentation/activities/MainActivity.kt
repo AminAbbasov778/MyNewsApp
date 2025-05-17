@@ -2,18 +2,16 @@ package com.example.mynewsapp.presentation.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.mynewsapp.R
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.ActivityMainBinding
 import com.example.mynewsapp.presentation.uistates.ResultState
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.presentation.viewmodels.MainViewModel
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
@@ -57,6 +55,7 @@ class MainActivity : BaseActivity() {
                 R.id.createNewsFragment -> binding.bottomnavigation.setGone()
                 R.id.editProfileFragment -> binding.bottomnavigation.setGone()
                 R.id.settingsFragment -> binding.bottomnavigation.setGone()
+                R.id.exploreFragment -> binding.bottomnavigation.show()
             }
         }
 

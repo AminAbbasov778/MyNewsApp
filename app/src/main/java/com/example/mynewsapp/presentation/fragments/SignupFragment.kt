@@ -1,6 +1,5 @@
 package com.example.mynewsapp.presentation.fragments
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,11 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mynewsapp.R
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentSignupBinding
 import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uistates.ValidationState
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.presentation.viewmodels.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

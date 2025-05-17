@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
 import com.example.mynewsapp.Utils.LanguageManager
-import com.example.mynewsapp.data.model.language.Language
 import com.example.mynewsapp.domain.usecases.languageusecases.GetCurrentLanguageUseCase
 import com.example.mynewsapp.domain.usecases.languageusecases.GetLanguageListUseCase
 import com.example.mynewsapp.domain.usecases.languageusecases.SetLanguageUseCase

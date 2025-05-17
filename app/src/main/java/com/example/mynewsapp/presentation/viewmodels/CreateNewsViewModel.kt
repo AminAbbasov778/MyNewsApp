@@ -8,20 +8,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mynewsapp.R
-import com.example.mynewsapp.data.model.userprofile.Profile
 import com.example.mynewsapp.domain.usecases.commonusecases.CapturePhotoUseCase
-import com.example.mynewsapp.domain.usecases.createnewsusecases.CreateNewsUseCase
-import com.example.mynewsapp.domain.usecases.createnewsusecases.UserNewsModelUseCase
+import com.example.mynewsapp.domain.usecases.commonusecases.GetImagePickerOptionsUseCase
 import com.example.mynewsapp.domain.usecases.commonusecases.GetProfileDataUseCase
+import com.example.mynewsapp.domain.usecases.createnewsusecases.CreateNewsUseCase
 import com.example.mynewsapp.domain.usecases.createnewsusecases.GetTimeStampUseCase
+import com.example.mynewsapp.domain.usecases.createnewsusecases.UserNewsModelUseCase
 import com.example.mynewsapp.domain.usecases.editprofileusecases.ConvertUriToBase64UseCase
 import com.example.mynewsapp.presentation.mappers.toDomain
-import com.example.mynewsapp.presentation.mappers.toProfileUiModel
 import com.example.mynewsapp.presentation.mappers.toUi
 import com.example.mynewsapp.presentation.uimodels.createnews.NewUserNewsUiModel
-import com.example.mynewsapp.presentation.uimodels.createnews.UserNewsUiModel
 import com.example.mynewsapp.presentation.uimodels.profile.NewProfileUiModel
-import com.example.mynewsapp.presentation.uimodels.profile.ProfileUiModel
 import com.example.mynewsapp.presentation.uistates.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -43,12 +40,13 @@ class CreateNewsViewModel @Inject constructor(
     val getProfileDataUseCase: GetProfileDataUseCase,
     val convertUriToBase64UseCase: ConvertUriToBase64UseCase,
     val getTimeStampUseCase: GetTimeStampUseCase,
+    val getImagePickerOptionsUseCase: GetImagePickerOptionsUseCase
 ) : ViewModel() {
     private var _imageUri = MutableLiveData<Uri>()
     val imageUri: LiveData<Uri> get() = _imageUri
 
-    private var _createNewsResult = MutableLiveData<UiState<Int>>()
-    val createNewsResult: LiveData<UiState<Int>> get() = _createNewsResult
+    private var _createNewsResult = MutableLiveData<UiState<Unit>>()
+    val createNewsResult: LiveData<UiState<Unit>> get() = _createNewsResult
 
 
     private val _title = MutableStateFlow("")
@@ -66,6 +64,12 @@ class CreateNewsViewModel @Inject constructor(
     private var _isPublishedActive = MutableLiveData<Boolean>()
     val isPublishedActive : LiveData<Boolean> get() = _isPublishedActive
 
+    private var _imagePickerOptions = MutableLiveData<Array<String>>()
+    val imagePickerOptions: LiveData<Array<String>> get() = _imagePickerOptions
+
+
+
+
     fun togglePublishedBtn(){
         _isPublishedActive.value = isFormValid.value
     }
@@ -82,15 +86,13 @@ class CreateNewsViewModel @Inject constructor(
         _uri.value = uri
     }
 
-    private var _imagePickerOptions = MutableLiveData<Array<String>>()
-    val imagePickerOptions: LiveData<Array<String>> get() = _imagePickerOptions
 
     fun capturePhoto() {
         _imageUri.value = capturePhotoUseCase()
     }
 
     fun getImagePickerOptions() {
-        _imagePickerOptions.value = arrayOf("Camera", "Gallery")
+        _imagePickerOptions.value = getImagePickerOptionsUseCase()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -120,7 +122,7 @@ class CreateNewsViewModel @Inject constructor(
 
             withContext(Dispatchers.Main) {
                 _createNewsResult.value = if (result.isSuccess) {
-                    UiState.Success(R.string.successful_created_news)
+                    UiState.Success(Unit)
                 } else {
                     UiState.Error(R.string.failure_created_news)
                 }

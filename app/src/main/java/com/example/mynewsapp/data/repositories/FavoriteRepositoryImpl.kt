@@ -1,6 +1,6 @@
 package com.example.mynewsapp.data.repository
 
-import android.util.Log
+import FirestoreUtil
 import com.example.mynewsapp.domain.interfaces.FavoriteRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue

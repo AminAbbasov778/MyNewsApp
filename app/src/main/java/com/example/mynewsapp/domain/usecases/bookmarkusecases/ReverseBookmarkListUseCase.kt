@@ -1,7 +1,5 @@
 package com.example.mynewsapp.domain.usecases.bookmark
 
-import com.example.mynewsapp.data.local.entity.BookmarkEntity
-import com.example.mynewsapp.data.model.latestnews.Article
 import com.example.mynewsapp.domain.domainmodels.ArticleModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

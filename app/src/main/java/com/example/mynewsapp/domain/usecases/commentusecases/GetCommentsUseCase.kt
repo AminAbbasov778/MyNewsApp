@@ -19,8 +19,10 @@ class GetCommentsUseCase @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     suspend operator fun invoke(url: String): Flow<Result<List<CommentModel>>> {
         return commentRepository.getComments(url).map { result ->
-            result.map {
-                val commentList = it.map { it.copy(timeDifference = timeDifferenceUseCase(changeIsoToMillisFromFirebaseUseCase(it.commentedAt))) }
+            result.map { comments ->
+                val commentList = comments.map {
+                    it.copy(timeDifference = timeDifferenceUseCase(changeIsoToMillisFromFirebaseUseCase(it.commentedAt)))
+                }
                 buildNestedCommentsUseCase(commentList)
             }
         }

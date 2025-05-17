@@ -1,20 +1,16 @@
 package com.example.mynewsapp.presentation.fragments
 
-import android.app.AlertDialog
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -22,12 +18,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.mynewsapp.R
 import com.example.mynewsapp.Utils.Constants.CAMERA_PERMISSION_REQUEST_CODE
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
-import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.databinding.FragmentCreateNewsBinding
 import com.example.mynewsapp.presentation.uistates.UiState
 import com.example.mynewsapp.presentation.uiutils.CameraPermissionUtils
 import com.example.mynewsapp.presentation.uiutils.DialogUtils
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.setGone
+import com.example.mynewsapp.presentation.uiutils.VisibilityUtils.show
 import com.example.mynewsapp.presentation.viewmodels.CreateNewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -97,6 +93,7 @@ class CreateNewsFragment : Fragment() {
     private fun observe(){
         viewModel.imagePickerOptions.observe(viewLifecycleOwner) {
             showImagePickerDialog(it)
+
         }
         viewModel.imageUri.observe(viewLifecycleOwner) {
             it?.let {
@@ -107,7 +104,6 @@ class CreateNewsFragment : Fragment() {
             when(it){
                 is UiState.Success -> {
                     binding.loading.setGone()
-                    Toast.makeText(context, it.data, Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }
                 is UiState.Error ->{

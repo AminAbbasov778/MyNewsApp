@@ -6,7 +6,7 @@ import javax.inject.Inject
 class GetCategoryUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
 ) {
-    operator fun invoke(): ArrayList<String> {
+    operator fun invoke(): ArrayList<Int> {
         return categoryRepository.getCategories()
     }
 }

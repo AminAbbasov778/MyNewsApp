@@ -1,4 +1,4 @@
 package com.example.mynewsapp.domain.domainmodels
 
-class LanguageModel(val language : String, val code : String) {
+class LanguageModel(val language : Int, val code : String) {
 }

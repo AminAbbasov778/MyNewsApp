@@ -2,7 +2,6 @@ package com.example.mynewsapp.data.mappers
 
 import com.example.mynewsapp.data.model.comment.Comment
 import com.example.mynewsapp.domain.domainmodels.CommentModel
-import com.example.mynewsapp.presentation.uimodels.comment.NewCommentUIModel
 
 fun Comment.toDomain(): CommentModel{
     return   CommentModel( comment = comment,
@@ -10,7 +9,7 @@ fun Comment.toDomain(): CommentModel{
         username = username,
         userId = userId,
         commentedAt = commentedAt,
-        timeDifference = "Empty time Difference",
+        timeDifference = "",
         url = url,
         isReply = isReply,
         parentCommentId = parentCommentId,
@@ -28,5 +27,6 @@ fun CommentModel.toData(): Comment{
         isReply = isReply,
         parentCommentId = parentCommentId,
         parentUsername = parentUsername,
-        likesCount = likesCount,)
+        likesCount = likesCount ,
+        )
 }
