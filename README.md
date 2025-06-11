@@ -27,22 +27,25 @@
 
 ---
 
-
 ## 📸 Screenshots
 
-| Page | Screenshot |
-|------|------------|
-| Onboarding | ![Onboarding](screenshots/Screenshot_20250611-114312.png) |
-| Login Page | ![Login](screenshots/login.png) |
-| Home Page | ![Home](screenshots/home.png) |
-| Detail Page | ![Detail](screenshots/detail.png) |
-| Comments Page | ![Comments](screenshots/comments.png) |
-| Add News | ![Add News](screenshots/add_news.png) |
-| Dark Mode | ![Dark Mode](screenshots/dark_mode.png) |
-| Language Switch | ![Language](screenshots/language.png) |
-| Profile Page | ![Profile](screenshots/profile.png) |
+| Onboarding | Login Page | Home Page | Detail Page |
+|------------|------------|-----------|-------------|
+| <img src="screenshots/onboarding.png" width="200" height="400" /> | <img src="screenshots/login.png" width="200" height="400" /> | <img src="screenshots/home.png" width="200" height="400" /> | <img src="screenshots/detail.png" width="200" height="400" /> |
 
----
+| Comments Page | Add News | Dark Mode | Language Switch |
+|---------------|----------|-----------|-----------------|
+| <img src="screenshots/comments.png" width="200" height="400" /> | <img src="screenshots/add_news.png" width="200" height="400" /> | <img src="screenshots/dark_mode.png" width="200" height="400" /> | <img src="screenshots/language.png" width="200" height="400" /> |
+
+| Profile Page | Edit Profile | Explore Page | Bookmark Page |
+|--------------|---------------|---------------|----------------|
+| <img src="screenshots/profile.png" width="200" height="400" /> | <img src="screenshots/edit_profile.png" width="200" height="400" /> | <img src="screenshots/explore.png" width="200" height="400" /> | <img src="screenshots/bookmark.png" width="200" height="400" /> |
+
+| Followings Page | Search Page |
+|------------------|-------------|
+| <img src="screenshots/followings.png" width="200" height="400" /> | <img src="screenshots/search.png" width="200" height="400" /> |
+
+
 
 ## 🧠 Technologies Used
 
