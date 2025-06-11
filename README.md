@@ -4,6 +4,31 @@
 
 ---
 
+## 📸 Screenshots
+
+| Onboarding 1           | Onboarding 2           | Onboarding 3           | Sign Up Page                           |
+|-----------------------|-----------------------|-----------------------|--------------------------------------|
+| <img src="screenshots/Screenshot_20250611-120117.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-120225.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-120242.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115253.png" width="200" height="400" /> |
+
+| Login Page             | Home Page              | Trending Page          | Detail Page                          |
+|-----------------------|-----------------------|-----------------------|------------------------------------|
+| <img src="screenshots/Screenshot_20250611-115235.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114312.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114839.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114721.png" width="200" height="400" /> |
+
+| Comments Page          | Add News               | Display                | Language Switch                    |
+|-----------------------|-----------------------|-----------------------|----------------------------------|
+| <img src="screenshots/Screenshot_20250611-114811.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115046.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115145.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115121.png" width="200" height="400" /> |
+
+| Profile Page           | Edit Profile           | Explore Page           | Bookmark Page                    |
+|-----------------------|-----------------------|-----------------------|--------------------------------|
+| <img src="screenshots/Screenshot_20250611-114506.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114911.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114411.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114449.png" width="200" height="400" /> |
+
+| Followings Page        | Search Page            | Settings Page          |                                  |
+|-----------------------|-----------------------|-----------------------|----------------------------------|
+| <img src="screenshots/Screenshot_20250611-115016.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114619.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115109.png" width="200" height="400" /> |                                  |
+
+
+
+
 ## 📱 Key Screens & Features
 
 - **Onboarding** – First-time user introduction  
@@ -27,27 +52,6 @@
 - **Language Page** - Manage app preferences and settings
 
 ---
-
-| Onboarding 1           | Onboarding 2           | Onboarding 3           | Sign Up Page                           |
-|-----------------------|-----------------------|-----------------------|--------------------------------------|
-| <img src="screenshots/Screenshot_20250611-120117.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-120225.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-120242.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115253.png" width="200" height="400" /> |
-
-| Login Page             | Home Page              | Trending Page          | Detail Page                          |
-|-----------------------|-----------------------|-----------------------|------------------------------------|
-| <img src="screenshots/Screenshot_20250611-115235.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114312.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114839.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114721.png" width="200" height="400" /> |
-
-| Comments Page          | Add News               | Display                | Language Switch                    |
-|-----------------------|-----------------------|-----------------------|----------------------------------|
-| <img src="screenshots/Screenshot_20250611-114811.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115046.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115145.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115121.png" width="200" height="400" /> |
-
-| Profile Page           | Edit Profile           | Explore Page           | Bookmark Page                    |
-|-----------------------|-----------------------|-----------------------|--------------------------------|
-| <img src="screenshots/Screenshot_20250611-114506.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114911.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114411.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114449.png" width="200" height="400" /> |
-
-| Followings Page        | Search Page            | Settings Page          |                                  |
-|-----------------------|-----------------------|-----------------------|----------------------------------|
-| <img src="screenshots/Screenshot_20250611-115016.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114619.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115109.png" width="200" height="400" /> |                                  |
-
 
 ## 🧠 Technologies Used
 
