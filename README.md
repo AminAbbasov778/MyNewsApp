@@ -31,19 +31,19 @@
 
 | Onboarding | Login Page | Home Page | Detail Page |
 |------------|------------|-----------|-------------|
-| <img src="screenshots/onboarding.png" width="200" height="400" /> | <img src="screenshots/login.png" width="200" height="400" /> | <img src="screenshots/home.png" width="200" height="400" /> | <img src="screenshots/detail.png" width="200" height="400" /> |
+| <img src="screenshots/onboarding.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115235.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114312.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114721.png" width="200" height="400" /> |
 
-| Comments Page | Add News | Dark Mode | Language Switch |
+| Comments Page | Add News | Display | Language Switch |
 |---------------|----------|-----------|-----------------|
-| <img src="screenshots/comments.png" width="200" height="400" /> | <img src="screenshots/add_news.png" width="200" height="400" /> | <img src="screenshots/dark_mode.png" width="200" height="400" /> | <img src="screenshots/language.png" width="200" height="400" /> |
+| <img src="screenshots/Screenshot_20250611-114811.png" width="200" height="400" /> | <img src="screenshots/add_news.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115145.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-115121.png" width="200" height="400" /> |
 
 | Profile Page | Edit Profile | Explore Page | Bookmark Page |
 |--------------|---------------|---------------|----------------|
-| <img src="screenshots/profile.png" width="200" height="400" /> | <img src="screenshots/edit_profile.png" width="200" height="400" /> | <img src="screenshots/explore.png" width="200" height="400" /> | <img src="screenshots/bookmark.png" width="200" height="400" /> |
+| <img src="screenshots/Screenshot_20250611-114506.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114911.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114411.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114449.png" width="200" height="400" /> |
 
-| Followings Page | Search Page |
+| Followings Page | Search Page | 
 |------------------|-------------|
-| <img src="screenshots/followings.png" width="200" height="400" /> | <img src="screenshots/search.png" width="200" height="400" /> |
+| <img src="screenshots/Screenshot_20250611-115016.png" width="200" height="400" /> | <img src="screenshots/Screenshot_20250611-114619.png" width="200" height="400" /> |
 
 
 
