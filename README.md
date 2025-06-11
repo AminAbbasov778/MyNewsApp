@@ -23,7 +23,7 @@
 - **Add News Page** – Create your own news with image upload  
 - **Followings Page** – List of followed authors  
 - **Dark Mode Page** – Toggle dark/light theme  
-- **Language Page** – Change app language (i18n)
+- **Language Page** – Change app language 
 - **Language Page** - Manage app preferences and settings
 
 ---
