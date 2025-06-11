@@ -27,6 +27,23 @@
 
 ---
 
+
+## 📸 Screenshots
+
+| Page | Screenshot |
+|------|------------|
+| Onboarding | ![Onboarding](screenshots/onboarding.png) |
+| Login Page | ![Login](screenshots/login.png) |
+| Home Page | ![Home](screenshots/home.png) |
+| Detail Page | ![Detail](screenshots/detail.png) |
+| Comments Page | ![Comments](screenshots/comments.png) |
+| Add News | ![Add News](screenshots/add_news.png) |
+| Dark Mode | ![Dark Mode](screenshots/dark_mode.png) |
+| Language Switch | ![Language](screenshots/language.png) |
+| Profile Page | ![Profile](screenshots/profile.png) |
+
+---
+
 ## 🧠 Technologies Used
 
 | Technology | Purpose |
