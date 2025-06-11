@@ -33,7 +33,7 @@
 
 - **Onboarding** – First-time user introduction  
 - **Sign Up / Login** – Register or sign in via Email, Google, or Facebook  
-- **Home Page** – Browse latest and trending news  
+- **Home Page** – Browse latest and trending news. Load news and lists in chunks dynamically to enhance performance and usability.
 - **Search Page** – Search by news, topics, or authors  
 - **Detail Page** – View news with:
   - Like / Dislike
@@ -84,7 +84,8 @@
 - ✅ Offline support with Room DB  
 - ✅ Language switching (internationalization)  
 - ✅ Upload profile and news images  
-- ✅ Add your own news  
+- ✅ Add your own news
+- ✅ Infinite Scroll with pagination support 
 - ✅ Edit profile and settings  
 
 ---
