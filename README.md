@@ -32,7 +32,7 @@
 
 | Page | Screenshot |
 |------|------------|
-| Onboarding | ![Onboarding](screenshots/onboarding.png) |
+| Onboarding | ![Onboarding](screenshots/Screenshot_20250611-114312.png) |
 | Login Page | ![Login](screenshots/login.png) |
 | Home Page | ![Home](screenshots/home.png) |
 | Detail Page | ![Detail](screenshots/detail.png) |
