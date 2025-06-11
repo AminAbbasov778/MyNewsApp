@@ -66,7 +66,6 @@
 | **Figma** | Design|
 | **Firebase Auth** | Google/Facebook login |
 | **Firebase Firestore** | Real-time DB for news and comments |
-| **Firebase Storage** | Upload and retrieve images |
 | **Room** | Local database (e.g., bookmarks) |
 | **Retrofit** | Network layer with coroutine support |
 | **Hilt** | Dependency injection |
