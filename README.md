@@ -1,4 +1,4 @@
-# 📰 NewApp
+# 📰 NewApp (Clean Architecture + MVVM + Hilt)
 
 **NewApp** is a modern Kotlin-based Android news application that allows users to explore, interact with, and manage news content. It supports social features like comments, bookmarks, and follows, with authentication via Google and Facebook. Built using MVVM, Clean Architecture, and Kotlin Coroutines for responsive, asynchronous UI updates.
 
